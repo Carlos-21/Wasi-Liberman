@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Wasi</string>
+    <string name="cLogin">Login</string>
+    <string name="cHijos">Hijos</string>
+    <string name="cAlumnosHabilitados">Alumnos habilitados</string>
+    <string name="cAlumnosNoHabilitados">Alumnos no habilitados</string>
+    <string name="cAlumnosEntregados">Alumnos entregados</string>
+</resources>
