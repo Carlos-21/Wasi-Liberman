@@ -13,7 +13,7 @@ import aplicacion.liberman.com.wasi.soporte.Adaptador;
 
 public class VerHijoApoderado extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView lista;
-    private boolean bandera;
+    private boolean bandera = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
         Bundle bun = inten.getExtras();
 
         if(bun != null){
+            System.out.println("boolean " + (boolean)bun.getBoolean("bandera"));
             bandera = (boolean)bun.getBoolean("bandera");
         }
     }

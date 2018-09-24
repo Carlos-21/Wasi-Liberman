@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioIncorrecto, Toast.LENGTH_SHORT).show();
             }
                 break;
-            case 2 : if(usuario.equals("movilidad") && clave.equals("movilidad")){
+            case 2 : if(Usuario.existeUsuario(listaUsuario, usuarioWasi)){
                 intent = new Intent(Login.this, Movilidad.class);
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioCorrecto, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
@@ -112,7 +112,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioIncorrecto, Toast.LENGTH_SHORT).show();
             }
                 break;
-            case 4 : if(usuario.equals("profesor") && clave.equals("profesor")){
+            case 4 : if(Usuario.existeUsuario(listaUsuario, usuarioWasi)){
                 intent = new Intent(Login.this, Profesor.class);
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioCorrecto, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
@@ -165,7 +165,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 addToRequestQueue(
                         new JsonObjectRequest(
                                 Request.Method.GET,
-                                Direccion.GET,
+                                "https://wasisss.000webhostapp.com/Wasi-REST/UsuarioREST.php",
                                 null,
                                 new Response.Listener<JSONObject>() {
 
@@ -178,7 +178,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        Log.d("TAG", "Error Volley: " + error.getMessage());
+                                        Log.d("TAG-Volley-Error", "Error Volley: " + error.getMessage());
                                     }
                                 }
 
@@ -196,13 +196,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         try {
             // Obtener atributo "estado"
             String estado = response.getString("estado");
-
+            Log.d("TAG-ARRAY1", estado);
             switch (estado) {
                 case "1": // EXITO
                     // Obtener array "metas" Json
-                    JSONArray mensaje = response.getJSONArray("metas");
+                    JSONArray mensaje = response.getJSONArray("usuarios");
                     // Parsear con Gson
                     listaUsuario = gson.fromJson(mensaje.toString(), Usuario[].class);
+                    Log.d("TAG-ARRAY2", "Error Volley: " + listaUsuario.length);
                     break;
                 case "2": // FALLIDO
                     String mensaje2 = response.getString("mensaje");
@@ -214,7 +215,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d("TAG-Volley-Error-52", "Error Volley: ");
         }
 
     }

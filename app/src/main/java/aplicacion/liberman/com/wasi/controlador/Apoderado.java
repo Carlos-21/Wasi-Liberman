@@ -41,17 +41,18 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         Intent intent = null;
         switch (view.getId()){
             case R.id.verHijos : intent = new Intent(Apoderado.this, VerHijoApoderado.class);
-                                 intent.putExtra("bandera","false");
+                                 intent.putExtra("bandera",false);
+                                 startActivity(intent);
                                  break;
             case R.id.permitirSalida : intent = new Intent(Apoderado.this, VerHijoApoderado.class);
-                                       intent.putExtra("bandera","true");
+                                       intent.putExtra("bandera",true);
+                                       startActivity(intent);
                                        break;
             case R.id.asignarRecogedor : break;
             case R.id.registroSalidas : break;
             case R.id.cerrarSesion : cerrarSesion();
                                      break;
         }
-        startActivity(intent);
     }
 
     /**

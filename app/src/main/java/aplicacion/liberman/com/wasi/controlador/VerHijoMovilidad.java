@@ -38,6 +38,7 @@ public class VerHijoMovilidad extends AppCompatActivity {
         Bundle bun = inten.getExtras();
 
         if(bun != null){
+            System.out.println("Titulo : "+(String)bun.getString("titulo"));
             setTitle((String)bun.getString("titulo"));
         }
     }

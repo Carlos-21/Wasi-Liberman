@@ -34,15 +34,16 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
         Intent intent = null;
         switch (view.getId()){
             case R.id.alumnosHabilitados : intent = new Intent(Profesor.this, VerHijoProfesor.class);
-                intent.putExtra("titulo",R.string.cAlumnosHabilitados);
+                intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosHabilitados));
+                startActivity(intent);
                 break;
             case R.id.alumnosNoHabilitados : intent = new Intent(Profesor.this, VerHijoProfesor.class);
-                intent.putExtra("titulo",R.string.cAlumnosNoHabilitados);
+                intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosNoHabilitados));
+                startActivity(intent);
                 break;
             case R.id.cerrarSesion : cerrarSesion();
                 break;
         }
-        startActivity(intent);
     }
 
     /**

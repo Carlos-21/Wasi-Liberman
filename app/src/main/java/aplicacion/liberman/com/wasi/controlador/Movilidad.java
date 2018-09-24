@@ -37,18 +37,20 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
         Intent intent = null;
         switch (view.getId()){
             case R.id.alumnosHabilitados : intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
-                                           intent.putExtra("titulo",R.string.cAlumnosHabilitados);
+                                           intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosHabilitados));
+                                           startActivity(intent);
                                            break;
             case R.id.alumnosNoHabilitados : intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
-                                             intent.putExtra("titulo",R.string.cAlumnosNoHabilitados);
+                                             intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosNoHabilitados));
+                                             startActivity(intent);
                                              break;
             case R.id.alumnosEntregados : intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
-                                          intent.putExtra("titulo",R.string.cAlumnosEntregados);
+                                          intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosEntregados));
+                                          startActivity(intent);
                                           break;
             case R.id.cerrarSesion : cerrarSesion();
                                      break;
         }
-        startActivity(intent);
     }
 
     /**
