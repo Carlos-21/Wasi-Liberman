@@ -3,14 +3,28 @@ package aplicacion.liberman.com.wasi.controlador;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import aplicacion.liberman.com.wasi.R;
+import aplicacion.liberman.com.wasi.contenedor.Usuario;
+import aplicacion.liberman.com.wasi.data.Direccion;
+import aplicacion.liberman.com.wasi.data.VolleySingleton;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
@@ -20,6 +34,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private TextView labelLogin;
     private ImageView imagenLoginPerfil;
     private int perfil;
+    private Usuario[]listaUsuario;
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +43,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
 
         setTitle(R.string.cLogin);
+
+        llamarServicioRest();
 
         labelLogin = (TextView)findViewById(R.id.labelPerfil);
         imagenLoginPerfil = (ImageView)findViewById(R.id.imagenLoginPerfil);
@@ -71,8 +89,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private void verificarUsuario(Intent intent, int tipoPerfil){
         String usuario = this.usuario.getText().toString();
         String clave = this.clave.getText().toString();
+
+        Usuario usuarioWasi = new Usuario(usuario, clave);
         switch (tipoPerfil){
-            case 1 : if(usuario.equals("padre") && clave.equals("padre")){
+            case 1 : if(Usuario.existeUsuario(listaUsuario, usuarioWasi)){
                 intent = new Intent(Login.this, Apoderado.class);
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioCorrecto, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
@@ -133,4 +153,70 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             }
         }
     }
+
+    /**
+     * Carga el adaptador con las metas obtenidas
+     * en la respuesta
+     */
+    public void llamarServicioRest() {
+        // Petición GET
+        VolleySingleton.
+                getInstance(Login.this).
+                addToRequestQueue(
+                        new JsonObjectRequest(
+                                Request.Method.GET,
+                                Direccion.GET,
+                                null,
+                                new Response.Listener<JSONObject>() {
+
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        // Procesar la respuesta Json
+                                        procesarRespuesta(response);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("TAG", "Error Volley: " + error.getMessage());
+                                    }
+                                }
+
+                        )
+                );
+    }
+
+    /**
+     * Interpreta los resultados de la respuesta y así
+     * realizar las operaciones correspondientes
+     *
+     * @param response Objeto Json con la respuesta
+     */
+    private void procesarRespuesta(JSONObject response) {
+        try {
+            // Obtener atributo "estado"
+            String estado = response.getString("estado");
+
+            switch (estado) {
+                case "1": // EXITO
+                    // Obtener array "metas" Json
+                    JSONArray mensaje = response.getJSONArray("metas");
+                    // Parsear con Gson
+                    listaUsuario = gson.fromJson(mensaje.toString(), Usuario[].class);
+                    break;
+                case "2": // FALLIDO
+                    String mensaje2 = response.getString("mensaje");
+                    Toast.makeText(
+                            Login.this,
+                            mensaje2,
+                            Toast.LENGTH_LONG).show();
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
