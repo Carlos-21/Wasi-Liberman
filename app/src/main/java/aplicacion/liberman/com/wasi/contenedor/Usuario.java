@@ -1,5 +1,7 @@
 package aplicacion.liberman.com.wasi.contenedor;
 
+import aplicacion.liberman.com.wasi.soporte.Codificar;
+
 public class Usuario {
     private String nombre;
     private String clave;
@@ -33,7 +35,7 @@ public class Usuario {
      */
     public static boolean existeUsuario(Usuario[] lista, Usuario usuario){
         for (Usuario auxiliar : lista){
-            if(auxiliar.getNombre().equals(usuario.getNombre()) && auxiliar.getClave().equals(usuario.getClave())){
+            if(auxiliar.getNombre().equals(usuario.getNombre()) && auxiliar.getClave().equals(Codificar.sha1(usuario.getClave()))){
                 return true;
             }
         }

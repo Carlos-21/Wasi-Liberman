@@ -44,8 +44,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         setTitle(R.string.cLogin);
 
-        llamarServicioRest();
-
         labelLogin = (TextView)findViewById(R.id.labelPerfil);
         imagenLoginPerfil = (ImageView)findViewById(R.id.imagenLoginPerfil);
 
@@ -56,6 +54,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         ingresar.setOnClickListener(this);
 
         tipoPerfil();
+
+        llamarServicioRest();
+
     }
 
     @Override
@@ -159,13 +160,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
      * en la respuesta
      */
     public void llamarServicioRest() {
+        String newURL = Direccion.GET + "?tipoPerfil=" + perfil;
         // Petición GET
         VolleySingleton.
                 getInstance(Login.this).
                 addToRequestQueue(
                         new JsonObjectRequest(
                                 Request.Method.GET,
-                                "https://wasisss.000webhostapp.com/Wasi-REST/UsuarioREST.php",
+                                newURL,
                                 null,
                                 new Response.Listener<JSONObject>() {
 

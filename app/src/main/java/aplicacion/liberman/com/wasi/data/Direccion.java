@@ -24,7 +24,7 @@ public class Direccion {
     /**
      * URLs del Web Service
      */
-    public static final String GET = IP + PUERTO_HOST + "?dir=Wasi-REST/UsuarioREST.php";
+    public static final String GET = IP + PUERTO_HOST + "Wasi-REST/UsuarioREST.php";
     public static final String GET_BY_ID = IP + PUERTO_HOST + "/I%20Wish/obtener_meta_por_id.php";
     public static final String UPDATE = IP + PUERTO_HOST + "/I%20Wish/actualizar_meta.php";
     public static final String DELETE = IP + PUERTO_HOST + "/I%20Wish/borrar_meta.php";
