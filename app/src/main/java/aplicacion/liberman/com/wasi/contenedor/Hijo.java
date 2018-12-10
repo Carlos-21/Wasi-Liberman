@@ -6,40 +6,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hijo {
-    private ImageView foto;
-    private String apellido;
-    private String nombre;
+    private String apellidos;
+    private String imagen;
     private String grado;
+    private String nombres;
 
-    public Hijo(ImageView foto, String apellido, String nombre, String grado) {
-        this.foto = foto;
-        this.apellido = apellido;
-        this.nombre = nombre;
+    public Hijo(String apellidos, String imagen, String grado, String nombres) {
+        this.apellidos = apellidos;
+        this.imagen = imagen;
         this.grado = grado;
+        this.nombres = nombres;
     }
 
-    public ImageView getFoto() {
-        return foto;
+    public Hijo() {
+
     }
 
-    public void setFoto(ImageView foto) {
-        this.foto = foto;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public String getApellido() {
-        return apellido;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public String getImagen() {
+        return imagen;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public String getGrado() {
@@ -50,11 +46,11 @@ public class Hijo {
         this.grado = grado;
     }
 
-    public static List<Hijo> listarHijos(){
-        List<Hijo> lista = new ArrayList<>();
-        lista.add(new Hijo(null, "ape1", "nom1","5to"));
-        lista.add(new Hijo(null, "ape2", "nom2","2to"));
-        lista.add(new Hijo(null, "ape3", "nom3","3to"));
-        return lista;
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 }

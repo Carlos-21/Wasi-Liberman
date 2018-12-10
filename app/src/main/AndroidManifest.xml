@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="aplicacion.liberman.com.wasi">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,19 +22,24 @@
             android:name=".controlador.Perfil"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".controlador.Login" />
-        <activity android:name=".controlador.Apoderado"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".controlador.Movilidad"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".controlador.Profesor"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".controlador.VerHijoApoderado"
+        <activity
+            android:name=".controlador.Apoderado"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".controlador.Movilidad"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".controlador.Profesor"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".controlador.VerHijoApoderado"
             android:parentActivityName=".controlador.Apoderado">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controlador.Apoderado" />
         </activity>
-        <activity android:name=".controlador.PermitirSalida"
+        <activity
+            android:name=".controlador.PermitirSalida"
             android:parentActivityName=".controlador.VerHijoApoderado">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -40,18 +47,21 @@
         </activity>
         <activity android:name=".controlador.SalidaPermitida" />
         <activity android:name=".controlador.ConfirmarRecogedor" />
-        <activity android:name=".controlador.VerHijoMovilidad"
+        <activity
+            android:name=".controlador.VerHijoMovilidad"
             android:parentActivityName=".controlador.Movilidad">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controlador.Movilidad" />
         </activity>
-        <activity android:name=".controlador.VerHijoProfesor"
+        <activity
+            android:name=".controlador.VerHijoProfesor"
             android:parentActivityName=".controlador.Profesor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controlador.Profesor" />
         </activity>
+        <activity android:name=".controlador.LoginFirebase"></activity>
     </application>
 
 </manifest>

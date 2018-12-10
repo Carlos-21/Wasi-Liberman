@@ -19,13 +19,13 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        perfilApoderado = (ImageView)findViewById(R.id.perfilApoderado);
+        perfilApoderado = (ImageView)findViewById(R.id.oImagenPerfilApoderado);
         perfilApoderado.setOnClickListener(this);
-        perfilRecogedor = (ImageView)findViewById(R.id.perfilRecogedor);
+        perfilRecogedor = (ImageView)findViewById(R.id.oImagenPerfilRecogedor);
         perfilRecogedor.setOnClickListener(this);
-        perfilProfesor = (ImageView)findViewById(R.id.perfilProfesor);
+        perfilProfesor = (ImageView)findViewById(R.id.oImagenPerfilProfesor);
         perfilProfesor.setOnClickListener(this);
-        perfilMovilidad = (ImageView)findViewById(R.id.perfilMovilidad);
+        perfilMovilidad = (ImageView)findViewById(R.id.oImagenPerfilMovilidad);
         perfilMovilidad.setOnClickListener(this);
 
     }
@@ -34,16 +34,16 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View view) {
         Intent intent = null;
         switch(view.getId()){
-            case R.id.perfilApoderado :  intent = new Intent(Perfil.this, Login.class);
+            case R.id.oImagenPerfilApoderado :  intent = new Intent(Perfil.this, Login.class);
                 intent.putExtra("perfil", 1);
                 break;
-            case R.id.perfilMovilidad :  intent = new Intent(Perfil.this, Login.class);
+            case R.id.oImagenPerfilMovilidad :  intent = new Intent(Perfil.this, Login.class);
                 intent.putExtra("perfil", 2);
                 break;
-            case R.id.perfilRecogedor :  intent = new Intent(Perfil.this, Login.class);
+            case R.id.oImagenPerfilRecogedor :  intent = new Intent(Perfil.this, Login.class);
                 intent.putExtra("perfil", 3);
                 break;
-            case R.id.perfilProfesor :  intent = new Intent(Perfil.this, Login.class);
+            case R.id.oImagenPerfilProfesor :  intent = new Intent(Perfil.this, Login.class);
                 intent.putExtra("perfil", 4);
                 break;
         }

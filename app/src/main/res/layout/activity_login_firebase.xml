@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controlador.Login">
+    tools:context=".controlador.LoginFirebase">
 
     <LinearLayout
         android:orientation="vertical"
@@ -33,20 +33,20 @@
 
 
         <ImageView
-            android:id="@+id/oImagenLogin2"
+            android:id="@+id/oImagenLogin1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/login_apoderado" />
+            android:background="@drawable/usuario_seguridad" />
 
         <TextView
-            android:id="@+id/oLabelLogin2"
+            android:id="@+id/oLabelLogin1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imagenLoginPerfil"
             android:layout_gravity="center"
-            android:text="Apoderado"
+            android:text="Seguridad Usuario"
             android:textColor="@color/md_black_1000"
             android:textSize="28dp" />
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/oTextoUsuarioLogin2"
+                android:id="@+id/oTextoUsuarioLogin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/usuario"
@@ -73,7 +73,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/oTextoCLaveLogin2"
+                android:id="@+id/oTextoCLaveLogin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -83,7 +83,7 @@
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/oBotonIngresarLogin2"
+                android:id="@+id/oBotonIngresarLogin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
@@ -14,21 +17,28 @@ import aplicacion.liberman.com.wasi.soporte.Mensaje;
 public class PermitirSalida extends AppCompatActivity implements View.OnClickListener{
     private ImageView permitirSalida;
     private ImageView permitirMovilidad;
+    private ImageView hijoSalida;
     private String nombresHijo;
     private String apellidosHijo;
+    private String imagen;
+    private String identificador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permitir_salida);
 
-        verificarVista();
-        setTitle(apellidosHijo + " " + nombresHijo);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         permitirSalida = (ImageView)findViewById(R.id.permitirSalida);
         permitirSalida.setOnClickListener(this);
         permitirMovilidad = (ImageView)findViewById(R.id.permitirMovilidad);
         permitirMovilidad.setOnClickListener(this);
+        hijoSalida = (ImageView)findViewById(R.id.fotoHijoSalida);
+
+        verificarVista();
+        setTitle(apellidosHijo + " " + nombresHijo);
     }
 
     @Override
@@ -51,6 +61,9 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
         if(bun != null){
             nombresHijo = (String)bun.getString("nombres");
             apellidosHijo = (String)bun.getString("apellidos");
+            imagen = (String)bun.getString("imagen");
+            identificador = (String)bun.getString("identificador");
+            Picasso.get().load(imagen).into(hijoSalida);
         }
     }
 
@@ -118,4 +131,19 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(PermitirSalida.this, VerHijoApoderado.class);
+                intent.putExtra("bandera", true);
+                intent.putExtra("identificador", identificador);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

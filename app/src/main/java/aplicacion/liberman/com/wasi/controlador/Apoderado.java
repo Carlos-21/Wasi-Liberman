@@ -17,6 +17,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
     private ImageView asignarRecogedor;
     private ImageView registroSalidas;
     private ImageView cerrarSesion;
+    private String identificador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         cerrarSesion = (ImageView)findViewById(R.id.cerrarSesion);
         cerrarSesion.setOnClickListener(this);
 
+        verificarVista();
     }
 
     @Override
@@ -42,10 +44,12 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         switch (view.getId()){
             case R.id.verHijos : intent = new Intent(Apoderado.this, VerHijoApoderado.class);
                                  intent.putExtra("bandera",false);
+                                 intent.putExtra("identificador", identificador);
                                  startActivity(intent);
                                  break;
             case R.id.permitirSalida : intent = new Intent(Apoderado.this, VerHijoApoderado.class);
                                        intent.putExtra("bandera",true);
+                                       intent.putExtra("identificador", identificador);
                                        startActivity(intent);
                                        break;
             case R.id.asignarRecogedor : break;
@@ -87,4 +91,16 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         alertDialog.show();
     }
 
+    /**
+     * Definir documentación
+     */
+    private void verificarVista(){
+        Intent inten = getIntent();
+        Bundle bun = inten.getExtras();
+
+        if(bun != null){
+            identificador = (String)bun.getString("identificador");
+            System.out.println("Identificado 125186 : "+identificador);
+        }
+    }
 }

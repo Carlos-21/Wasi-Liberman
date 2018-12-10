@@ -1,15 +1,14 @@
 package aplicacion.liberman.com.wasi.contenedor;
 
+import java.util.ArrayList;
+
 import aplicacion.liberman.com.wasi.soporte.Codificar;
 
 public class Usuario {
-    private String nombre;
     private String clave;
-
-    public Usuario(String nombre, String clave) {
-        this.nombre = nombre;
-        this.clave = clave;
-    }
+    private String nombre;
+    private int perfil;
+    private String identificador;
 
     public String getNombre() {
         return nombre;
@@ -27,19 +26,20 @@ public class Usuario {
         this.clave = clave;
     }
 
-    /**
-     * Método encargado de comprobar la existencia de un usuario
-     * @param lista
-     * @param usuario
-     * @return
-     */
-    public static boolean existeUsuario(Usuario[] lista, Usuario usuario){
-        for (Usuario auxiliar : lista){
-            if(auxiliar.getNombre().equals(usuario.getNombre()) && auxiliar.getClave().equals(Codificar.sha1(usuario.getClave()))){
-                return true;
-            }
-        }
-        return false;
+    public int getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(int perfil) {
+        this.perfil = perfil;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
     }
 
 }

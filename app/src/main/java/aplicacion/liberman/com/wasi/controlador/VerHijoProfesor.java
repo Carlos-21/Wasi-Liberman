@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.contenedor.Hijo;
 import aplicacion.liberman.com.wasi.soporte.Adaptador;
@@ -26,7 +31,16 @@ public class VerHijoProfesor extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         lista.setLayoutManager(linearLayoutManager);
 
-        Adaptador adaptador = new Adaptador(Hijo.listarHijos());
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference sR = database.collection("Usuarios").document("user01");
+        Query query = sR.collection("Hijos");
+
+        FirestoreRecyclerOptions<Hijo> options = new FirestoreRecyclerOptions.Builder<Hijo>()
+                .setQuery(query, Hijo.class)
+                .build();
+
+        Adaptador adaptador = new Adaptador(options);
+
         lista.setAdapter(adaptador);
 
     }

@@ -64,7 +64,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/perfilApoderado"
+                        android:id="@+id/oImagenPerfilApoderado"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -105,7 +105,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/perfilRecogedor"
+                        android:id="@+id/oImagenPerfilRecogedor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -148,7 +148,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/perfilProfesor"
+                        android:id="@+id/oImagenPerfilProfesor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -189,7 +189,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/perfilMovilidad"
+                        android:id="@+id/oImagenPerfilMovilidad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

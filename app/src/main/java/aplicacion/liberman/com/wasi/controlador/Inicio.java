@@ -17,7 +17,7 @@ public class Inicio extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Inicio.this,Perfil.class);
+                Intent intent = new Intent(Inicio.this, LoginFirebase.class);
                 startActivity(intent);
                 finish();
             }

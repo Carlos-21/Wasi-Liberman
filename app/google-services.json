@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "434477753295",
+    "firebase_url": "https://wasi-7cc88.firebaseio.com",
+    "project_id": "wasi-7cc88",
+    "storage_bucket": "wasi-7cc88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434477753295:android:86e15ca75ccdfb75",
+        "android_client_info": {
+          "package_name": "aplicacion.liberman.com.wasi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434477753295-fr6mgcnr1o92mlj0sh7abraf2a087h7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aplicacion.liberman.com.wasi",
+            "certificate_hash": "9e514736a34301d35150b698cb8ff220e6da0962"
+          }
+        },
+        {
+          "client_id": "434477753295-4d6e3vt73frld3a4lf648krs50kdj0ig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClF7xT7Emd7T8zf4bR4GXkhB2K38vOTcM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434477753295-4d6e3vt73frld3a4lf648krs50kdj0ig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
