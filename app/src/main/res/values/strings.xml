@@ -7,4 +7,5 @@
     <string name="cAlumnosEntregados">Alumnos entregados</string>
     <string name="sAutentificacionCelular">Login por celular</string>
     <string name="sCelular">Ingrese código de verificación</string>
+    <string name="sRegistroSalidas">Registro de Salidas</string>
 </resources>

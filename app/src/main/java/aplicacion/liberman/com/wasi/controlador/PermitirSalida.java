@@ -22,6 +22,7 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
     private String apellidosHijo;
     private String imagen;
     private String identificador;
+    private String identificadorHijo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
             apellidosHijo = (String)bun.getString("apellidos");
             imagen = (String)bun.getString("imagen");
             identificador = (String)bun.getString("identificador");
+            identificadorHijo = (String)bun.getString("identificadorHijo");
             Picasso.get().load(imagen).into(hijoSalida);
         }
     }
@@ -83,6 +85,10 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(PermitirSalida.this, SalidaPermitida.class);
                 intent.putExtra("salida",1);
+                intent.putExtra("imagen",imagen);
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("nombres", nombresHijo + " " + apellidosHijo);
+                intent.putExtra("identificadorHijo", identificadorHijo);
                 startActivity(intent);
                 finish();
             }
@@ -115,6 +121,10 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(PermitirSalida.this, SalidaPermitida.class);
                 intent.putExtra("salida",2);
+                intent.putExtra("imagen",imagen);
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("nombres", nombresHijo + " " + apellidosHijo);
+                intent.putExtra("identificadorHijo", identificadorHijo);
                 startActivity(intent);
                 finish();
             }

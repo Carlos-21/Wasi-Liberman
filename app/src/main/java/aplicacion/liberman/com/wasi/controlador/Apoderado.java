@@ -53,7 +53,10 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
                                        startActivity(intent);
                                        break;
             case R.id.asignarRecogedor : break;
-            case R.id.registroSalidas : break;
+            case R.id.registroSalidas : intent = new Intent(Apoderado.this, VerRegistroSalida.class);
+                                        intent.putExtra("identificador", identificador);
+                                        startActivity(intent);
+                                        break;
             case R.id.cerrarSesion : cerrarSesion();
                                      break;
         }

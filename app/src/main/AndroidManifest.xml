@@ -62,6 +62,12 @@
                 android:value=".controlador.Profesor" />
         </activity>
         <activity android:name=".controlador.LoginFirebase" />
+        <activity android:name=".controlador.VerRegistroSalida"
+            android:parentActivityName=".controlador.Apoderado">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controlador.Apoderado" />
+        </activity>
     </application>
 
 </manifest>

@@ -12,54 +12,40 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import aplicacion.liberman.com.wasi.R;
-import aplicacion.liberman.com.wasi.contenedor.Hijo;
-import aplicacion.liberman.com.wasi.soporte.AdaptadorHijo;
+import aplicacion.liberman.com.wasi.contenedor.Registro;
+import aplicacion.liberman.com.wasi.soporte.AdaptadorRegistro;
 
-public class VerHijoProfesor extends AppCompatActivity {
+public class VerRegistroSalida extends AppCompatActivity {
     private RecyclerView lista;
-    private boolean estado;
-    private AdaptadorHijo adaptadorHijo;
+    private AdaptadorRegistro adaptadorRegistro;
     private String identificador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ver_hijo_profesor);
+        setContentView(R.layout.activity_ver_registro_salida);
+
+        setTitle(R.string.sRegistroSalidas);
 
         verificarVista();
 
-        lista = (RecyclerView) findViewById(R.id.listaHijoProfesor);
+        lista = (RecyclerView) findViewById(R.id.listaRegistroSalida);
         lista.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         lista.setLayoutManager(linearLayoutManager);
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        Query query = database.collection("Niño").whereEqualTo("profesor",identificador).whereEqualTo("estado", estado);
+        Query query = database.collection("Usuarios").document(identificador).collection("Salidas");
 
-        FirestoreRecyclerOptions<Hijo> options = new FirestoreRecyclerOptions.Builder<Hijo>()
-                .setQuery(query, Hijo.class)
+        FirestoreRecyclerOptions<Registro> options = new FirestoreRecyclerOptions.Builder<Registro>()
+                .setQuery(query, Registro.class)
                 .build();
 
-        adaptadorHijo = new AdaptadorHijo(options);
+        adaptadorRegistro = new AdaptadorRegistro(options);
 
-        lista.setAdapter(adaptadorHijo);
+        lista.setAdapter(adaptadorRegistro);
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adaptadorHijo.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (adaptadorHijo != null) {
-            adaptadorHijo.stopListening();
-        }
     }
 
     /**
@@ -70,9 +56,22 @@ public class VerHijoProfesor extends AppCompatActivity {
         Bundle bun = inten.getExtras();
 
         if(bun != null){
-            setTitle((String)bun.getString("titulo"));
             identificador = (String)bun.getString("identificador");
-            estado = (boolean)bun.getBoolean("estado");
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adaptadorRegistro.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (adaptadorRegistro != null) {
+            adaptadorRegistro.stopListening();
         }
     }
 
@@ -80,7 +79,7 @@ public class VerHijoProfesor extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(VerHijoProfesor.this, Profesor.class);
+                Intent intent = new Intent(VerRegistroSalida.this, Apoderado.class);
                 intent.putExtra("identificador", identificador);
                 startActivity(intent);
                 return true;

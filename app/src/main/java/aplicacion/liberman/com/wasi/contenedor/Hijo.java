@@ -11,6 +11,7 @@ public class Hijo {
     private boolean casa;
     private boolean estado;
     private String grado;
+    private String identificador;
     private String imagen;
     private String movilidad;
     private String nombres;
@@ -56,6 +57,14 @@ public class Hijo {
         this.grado = grado;
     }
 
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
     public String getImagen() {
         return imagen;
     }
@@ -87,5 +96,4 @@ public class Hijo {
     public void setProfesor(String profesor) {
         this.profesor = profesor;
     }
-
 }

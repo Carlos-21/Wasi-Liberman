@@ -20,4 +20,14 @@ public class Mensaje {
     public static String hora;
     public static String fecha;
     public static String mensajeSalida = "Salida permitida: \nHora : paramH \nDía : paramD";
+
+    public static String mensajeSalidaPermitida = "Se ha registro la salida con éxito";
+
+    public static String mensajeSalidaHecha = "paramH, ya tiene permiso de salida";
+
+    public static String tituloPermitirEntrega = "Entrega de alumno";
+    public static String mensajePermitirEntrega = "¿Está en la casa de paramH?";
+
+    public static String mensajeEntregaHecha = "paramH, ya esta en su casa";
+
 }

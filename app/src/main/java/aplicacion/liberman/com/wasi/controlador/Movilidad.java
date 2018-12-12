@@ -44,6 +44,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
                                            intent.putExtra("identificador", identificador);
                                            intent.putExtra("estado", true);
                                            intent.putExtra("casa", false);
+                                           intent.putExtra("bandera", true);
                                            startActivity(intent);
                                            break;
             case R.id.alumnosNoHabilitados : intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
@@ -51,6 +52,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
                                              intent.putExtra("identificador", identificador);
                                              intent.putExtra("estado", false);
                                              intent.putExtra("casa", false);
+                                             intent.putExtra("bandera", false);
                                              startActivity(intent);
                                              break;
             case R.id.alumnosEntregados : intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
@@ -58,6 +60,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
                                           intent.putExtra("identificador", identificador);
                                           intent.putExtra("estado", true);
                                           intent.putExtra("casa", true);
+                                          intent.putExtra("bandera", false);
                                           startActivity(intent);
                                           break;
             case R.id.cerrarSesion : cerrarSesion();
@@ -106,7 +109,6 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
 
         if(bun != null){
             identificador = (String)bun.getString("identificador");
-            System.out.println("asffasfd 123 " + identificador);
         }
     }
 

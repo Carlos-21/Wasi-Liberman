@@ -9,10 +9,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
-import aplicacion.liberman.com.wasi.contenedor.Hijo;
 import aplicacion.liberman.com.wasi.R;
+import aplicacion.liberman.com.wasi.contenedor.Hijo;
+import aplicacion.liberman.com.wasi.contenedor.Registro;
 
-public class Adaptador extends FirestoreRecyclerAdapter<Hijo, HijoHolder> implements View.OnClickListener{
+public class AdaptadorRegistro extends FirestoreRecyclerAdapter<Registro, RegistroHolder> implements View.OnClickListener{
     private View.OnClickListener listener;
 
     /**
@@ -21,7 +22,7 @@ public class Adaptador extends FirestoreRecyclerAdapter<Hijo, HijoHolder> implem
      *
      * @param options
      */
-    public Adaptador(FirestoreRecyclerOptions<Hijo> options) {
+    public AdaptadorRegistro(FirestoreRecyclerOptions<Registro> options) {
         super(options);
     }
 
@@ -39,17 +40,17 @@ public class Adaptador extends FirestoreRecyclerAdapter<Hijo, HijoHolder> implem
 
 
     @Override
-    protected void onBindViewHolder(HijoHolder holder, int position, Hijo model) {
-        holder.oDatoHijo.setText("Apellidos: "+model.getApellidos()+"\nNombres: "+model.getNombres()+"\nGrado: "+model.getGrado());
-        Picasso.get().load(model.getImagen()).into(holder.oFotoHijo);
+    protected void onBindViewHolder(RegistroHolder holder, int position, Registro model) {
+        holder.oDatoHijoSalida.setText("Hijo: "+model.getHijo()+"\nFecha: "+model.getFecha()+"\nHora: "+model.getHora()+"\nUsuario: "+model.getUsuario());
+        Picasso.get().load(model.getImagen()).into(holder.oFotoHijoSalida);
     }
 
     @Override
-    public HijoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_hijos, parent, false);
+    public RegistroHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_registro, parent, false);
         v.setOnClickListener(this);
-        HijoHolder oHijoHolder = new HijoHolder(v);
-        return oHijoHolder;
+        RegistroHolder oRegistroHolder = new RegistroHolder(v);
+        return oRegistroHolder;
     }
 
 }

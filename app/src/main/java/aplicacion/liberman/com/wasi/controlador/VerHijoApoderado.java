@@ -7,20 +7,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.contenedor.Hijo;
-import aplicacion.liberman.com.wasi.soporte.Adaptador;
+import aplicacion.liberman.com.wasi.soporte.AdaptadorHijo;
+import aplicacion.liberman.com.wasi.soporte.Mensaje;
 
 public class VerHijoApoderado extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView lista;
     private boolean bandera = true;
-    private Adaptador adaptador;
+    private AdaptadorHijo adaptadorHijo;
     private String identificador;
 
     @Override
@@ -47,25 +48,33 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
                 .setQuery(query, Hijo.class)
                 .build();
 
-        adaptador = new Adaptador(options);
+        adaptadorHijo = new AdaptadorHijo(options);
 
-        adaptador.setOnClickListener(this);
-        lista.setAdapter(adaptador);
+        adaptadorHijo.setOnClickListener(this);
+        lista.setAdapter(adaptadorHijo);
     }
 
     @Override
     public void onClick(View view) {
         if(bandera){
             int posicion = lista.getChildAdapterPosition(view);
-            Hijo hijo = adaptador.getItem(posicion);
-            Intent intent = new Intent(VerHijoApoderado.this, PermitirSalida.class);
+            Hijo hijo = adaptadorHijo.getItem(posicion);
+            if(!hijo.isEstado()){
+                Intent intent = new Intent(VerHijoApoderado.this, PermitirSalida.class);
 
-            intent.putExtra("nombres", hijo.getNombres());
-            intent.putExtra("apellidos", hijo.getApellidos());
-            intent.putExtra("imagen", hijo.getImagen());
-            intent.putExtra("identificador", identificador);
+                intent.putExtra("nombres", hijo.getNombres());
+                intent.putExtra("apellidos", hijo.getApellidos());
+                intent.putExtra("imagen", hijo.getImagen());
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("identificadorHijo", hijo.getIdentificador());
 
-            startActivity(intent);
+                startActivity(intent);
+            }
+            else{
+                String mensaje = Mensaje.mensajeSalidaHecha.replace("paramH", hijo.getNombres() + " " + hijo.getApellidos());
+                Toast.makeText(VerHijoApoderado.this, mensaje, Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -85,15 +94,15 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
-        adaptador.startListening();
+        adaptadorHijo.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        if (adaptador != null) {
-            adaptador.stopListening();
+        if (adaptadorHijo != null) {
+            adaptadorHijo.stopListening();
         }
     }
 

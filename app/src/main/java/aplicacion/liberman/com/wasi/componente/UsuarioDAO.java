@@ -19,7 +19,6 @@ public class UsuarioDAO {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
         db.collection("Usuarios")
                 .whereEqualTo("perfil",iPerfil)
                 .get()
