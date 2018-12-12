@@ -7,20 +7,14 @@ import java.util.List;
 
 public class Hijo {
     private String apellidos;
-    private String imagen;
+    private String apoderado;
+    private boolean casa;
+    private boolean estado;
     private String grado;
+    private String imagen;
+    private String movilidad;
     private String nombres;
-
-    public Hijo(String apellidos, String imagen, String grado, String nombres) {
-        this.apellidos = apellidos;
-        this.imagen = imagen;
-        this.grado = grado;
-        this.nombres = nombres;
-    }
-
-    public Hijo() {
-
-    }
+    private String profesor;
 
     public String getApellidos() {
         return apellidos;
@@ -30,12 +24,28 @@ public class Hijo {
         this.apellidos = apellidos;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getApoderado() {
+        return apoderado;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setApoderado(String apoderado) {
+        this.apoderado = apoderado;
+    }
+
+    public boolean isCasa() {
+        return casa;
+    }
+
+    public void setCasa(boolean casa) {
+        this.casa = casa;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public String getGrado() {
@@ -46,6 +56,22 @@ public class Hijo {
         this.grado = grado;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getMovilidad() {
+        return movilidad;
+    }
+
+    public void setMovilidad(String movilidad) {
+        this.movilidad = movilidad;
+    }
+
     public String getNombres() {
         return nombres;
     }
@@ -53,4 +79,13 @@ public class Hijo {
     public void setNombres(String nombres) {
         this.nombres = nombres;
     }
+
+    public String getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(String profesor) {
+        this.profesor = profesor;
+    }
+
 }

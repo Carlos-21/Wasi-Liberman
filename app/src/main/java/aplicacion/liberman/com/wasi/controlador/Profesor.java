@@ -15,11 +15,14 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
     private ImageView alumnosHabilitados;
     private ImageView alumnosNoHabilitados;
     private ImageView cerrarSesion;
+    private String identificador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profesor);
+
+        verificarVista();
 
         alumnosHabilitados = (ImageView)findViewById(R.id.alumnosHabilitados);
         alumnosHabilitados.setOnClickListener(this);
@@ -35,10 +38,14 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
         switch (view.getId()){
             case R.id.alumnosHabilitados : intent = new Intent(Profesor.this, VerHijoProfesor.class);
                 intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosHabilitados));
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("estado", true);
                 startActivity(intent);
                 break;
             case R.id.alumnosNoHabilitados : intent = new Intent(Profesor.this, VerHijoProfesor.class);
                 intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosNoHabilitados));
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("estado", false);
                 startActivity(intent);
                 break;
             case R.id.cerrarSesion : cerrarSesion();
@@ -76,6 +83,18 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    /**
+     * Definir documentación
+     */
+    private void verificarVista(){
+        Intent inten = getIntent();
+        Bundle bun = inten.getExtras();
+
+        if(bun != null){
+            identificador = (String)bun.getString("identificador");
+        }
     }
 
 }

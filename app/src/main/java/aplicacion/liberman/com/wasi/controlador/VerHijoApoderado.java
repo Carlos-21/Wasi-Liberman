@@ -41,10 +41,7 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
         lista.setLayoutManager(linearLayoutManager);
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        System.out.println("Identificador : "+identificador);
-        DocumentReference sR = database.collection("Usuarios").document(identificador);
-
-        Query query = sR.collection("Hijos");
+        Query query = database.collection("Niño").whereEqualTo("apoderado",identificador);
 
         FirestoreRecyclerOptions<Hijo> options = new FirestoreRecyclerOptions.Builder<Hijo>()
                 .setQuery(query, Hijo.class)

@@ -61,7 +61,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controlador.Profesor" />
         </activity>
-        <activity android:name=".controlador.LoginFirebase"></activity>
+        <activity android:name=".controlador.LoginFirebase" />
     </application>
 
 </manifest>

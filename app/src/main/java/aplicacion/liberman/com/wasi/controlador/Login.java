@@ -119,6 +119,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 break;
             case 2 : if(Buscar.existeUsuario(aListaUsuarios, oUsuarioWasi)){
                 intent = new Intent(Login.this, Movilidad.class);
+                intent.putExtra("identificador",oUsuarioWasi.getIdentificador());
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioCorrecto, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
@@ -129,6 +130,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 break;
             case 4 : if(Buscar.existeUsuario(aListaUsuarios, oUsuarioWasi)){
                 intent = new Intent(Login.this, Profesor.class);
+                intent.putExtra("identificador",oUsuarioWasi.getIdentificador());
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioCorrecto, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
