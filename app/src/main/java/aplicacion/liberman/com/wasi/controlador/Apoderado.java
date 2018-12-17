@@ -52,7 +52,10 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
                                        intent.putExtra("identificador", identificador);
                                        startActivity(intent);
                                        break;
-            case R.id.asignarRecogedor : break;
+            case R.id.asignarRecogedor : intent = new Intent(Apoderado.this, ConfirmarRecogedor.class);
+                                         intent.putExtra("identificador", identificador);
+                                         startActivity(intent);
+                                         break;
             case R.id.registroSalidas : intent = new Intent(Apoderado.this, VerRegistroSalida.class);
                                         intent.putExtra("identificador", identificador);
                                         startActivity(intent);
@@ -103,7 +106,6 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
 
         if(bun != null){
             identificador = (String)bun.getString("identificador");
-            System.out.println("Identificado 125186 : "+identificador);
         }
     }
 }

@@ -30,4 +30,9 @@ public class Mensaje {
 
     public static String mensajeEntregaHecha = "paramH, ya esta en su casa";
 
+    public static String mensajeTextoRecogeor = "Su identificador es : paramI\nSu usuario es: paramU\nSu contraseña es: paramC";
+
+    public static String mensajeAutorizacion = "Autentificación correcta";
+    public static String mensajeNoAutorizacion = "Autentificación incorrecta";
+
 }

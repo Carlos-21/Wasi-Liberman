@@ -57,4 +57,35 @@ public class Validar {
         return bValidado;
     }
 
+    public static boolean validarRegistroRecogedor(EditText oTextoUsuario, EditText oTextoClave, EditText oTextoTelefono){
+        boolean bValidado = true;
+
+        String sUsuario = oTextoUsuario.getText().toString();
+        if (TextUtils.isEmpty(sUsuario)) {
+            oTextoUsuario.setError("Requerido");
+            bValidado = false;
+        } else {
+            oTextoUsuario.setError(null);
+        }
+
+        String sClave = oTextoClave.getText().toString();
+        if (TextUtils.isEmpty(sClave)) {
+            oTextoClave.setError("Requerido");
+            bValidado = false;
+        } else {
+            oTextoClave.setError(null);
+        }
+
+        String sTelefono = oTextoTelefono.getText().toString();
+
+        if (TextUtils.isEmpty(sTelefono)) {
+            oTextoTelefono.setError("Requerido");
+            bValidado = false;
+        } else {
+            oTextoTelefono.setError(null);
+        }
+
+        return bValidado;
+    }
+
 }

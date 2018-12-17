@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controlador.Apoderado">
-
+    tools:context=".controlador.Profesor">
 
     <LinearLayout
         android:orientation="vertical"
@@ -15,34 +14,32 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1">
+            android:layout_height="0dp">
 
             <TextView
                 android:id="@+id/textGrid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Apoderado"
+                android:text="Profesor"
+                android:textSize="34sp"
                 android:textColor="@android:color/white"
-                android:textSize="34sp" />
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 
         <GridLayout
             android:id="@+id/mainGrid"
+            android:columnCount="1"
+            android:rowCount="3"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:layout_weight="8"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_weight="6"
-            android:alignmentMode="alignMargins"
-            android:columnCount="2"
-            android:columnOrderPreserved="false"
             android:padding="14dp"
-            android:rowCount="3">
+            >
             <!-- Row 1 -->
 
             <!-- Column 1 -->
@@ -67,18 +64,18 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/verHijos"
+                        android:id="@+id/alumnosHabilitados"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ver_hijos" />
+                        android:src="@drawable/alumnos_habilitados" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Ver hijos"
                         android:textAlignment="center"
+                        android:text="Alumnos habilitados"
                         android:textColor="@android:color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -109,18 +106,18 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/permitirSalida"
+                        android:id="@+id/alumnosNoHabilitados"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/permitir_salida" />
+                        android:src="@drawable/alumnos_no_habilitados" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Permitir salida"
+                        android:text="Alumno no habilitados"
                         android:textAlignment="center"
+                        android:layout_gravity="center"
                         android:textColor="@android:color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -153,108 +150,6 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/asignarRecogedor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/asignar_recogedor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Asignar recogedor"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <!-- Column 2 -->
-            <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
-                android:background="@color/md_white_1000"
-                app:cardBackgroundColor="@android:color/background_light"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/registroSalidas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ver_registro_salidas" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Ver salidas"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-
-        </GridLayout>
-
-        <GridLayout
-            android:id="@+id/mainGrid2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="3"
-            android:alignmentMode="alignMargins"
-            android:columnCount="1"
-            android:columnOrderPreserved="false"
-            android:padding="14dp"
-            android:rowCount="1">
-
-            <!-- Row 3 -->
-
-            <!-- Column 1 -->
-            <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
-                android:background="@color/md_white_1000"
-                app:cardBackgroundColor="@android:color/background_light"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
-                    android:orientation="vertical">
-
-                    <ImageView
                         android:id="@+id/cerrarSesion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -264,9 +159,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:text="Cerrar sesión"
                         android:textAlignment="center"
+                        android:layout_gravity="center"
                         android:textColor="@android:color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />

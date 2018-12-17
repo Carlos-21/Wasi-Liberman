@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,15 +19,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import aplicacion.liberman.com.wasi.R;
+import aplicacion.liberman.com.wasi.soporte.Mensaje;
 import aplicacion.liberman.com.wasi.soporte.Validar;
+import aplicacion.liberman.com.wasi.util.FirebaseUtil;
 
 public class LoginFirebase extends AppCompatActivity implements View.OnClickListener {
     private EditText oTextoUsuario;
     private EditText oTextoClave;
     private Button oBotonIngresar;
     private FirebaseAuth oAutentificacion;
+    private FirebaseAuth autentificador = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +79,13 @@ public class LoginFirebase extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             //FirebaseUser user = oAutentificacion.getCurrentUser();
-                            Toast.makeText(LoginFirebase.this, "Authentication correct.",
+                            Toast.makeText(LoginFirebase.this, Mensaje.mensajeAutorizacion,
                                     Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginFirebase.this,Perfil.class);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginFirebase.this, "Authentication failed.",
+                            Toast.makeText(LoginFirebase.this, Mensaje.mensajeNoAutorizacion,
                                     Toast.LENGTH_SHORT).show();
                         }
 
@@ -121,14 +125,19 @@ public class LoginFirebase extends AppCompatActivity implements View.OnClickList
         if (id == R.id.login_celular) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginFirebase.this);
 
-            LayoutInflater inflater = this.getLayoutInflater();
+            View view = LoginFirebase.this.getLayoutInflater().inflate(R.layout.login_celular_firebase, null);
 
-            builder.setView(inflater.inflate(R.layout.login_celular_firebase, null))
+            final EditText idSecuridad = ((EditText)view.findViewById(R.id.identificadorSeguridad));
+            final EditText credencial = ((EditText)view.findViewById(R.id.credencialSeguridad));
+
+            builder.setView(view)
                     // Add action buttons
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            // sign in the user ...
+                            String seguridad = idSecuridad.getText().toString();
+                            String credenciales = credencial.getText().toString();
+                            verificarCredencialesTelefono(seguridad, credenciales);
                         }
                     })
                     .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -143,6 +152,29 @@ public class LoginFirebase extends AppCompatActivity implements View.OnClickList
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void verificarCredencialesTelefono(String verificationId, String code) {
+        // [START verify_with_code]
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        // [END verify_with_code]
+        ingresarPorTelefono(credential);
+    }
+
+    private void ingresarPorTelefono(PhoneAuthCredential credential) {
+        autentificador.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(LoginFirebase.this, Perfil.class);
+                            startActivity(intent);
+
+                        } else {
+
+                        }
+                    }
+                });
     }
 
 }

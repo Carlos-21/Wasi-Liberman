@@ -27,7 +27,7 @@
                 android:layout_centerInParent="true"
                 android:text="Apoderado"
                 android:textColor="@android:color/white"
-                android:textSize="34sp" />
+                android:textSize="60sp" />
 
         </RelativeLayout>
 
@@ -37,39 +37,39 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:layout_weight="6"
+            android:layout_weight="5"
             android:alignmentMode="alignMargins"
-            android:columnCount="2"
+            android:columnCount="3"
             android:columnOrderPreserved="false"
             android:padding="14dp"
-            android:rowCount="3">
+            android:rowCount="1">
             <!-- Row 1 -->
 
             <!-- Column 1 -->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
+                android:layout_marginBottom="16dp"
                 android:background="@color/md_white_1000"
                 app:cardBackgroundColor="@android:color/background_light"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/verHijos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="184dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ver_hijos" />
 
@@ -80,7 +80,7 @@
                         android:text="Ver hijos"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="36sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -91,27 +91,27 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
+                android:layout_marginBottom="16dp"
                 android:background="@color/md_white_1000"
                 app:cardBackgroundColor="@android:color/background_light"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/permitirSalida"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="184dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/permitir_salida" />
 
@@ -122,7 +122,7 @@
                         android:text="Permitir salida"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="36sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -135,27 +135,27 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
+                android:layout_marginBottom="16dp"
                 android:background="@color/md_white_1000"
                 app:cardBackgroundColor="@android:color/background_light"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/asignarRecogedor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="184dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/asignar_recogedor" />
 
@@ -166,49 +166,7 @@
                         android:text="Asignar recogedor"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <!-- Column 2 -->
-            <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
-                android:background="@color/md_white_1000"
-                app:cardBackgroundColor="@android:color/background_light"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/registroSalidas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ver_registro_salidas" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Ver salidas"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="36sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -223,10 +181,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="3"
+            android:layout_marginBottom="60dp"
+            android:layout_weight="5"
             android:alignmentMode="alignMargins"
-            android:columnCount="1"
+            android:columnCount="2"
             android:columnOrderPreserved="false"
             android:padding="14dp"
             android:rowCount="1">
@@ -237,27 +195,27 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
+                android:layout_marginBottom="16dp"
                 android:background="@color/md_white_1000"
                 app:cardBackgroundColor="@android:color/background_light"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/cerrarSesion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="184dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/cerrar_sesion" />
 
@@ -268,7 +226,48 @@
                         android:text="Cerrar sesión"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/md_white_1000"
+                app:cardBackgroundColor="@android:color/background_light"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/registroSalidas"
+                        android:layout_width="170dp"
+                        android:layout_height="184dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ver_registro_salidas" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Ver salidas"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="36sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

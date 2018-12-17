@@ -1,6 +1,7 @@
 package aplicacion.liberman.com.wasi.controlador;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.gson.Gson;
 import android.widget.Toast;
 
@@ -24,12 +31,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import aplicacion.liberman.com.wasi.R;
-import aplicacion.liberman.com.wasi.componente.UsuarioDAO;
+import aplicacion.liberman.com.wasi.util.FirebaseUtil;
 import aplicacion.liberman.com.wasi.contenedor.Usuario;
 import aplicacion.liberman.com.wasi.data.Direccion;
 import aplicacion.liberman.com.wasi.data.VolleySingleton;
 import aplicacion.liberman.com.wasi.soporte.Buscar;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
+import aplicacion.liberman.com.wasi.soporte.Validar;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
     private EditText oTextoUsuario;
@@ -67,7 +75,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         //llamarServicioRest();
         System.out.println("Perfil : "+iPerfil);
-        UsuarioDAO.listarUsuarios(aListaUsuarios, iPerfil);
+        FirebaseUtil.listarUsuarios(aListaUsuarios, iPerfil);
     }
 
     @Override
@@ -99,6 +107,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
      * encuentra registrada
      */
     private void verificarUsuario(Intent intent, int tipoPerfil){
+        if(!Validar.validarLoginPerfil(oTextoUsuario, oTextoClave)){
+            return;
+        }
         String oTextoUsuario = this.oTextoUsuario.getText().toString();
         String oTextoClave = this.oTextoClave.getText().toString();
 
