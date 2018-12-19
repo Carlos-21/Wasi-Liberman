@@ -20,64 +20,66 @@
 
             <TextView
                 android:id="@+id/textGrid"
-                android:text="Profesor"
-                android:textSize="34sp"
-                android:textColor="@android:color/white"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Profesor"
+                android:textColor="@android:color/white"
+                android:textSize="72sp" />
 
         </RelativeLayout>
 
         <GridLayout
             android:id="@+id/mainGrid"
-            android:columnCount="1"
-            android:rowCount="3"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
-            android:layout_weight="8"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="14dp"
-            >
+            android:layout_marginTop="7dp"
+            android:layout_weight="8"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:padding="10dp"
+            android:rowCount="2">
             <!-- Row 1 -->
 
             <!-- Column 1 -->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
+                android:layout_marginBottom="16dp"
                 android:background="@color/md_white_1000"
                 app:cardBackgroundColor="@android:color/background_light"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/alumnosHabilitados"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="202dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="80dp"
                         android:src="@drawable/alumnos_habilitados" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textAlignment="center"
                         android:text="Alumnos habilitados"
+                        android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -88,47 +90,45 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_rowWeight="1"
+                android:layout_marginBottom="16dp"
                 android:background="@color/md_white_1000"
                 app:cardBackgroundColor="@android:color/background_light"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/alumnosNoHabilitados"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="202dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="80dp"
                         android:src="@drawable/alumnos_no_habilitados" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="Alumno no habilitados"
                         android:textAlignment="center"
-                        android:layout_gravity="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
-            <!-- Row 2 -->
-
-            <!-- Column 1 -->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -143,27 +143,70 @@
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/inhabilitarAlumnos"
+                        android:layout_width="170dp"
+                        android:layout_height="202dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="80dp"
+                        android:src="@drawable/inhabilitar_alumno" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Quitar permisos"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/md_white_1000"
+                app:cardBackgroundColor="@android:color/background_light"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/cerrarSesion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="202dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="80dp"
                         android:src="@drawable/cerrar_sesion" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="Cerrar sesión"
                         android:textAlignment="center"
-                        android:layout_gravity="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

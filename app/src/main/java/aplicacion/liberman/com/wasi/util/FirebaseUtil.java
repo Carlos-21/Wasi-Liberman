@@ -13,17 +13,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import aplicacion.liberman.com.wasi.contenedor.Usuario;
 import aplicacion.liberman.com.wasi.controlador.ConfirmarRecogedor;
+import aplicacion.liberman.com.wasi.controlador.Login;
 import aplicacion.liberman.com.wasi.controlador.LoginFirebase;
 import aplicacion.liberman.com.wasi.controlador.Perfil;
+import aplicacion.liberman.com.wasi.controlador.Profesor;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
 
 public class FirebaseUtil {
@@ -101,6 +106,35 @@ public class FirebaseUtil {
                         }
                     }
                 });
+    }
+
+    public static void quitarPermisosAlumnos(String identificadorProfesor, final Profesor profesor){
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final WriteBatch batch = db.batch();
+
+        db.collection("Niño")
+                .whereEqualTo("profesor", identificadorProfesor)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                DocumentReference nycRef = db.collection("Niño").document(document.getId());
+                                batch.update(nycRef, "estado", false);
+                            }
+                        } else {
+
+                        }
+                        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(profesor.getApplicationContext(), Mensaje.mensajePermisosQuitados, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
     }
 
 }

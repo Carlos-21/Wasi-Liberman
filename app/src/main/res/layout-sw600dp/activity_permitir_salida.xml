@@ -26,18 +26,18 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:weightSum="8"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="8">
 
         <GridLayout
             android:id="@+id/mainGrid"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="250dp"
-            android:layout_weight="4"
+            android:layout_width="800dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_weight="1"
             android:alignmentMode="alignMargins"
             android:columnCount="2"
             android:columnOrderPreserved="false"
@@ -47,8 +47,6 @@
 
             <!-- Column 1 -->
             <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_marginLeft="16dp"
@@ -60,16 +58,16 @@
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/permitirSalida"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="162dp"
+                        android:layout_height="159dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/permitir_salida" />
 
@@ -80,7 +78,7 @@
                         android:text="Permitir salida"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -89,8 +87,6 @@
 
             <!-- Column 2 -->
             <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_marginLeft="16dp"
@@ -102,16 +98,16 @@
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/permitirMovilidad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="162dp"
+                        android:layout_height="159dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/permitir_movilidad" />
 
@@ -122,7 +118,7 @@
                         android:text="Permitir movilidad"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

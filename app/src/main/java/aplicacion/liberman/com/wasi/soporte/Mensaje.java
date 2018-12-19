@@ -35,4 +35,9 @@ public class Mensaje {
     public static String mensajeAutorizacion = "Autentificación correcta";
     public static String mensajeNoAutorizacion = "Autentificación incorrecta";
 
+    public static String tituloQuitarPermisos = "Quitar permisos";
+    public static String mensajeQuitarPermisos = "¿Desea quitar los permisos a los niños?";
+    public static String mensajePermisosQuitados = "Se ha quitado los permisos con éxito";
+    public static String mensajeFueraRango = "Funcionalidad fuera de hora";
+
 }

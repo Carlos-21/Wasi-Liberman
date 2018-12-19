@@ -23,7 +23,12 @@
         <activity
             android:name=".controlador.Perfil"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".controlador.Login" />
+        <activity android:name=".controlador.Login"
+            android:parentActivityName=".controlador.Perfil">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controlador.Perfil" />
+        </activity>
         <activity
             android:name=".controlador.Apoderado"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

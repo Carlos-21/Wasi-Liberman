@@ -67,22 +67,24 @@
                 android:id="@+id/oTextoUsuarioLogin2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:drawableRight="@drawable/usuario"
                 android:drawablePadding="20dp"
                 android:hint="Usuario"
-                android:layout_weight="1"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="24sp" />
 
             <EditText
                 android:id="@+id/oTextoCLaveLogin2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:drawableRight="@drawable/llave"
                 android:drawablePadding="20dp"
-                android:layout_weight="1"
                 android:hint="Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/oBotonIngresarLogin2"
@@ -94,7 +96,7 @@
                 android:text="Ingresar"
                 android:textAllCaps="false"
                 android:textColor="@color/md_white_1000"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
 
