@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
+import aplicacion.liberman.com.wasi.util.AlertaDialogoUtil;
 
 public class Movilidad extends AppCompatActivity implements View.OnClickListener{
     private ImageView alumnosHabilitados;
@@ -63,7 +64,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
                                           intent.putExtra("bandera", false);
                                           startActivity(intent);
                                           break;
-            case R.id.cerrarSesion : cerrarSesion();
+            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(null, null, Movilidad.this, 2);
                                      break;
         }
     }
@@ -72,7 +73,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
      * Método que se encargará de verificar si el usuario desea cerrar sessión,
      * de ser ser afirmativo se mostrará la actividad de perfiles
      */
-    private void cerrarSesion(){
+    /*private void cerrarSesion(){
         AlertDialog.Builder builder = new AlertDialog.Builder(Movilidad.this);
         builder.setTitle(Mensaje.tituloCerrarSesion);
         builder.setMessage(Mensaje.mensajeCerrarSesion);
@@ -98,7 +99,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
+    }*/
 
     /**
      * Definir documentación

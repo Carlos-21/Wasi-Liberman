@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controlador.Login">
+    tools:context=".controlador.LoginFirebase">
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,11 +16,10 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@drawable/background_login" />
-
         <ImageView
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="0dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,57 +33,59 @@
 
 
         <ImageView
-            android:id="@+id/oImagenLogin2"
+            android:id="@+id/oImagenLogin1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/login_apoderado" />
+            android:layout_marginTop="30dp"
+            android:background="@drawable/usuario_seguridad" />
 
         <TextView
-            android:id="@+id/oLabelLogin2"
+            android:id="@+id/oLabelLogin1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imagenLoginPerfil"
             android:layout_gravity="center"
-            android:text="Apoderado"
+            android:text="Seguridad Usuario"
             android:textColor="@color/md_black_1000"
             android:textSize="28dp" />
 
         <LinearLayout
-            android:layout_marginTop="8dp"
             android:id="@+id/layoutInput"
-            android:orientation="vertical"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="243dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
             android:background="@color/md_white_1000"
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <EditText
-                android:id="@+id/oTextoUsuarioLogin2"
+                android:id="@+id/oTextoUsuarioLogin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/usuario"
                 android:drawablePadding="20dp"
                 android:hint="Usuario"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/oTextoCLaveLogin2"
+                android:id="@+id/oTextoCLaveLogin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:drawableRight="@drawable/llave"
                 android:drawablePadding="20dp"
                 android:hint="Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textSize="24sp" />
 
             <Button
-                android:id="@+id/oBotonIngresarLogin2"
+                android:id="@+id/oBotonIngresarLogin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -92,7 +93,7 @@
                 android:text="Ingresar"
                 android:textAllCaps="false"
                 android:textColor="@color/md_white_1000"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
 

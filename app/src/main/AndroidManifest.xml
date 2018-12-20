@@ -52,7 +52,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controlador.VerHijoApoderado" />
         </activity>
-        <activity android:name=".controlador.SalidaPermitida" />
+        <activity android:name=".controlador.SalidaPermitida"
+            android:parentActivityName=".controlador.VerHijoApoderado">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controlador.VerHijoApoderado" />
+        </activity>
         <activity android:name=".controlador.ConfirmarRecogedor"
             android:parentActivityName=".controlador.Apoderado">
             <meta-data

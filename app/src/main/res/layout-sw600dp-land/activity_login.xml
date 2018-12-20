@@ -34,8 +34,8 @@
 
         <ImageView
             android:id="@+id/oImagenLogin2"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:background="@drawable/login_apoderado" />
@@ -52,8 +52,8 @@
 
         <LinearLayout
             android:id="@+id/layoutInput"
-            android:layout_width="1226dp"
-            android:layout_height="275dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"

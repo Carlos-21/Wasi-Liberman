@@ -12,6 +12,7 @@ import android.widget.Toast;
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.soporte.Fecha;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
+import aplicacion.liberman.com.wasi.util.AlertaDialogoUtil;
 import aplicacion.liberman.com.wasi.util.FirebaseUtil;
 
 public class Profesor extends AppCompatActivity implements View.OnClickListener{
@@ -55,13 +56,13 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.inhabilitarAlumnos :  if(Fecha.rangoFecha()){
-                                                inhabilitarAlumnos();
+                                                AlertaDialogoUtil.inhabilitarAlumnos(identificador, Profesor.this);
                                             }
                                             else{
                                                 Toast.makeText(this, Mensaje.mensajeFueraRango, Toast.LENGTH_SHORT).show();
                                             }
                                             break;
-            case R.id.cerrarSesion : cerrarSesion();
+            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(null, Profesor.this, null, 4);
                 break;
         }
     }
@@ -70,7 +71,7 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
      * Método que se encargará de verificar si el usuario desea cerrar sessión,
      * de ser ser afirmativo se mostrará la actividad de perfiles
      */
-    private void cerrarSesion(){
+    /*private void cerrarSesion(){
         AlertDialog.Builder builder = new AlertDialog.Builder(Profesor.this);
         builder.setTitle(Mensaje.tituloCerrarSesion);
         builder.setMessage(Mensaje.mensajeCerrarSesion);
@@ -96,9 +97,9 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
+    }*/
 
-    private void inhabilitarAlumnos(){
+    /*private void inhabilitarAlumnos(){
         AlertDialog.Builder builder = new AlertDialog.Builder(Profesor.this);
         builder.setTitle(Mensaje.tituloQuitarPermisos);
         builder.setMessage(Mensaje.mensajeQuitarPermisos);
@@ -122,7 +123,7 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
+    }*/
 
     /**
      * Definir documentación

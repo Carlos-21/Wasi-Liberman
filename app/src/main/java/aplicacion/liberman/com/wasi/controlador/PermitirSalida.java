@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
+import aplicacion.liberman.com.wasi.util.AlertaDialogoUtil;
 
 public class PermitirSalida extends AppCompatActivity implements View.OnClickListener{
     private ImageView permitirSalida;
@@ -45,9 +46,9 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.permitirSalida : autorizarSalidaApoderado();
+            case R.id.permitirSalida : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 1, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo);
                 break;
-            case R.id.permitirMovilidad : autorizarSalidaMovilidad();
+            case R.id.permitirMovilidad : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 2, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo);
                 break;
         }
     }

@@ -60,14 +60,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/alumnosHabilitados"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:src="@drawable/alumnos_habilitados" />
 
                     <TextView
@@ -102,7 +101,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -143,7 +141,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -156,9 +153,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="Quitar permisos"
                         android:textAlignment="center"
-                        android:layout_gravity="center"
                         android:textColor="@android:color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -184,7 +181,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView

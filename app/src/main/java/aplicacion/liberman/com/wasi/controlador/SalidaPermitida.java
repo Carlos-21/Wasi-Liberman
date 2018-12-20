@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +111,20 @@ public class SalidaPermitida extends AppCompatActivity {
                 // ...
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(SalidaPermitida.this, VerHijoApoderado.class);
+                intent.putExtra("bandera", true);
+                intent.putExtra("identificador", identificador);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

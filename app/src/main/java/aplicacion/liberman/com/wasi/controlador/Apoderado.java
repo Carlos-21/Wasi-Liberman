@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
+import aplicacion.liberman.com.wasi.util.AlertaDialogoUtil;
 
 public class Apoderado extends AppCompatActivity implements View.OnClickListener{
     private ImageView verHijos;
@@ -60,7 +61,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
                                         intent.putExtra("identificador", identificador);
                                         startActivity(intent);
                                         break;
-            case R.id.cerrarSesion : cerrarSesion();
+            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(Apoderado.this, null, null, 1);
                                      break;
         }
     }
@@ -69,7 +70,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
      * Método que se encargará de verificar si el usuario desea cerrar sessión,
      * de ser ser afirmativo se mostrará la actividad de perfiles
      */
-    private void cerrarSesion(){
+    /*private void cerrarSesion(){
         AlertDialog.Builder builder = new AlertDialog.Builder(Apoderado.this);
         builder.setTitle(Mensaje.tituloCerrarSesion);
         builder.setMessage(Mensaje.mensajeCerrarSesion);
@@ -96,6 +97,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    */
 
     /**
      * Definir documentación

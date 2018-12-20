@@ -76,7 +76,7 @@
                         android:text="Apoderado"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -117,7 +117,7 @@
                         android:text="Recogedor"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -160,7 +160,7 @@
                         android:text="Profesor"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -201,7 +201,7 @@
                         android:text="Movilidad"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

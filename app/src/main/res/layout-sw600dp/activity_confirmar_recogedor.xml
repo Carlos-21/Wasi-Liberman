@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controlador.Login">
+    tools:context=".controlador.ConfirmarRecogedor">
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,11 +16,10 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@drawable/background_login" />
-
         <ImageView
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="0dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,20 +33,20 @@
 
 
         <ImageView
-            android:id="@+id/oImagenLogin2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/imagenLoginPerfil"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/login_apoderado" />
+            android:background="@drawable/perfil_recogedor" />
 
         <TextView
-            android:id="@+id/oLabelLogin2"
+            android:id="@+id/labelPerfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imagenLoginPerfil"
             android:layout_gravity="center"
-            android:text="Apoderado"
+            android:text="Recogedor"
             android:textColor="@color/md_black_1000"
             android:textSize="28dp" />
 
@@ -65,34 +64,60 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/oTextoUsuarioLogin2"
+                android:id="@+id/textoUsuarioRecogedor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/usuario"
                 android:drawablePadding="20dp"
                 android:hint="Usuario"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/oTextoCLaveLogin2"
+                android:id="@+id/textoClaveRecogedor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:drawableRight="@drawable/llave"
                 android:drawablePadding="20dp"
                 android:hint="Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPersonName"
+                android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/oBotonIngresarLogin2"
+            <EditText
+                android:id="@+id/textoTelefonoRecogedor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableRight="@drawable/llave"
+                android:drawablePadding="20dp"
+                android:hint="Teléfono"
+                android:inputType="phone"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/botonGenerarDatos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/background_ingresar"
-                android:text="Ingresar"
+                android:background="@drawable/background_generar"
+                android:text="Generar datos"
                 android:textAllCaps="false"
                 android:textColor="@color/md_white_1000"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/botonConfirmarRecogedor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/background_ingresar"
+                android:text="Confirmar"
+                android:textAllCaps="false"
+                android:textColor="@color/md_white_1000"
+                android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
 

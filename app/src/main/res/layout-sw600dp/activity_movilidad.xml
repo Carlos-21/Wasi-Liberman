@@ -57,18 +57,17 @@
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/alumnosHabilitados"
-                        android:layout_width="173dp"
-                        android:layout_height="211dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="50dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/alumnos_habilitados" />
 
                     <TextView
@@ -100,18 +99,17 @@
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/alumnosNoHabilitados"
-                        android:layout_width="173dp"
-                        android:layout_height="211dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="50dp"
                         android:src="@drawable/alumnos_no_habilitados" />
 
                     <TextView
@@ -145,18 +143,17 @@
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/alumnosEntregados"
-                        android:layout_width="173dp"
-                        android:layout_height="211dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="50dp"
                         android:src="@drawable/alumnos_entregados" />
 
                     <TextView
@@ -188,18 +185,17 @@
                 app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/cerrarSesion"
-                        android:layout_width="173dp"
-                        android:layout_height="211dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="50dp"
                         android:src="@drawable/cerrar_sesion" />
 
                     <TextView

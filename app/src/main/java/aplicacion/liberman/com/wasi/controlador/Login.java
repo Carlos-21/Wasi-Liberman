@@ -182,6 +182,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
+
     //Verificar los siguiente metodos, para servicios REST
     /**
      * Carga el adaptador con las metas obtenidas
