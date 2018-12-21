@@ -32,6 +32,8 @@ public class SalidaPermitida extends AppCompatActivity {
     private String nombreHijo;
     private String identificadorHijo;
     private String imagenHijo;
+    private String apoderado;
+    private int tipoPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class SalidaPermitida extends AppCompatActivity {
             identificador = (String)bun.getString("identificador");
             nombreHijo = (String)bun.getString("nombres");
             identificadorHijo = (String)bun.getString("identificadorHijo");
+            apoderado = (String)bun.getString("apoderado");
+            tipoPerfil = (int)bun.getInt("tipoPerfil");
         }
 
         Mensaje.hora = Fecha.horaActual();
@@ -85,7 +89,13 @@ public class SalidaPermitida extends AppCompatActivity {
         data.put("hora", Mensaje.hora);
         data.put("imagen", imagenHijo);
 
-        db.collection("Usuarios").document(identificador).collection("Salidas")
+        String identificadorUsuario = identificador;
+        if(apoderado!=null){
+            identificadorUsuario = apoderado;
+            System.out.println("Apfewiwe  : "+ apoderado);
+        }
+
+        db.collection("Usuarios").document(identificadorUsuario).collection("Salidas")
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -117,10 +127,17 @@ public class SalidaPermitida extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(SalidaPermitida.this, VerHijoApoderado.class);
-                intent.putExtra("bandera", true);
-                intent.putExtra("identificador", identificador);
-                startActivity(intent);
+                if(tipoPerfil == 1){
+                    Intent intent = new Intent(SalidaPermitida.this, VerHijoApoderado.class);
+                    intent.putExtra("bandera", true);
+                    intent.putExtra("identificador", identificador);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(SalidaPermitida.this, VerHijoRecogedor.class);
+                    intent.putExtra("identificador", identificador);
+                    startActivity(intent);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -16,6 +16,7 @@ public class Hijo {
     private String movilidad;
     private String nombres;
     private String profesor;
+    private String recogedor;
 
     public String getApellidos() {
         return apellidos;
@@ -96,4 +97,13 @@ public class Hijo {
     public void setProfesor(String profesor) {
         this.profesor = profesor;
     }
+
+    public String getRecogedor() {
+        return recogedor;
+    }
+
+    public void setRecogedor(String recogedor) {
+        this.recogedor = recogedor;
+    }
+
 }

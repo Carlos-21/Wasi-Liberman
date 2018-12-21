@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "434477753295-91i2re44eksqtp5eguinc8j7prceiv7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aplicacion.liberman.com.wasi",
+            "certificate_hash": "bd5e8f7dc3e556c678ae18ec65b60b1999974441"
+          }
+        },
+        {
           "client_id": "434477753295-4d6e3vt73frld3a4lf648krs50kdj0ig.apps.googleusercontent.com",
           "client_type": 3
         }

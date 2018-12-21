@@ -11,6 +11,7 @@ import aplicacion.liberman.com.wasi.controlador.Movilidad;
 import aplicacion.liberman.com.wasi.controlador.Perfil;
 import aplicacion.liberman.com.wasi.controlador.PermitirSalida;
 import aplicacion.liberman.com.wasi.controlador.Profesor;
+import aplicacion.liberman.com.wasi.controlador.Recogedor;
 import aplicacion.liberman.com.wasi.controlador.SalidaPermitida;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
 
@@ -53,7 +54,7 @@ public class AlertaDialogoUtil {
      * Método que se encargará de verificar si el usuario desea cerrar sessión,
      * de ser ser afirmativo se mostrará la actividad de perfiles
      */
-    public static void cerrarSesion(final Apoderado apoderado, final Profesor profesor, final Movilidad movilidad, int valor){
+    public static void cerrarSesion(final Apoderado apoderado, final Movilidad movilidad, final Recogedor recogedor, final Profesor profesor, int valor){
         AlertDialog.Builder builder = null;
 
         switch (valor){
@@ -61,7 +62,8 @@ public class AlertaDialogoUtil {
                      break;
             case 2 : builder = new AlertDialog.Builder(movilidad);
                      break;
-            case 3 : break;
+            case 3 : builder = new AlertDialog.Builder(recogedor);
+                     break;
             case 4 : builder = new AlertDialog.Builder(profesor);
                      break;
         }
@@ -74,7 +76,7 @@ public class AlertaDialogoUtil {
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                volverPerfiles(apoderado, profesor, movilidad);
+                volverPerfiles(apoderado, movilidad, recogedor,profesor);
             }
         });
 
@@ -90,31 +92,47 @@ public class AlertaDialogoUtil {
         alertDialog.show();
     }
 
-    private static void volverPerfiles(Apoderado apoderado, Profesor profesor, Movilidad movilidad){
+    private static void volverPerfiles(Apoderado apoderado, Movilidad movilidad, Recogedor recogedor, Profesor profesor){
         Intent intent = null;
         if(apoderado!=null){
             intent = new Intent(apoderado.getApplication(), Perfil.class);
             apoderado.startActivity(intent);
             apoderado.finish();
         }
-        if(profesor!=null){
-            intent = new Intent(profesor.getApplication(), Perfil.class);
-            profesor.startActivity(intent);
-            profesor.finish();
-        }
+
         if(movilidad!=null){
             intent = new Intent(movilidad.getApplication(), Perfil.class);
             movilidad.startActivity(intent);
             movilidad.finish();
         }
 
+        if(recogedor!=null){
+            intent = new Intent(recogedor.getApplication(), Perfil.class);
+            recogedor.startActivity(intent);
+            recogedor.finish();
+        }
+
+        if(profesor!=null){
+            intent = new Intent(profesor.getApplication(), Perfil.class);
+            profesor.startActivity(intent);
+            profesor.finish();
+        }
     }
 
-    public static void autorizarSalidaHijo(final PermitirSalida permitirSalida, final int salida, final String imagen, final String identificador, final String nombresHijo, final String apellidosHijo, final String identificadorHijo){
+    public static void autorizarSalidaHijo(final PermitirSalida permitirSalida, final int salida, final String imagen, final String identificador, final String nombresHijo,
+                                           final String apellidosHijo, final String identificadorHijo, final String identificadorRecogedorApoderado, final int tipoPerfil){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(permitirSalida);
-        builder.setTitle(Mensaje.tituloPermitirMovilidad);
-        builder.setMessage(Mensaje.mensajePermitirMovilidad);
+
+        if(salida == 1){
+            Mensaje.nombre = apellidosHijo + " " + nombresHijo;
+            builder.setTitle(Mensaje.tituloPermitirSalida);
+            builder.setMessage(Mensaje.mensajePermitirSalida.replace("paramN", Mensaje.nombre));
+        }
+        else{
+            builder.setTitle(Mensaje.tituloPermitirMovilidad);
+            builder.setMessage(Mensaje.mensajePermitirMovilidad);
+        }
         builder.setCancelable(false);
         builder.setIcon(R.drawable.informacion);
 
@@ -127,6 +145,10 @@ public class AlertaDialogoUtil {
                 intent.putExtra("identificador", identificador);
                 intent.putExtra("nombres", nombresHijo + " " + apellidosHijo);
                 intent.putExtra("identificadorHijo", identificadorHijo);
+                if(identificadorRecogedorApoderado!=null){
+                    intent.putExtra("apoderado", identificadorRecogedorApoderado);
+                    intent.putExtra("perfil", tipoPerfil);
+                }
                 permitirSalida.startActivity(intent);
                 permitirSalida.finish();
             }

@@ -64,7 +64,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
                                           intent.putExtra("bandera", false);
                                           startActivity(intent);
                                           break;
-            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(null, null, Movilidad.this, 2);
+            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(null, Movilidad.this, null, null, 2);
                                      break;
         }
     }

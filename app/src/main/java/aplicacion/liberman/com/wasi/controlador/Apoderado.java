@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import aplicacion.liberman.com.wasi.R;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
 import aplicacion.liberman.com.wasi.util.AlertaDialogoUtil;
+import aplicacion.liberman.com.wasi.util.FirebaseUtil;
+import aplicacion.liberman.com.wasi.util.FirebaseUtilAutorizacion;
 
 public class Apoderado extends AppCompatActivity implements View.OnClickListener{
     private ImageView verHijos;
@@ -35,7 +37,6 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         registroSalidas.setOnClickListener(this);
         cerrarSesion = (ImageView)findViewById(R.id.cerrarSesion);
         cerrarSesion.setOnClickListener(this);
-
         verificarVista();
     }
 
@@ -61,7 +62,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
                                         intent.putExtra("identificador", identificador);
                                         startActivity(intent);
                                         break;
-            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(Apoderado.this, null, null, 1);
+            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(Apoderado.this, null, null, null,1);
                                      break;
         }
     }

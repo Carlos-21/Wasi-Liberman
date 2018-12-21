@@ -62,7 +62,7 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener{
                                                 Toast.makeText(this, Mensaje.mensajeFueraRango, Toast.LENGTH_SHORT).show();
                                             }
                                             break;
-            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(null, Profesor.this, null, 4);
+            case R.id.cerrarSesion : AlertaDialogoUtil.cerrarSesion(null, null, null, Profesor.this, 4);
                 break;
         }
     }

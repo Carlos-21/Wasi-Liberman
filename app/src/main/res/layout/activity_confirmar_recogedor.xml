@@ -87,8 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:drawableRight="@drawable/celular_numero"
                 android:drawablePadding="20dp"
-                android:drawableRight="@drawable/llave"
                 android:hint="Teléfono"
                 android:inputType="phone" />
 

@@ -30,6 +30,7 @@ import aplicacion.liberman.com.wasi.soporte.Generador;
 import aplicacion.liberman.com.wasi.soporte.Mensaje;
 import aplicacion.liberman.com.wasi.soporte.Validar;
 import aplicacion.liberman.com.wasi.util.FirebaseUtil;
+import aplicacion.liberman.com.wasi.util.FirebaseUtilEscritura;
 import aplicacion.liberman.com.wasi.util.MensajeTexto;
 
 public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClickListener{
@@ -63,7 +64,9 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.botonConfirmarRecogedor : if(Validar.validarRegistroRecogedor(textoUsuarioRecogedor, textoContraseñaRecogedor, textoTelefonoRecogedor)){
-                                                    mensajeConfirmarRecogedor();
+                                                    enviarCredencialesTelefono(textoTelefonoRecogedor.getText().toString(),
+                                                            textoUsuarioRecogedor.getText().toString(), textoContraseñaRecogedor.getText().toString());
+                                                    FirebaseUtilEscritura.registrarRecogedor(textoUsuarioRecogedor.getText().toString(), textoContraseñaRecogedor.getText().toString(), identificador);
                                                 }
                                                 break;
             case R.id.botonGenerarDatos : generarDatos();

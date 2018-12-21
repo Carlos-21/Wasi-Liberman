@@ -24,6 +24,8 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
     private String imagen;
     private String identificador;
     private String identificadorHijo;
+    private String identificadorRecogedorApoderado;
+    private int tipoPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,9 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.permitirSalida : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 1, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo);
+            case R.id.permitirSalida : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 1, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo, identificadorRecogedorApoderado, tipoPerfil);
                 break;
-            case R.id.permitirMovilidad : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 2, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo);
+            case R.id.permitirMovilidad : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 2, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo, identificadorRecogedorApoderado, tipoPerfil);
                 break;
         }
     }
@@ -67,12 +69,14 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
             identificador = (String)bun.getString("identificador");
             identificadorHijo = (String)bun.getString("identificadorHijo");
             Picasso.get().load(imagen).into(hijoSalida);
+            tipoPerfil = (int)bun.getInt("perfil");
+            if(tipoPerfil == 3){
+                identificadorRecogedorApoderado = (String)bun.getString("identificadorRecogedorApoderado");
+            }
         }
     }
 
-    /**
-     * Definir documentación
-     */
+    /*
     private void autorizarSalidaApoderado(){
         Mensaje.nombre = apellidosHijo + " " + nombresHijo;
         AlertDialog.Builder builder = new AlertDialog.Builder(PermitirSalida.this);
@@ -107,9 +111,6 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
         alertDialog.show();
     }
 
-    /**
-     * Definir documentación
-     */
     private void autorizarSalidaMovilidad(){
         AlertDialog.Builder builder = new AlertDialog.Builder(PermitirSalida.this);
         builder.setTitle(Mensaje.tituloPermitirMovilidad);
@@ -141,16 +142,23 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(PermitirSalida.this, VerHijoApoderado.class);
-                intent.putExtra("bandera", true);
-                intent.putExtra("identificador", identificador);
-                startActivity(intent);
+                if(tipoPerfil == 1){
+                    Intent intent = new Intent(PermitirSalida.this, VerHijoApoderado.class);
+                    intent.putExtra("bandera", true);
+                    intent.putExtra("identificador", identificador);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(PermitirSalida.this, VerHijoRecogedor.class);
+                    intent.putExtra("identificador", identificador);
+                    startActivity(intent);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

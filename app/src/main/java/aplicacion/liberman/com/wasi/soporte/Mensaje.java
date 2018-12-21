@@ -40,4 +40,5 @@ public class Mensaje {
     public static String mensajePermisosQuitados = "Se ha quitado los permisos con éxito";
     public static String mensajeFueraRango = "Funcionalidad fuera de hora";
 
+    public static String mensajeFirebaseRecogedor = "Se acabo tiempo de acceso";
 }

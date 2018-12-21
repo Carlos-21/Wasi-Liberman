@@ -97,6 +97,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 break;
             case 2 : verificarUsuario(intent, 2);
                 break;
+            case 3 : verificarUsuario(intent, 3);
+                break;
             case 4 : verificarUsuario(intent, 4);
                 break;
         }
@@ -132,6 +134,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 intent = new Intent(Login.this, Movilidad.class);
                 intent.putExtra("identificador",oUsuarioWasi.getIdentificador());
                 Toast.makeText(Login.this, Mensaje.mensajeUsuarioCorrecto, Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish();
+            }
+            else{
+                Toast.makeText(Login.this, Mensaje.mensajeUsuarioIncorrecto, Toast.LENGTH_SHORT).show();
+            }
+                break;
+            case 3 : if(Buscar.existeUsuario(aListaUsuarios, oUsuarioWasi)){
+                intent = new Intent(Login.this, Recogedor.class);
+                intent.putExtra("identificador",oUsuarioWasi.getIdentificador());
                 startActivity(intent);
                 finish();
             }
