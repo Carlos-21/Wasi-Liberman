@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="aplicacion.liberman.com.wasi">
+    package="aplicacion.liberman.com.wasiL2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controlador.Inicio">
+        <activity android:name="aplicacion.liberman.com.wasiL2.controlador.Inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,78 +20,78 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controlador.Perfil"
+            android:name="aplicacion.liberman.com.wasiL2.controlador.Perfil"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".controlador.Login"
-            android:parentActivityName=".controlador.Perfil">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.Login"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.Perfil">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.Perfil" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.Perfil" />
         </activity>
         <activity
-            android:name=".controlador.Apoderado"
+            android:name="aplicacion.liberman.com.wasiL2.controlador.Apoderado"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".controlador.Movilidad"
+            android:name="aplicacion.liberman.com.wasiL2.controlador.Movilidad"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".controlador.Profesor"
+            android:name="aplicacion.liberman.com.wasiL2.controlador.Profesor"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".controlador.VerHijoApoderado"
-            android:parentActivityName=".controlador.Apoderado">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.VerHijoApoderado"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.Apoderado">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.Apoderado" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.Apoderado" />
         </activity>
         <activity
-            android:name=".controlador.PermitirSalida"
-            android:parentActivityName=".controlador.VerHijoApoderado">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.PermitirSalida"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.VerHijoApoderado">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.VerHijoApoderado" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.VerHijoApoderado" />
         </activity>
         <activity
-            android:name=".controlador.SalidaPermitida"
-            android:parentActivityName=".controlador.VerHijoApoderado">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.SalidaPermitida"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.VerHijoApoderado">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.VerHijoApoderado" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.VerHijoApoderado" />
         </activity>
         <activity
-            android:name=".controlador.ConfirmarRecogedor"
-            android:parentActivityName=".controlador.Apoderado">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.ConfirmarRecogedor"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.Apoderado">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.Apoderado" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.Apoderado" />
         </activity>
         <activity
-            android:name=".controlador.VerHijoMovilidad"
-            android:parentActivityName=".controlador.Movilidad">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.VerHijoMovilidad"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.Movilidad">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.Movilidad" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.Movilidad" />
         </activity>
         <activity
-            android:name=".controlador.VerHijoProfesor"
-            android:parentActivityName=".controlador.Profesor">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.VerHijoProfesor"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.Profesor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.Profesor" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.Profesor" />
         </activity>
-        <activity android:name=".controlador.LoginFirebase" />
+        <activity android:name="aplicacion.liberman.com.wasiL2.controlador.LoginFirebase" />
         <activity
-            android:name=".controlador.VerRegistroSalida"
-            android:parentActivityName=".controlador.Apoderado">
+            android:name="aplicacion.liberman.com.wasiL2.controlador.VerRegistroSalida"
+            android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.Apoderado">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controlador.Apoderado" />
+                android:value="aplicacion.liberman.com.wasiL2.controlador.Apoderado" />
         </activity>
         <activity
-            android:name=".controlador.Recogedor"
+            android:name="aplicacion.liberman.com.wasiL2.controlador.Recogedor"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity android:name=".controlador.VerHijoRecogedor"></activity>
+        <activity android:name="aplicacion.liberman.com.wasiL2.controlador.VerHijoRecogedor"></activity>
     </application>
 
 </manifest>

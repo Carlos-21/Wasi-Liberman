@@ -20,6 +20,9 @@ allprojects {
         google()
         jcenter()
     }
+    repositories {
+        maven { url "https://oss.jfrog.org/artifactory/oss-snapshot-local" }
+    }
 }
 
 task clean(type: Delete) {

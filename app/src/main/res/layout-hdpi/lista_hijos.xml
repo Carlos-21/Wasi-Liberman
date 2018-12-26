@@ -38,7 +38,7 @@
                 android:layout_toRightOf="@+id/oFotoHijo"
                 android:text="Apellidos: Bunbury Ozaldir\nNombres: Fernando Alberto\nGrado: 5to primaria"
                 android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
 
         </LinearLayout>
