@@ -2,35 +2,34 @@ package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.contenedor.Hijo;
 import aplicacion.liberman.com.wasiL2.soporte.AdaptadorHijo;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView lista;
-    private boolean estado;
-    private boolean casa;
+    private boolean bEstado;
+    private boolean bCasa;
     private AdaptadorHijo adaptadorHijo;
-    private String identificador;
+    private String sIdentificador;
     private boolean bandera;
 
     @Override
@@ -38,27 +37,7 @@ public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_hijo_movilidad);
 
-        verificarVista();
-
-        lista = (RecyclerView) findViewById(R.id.listaHijoMovilidad);
-        lista.setHasFixedSize(true);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        lista.setLayoutManager(linearLayoutManager);
-
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        Query query = database.collection("Niño").whereEqualTo("movilidad",identificador)
-                                                              .whereEqualTo("estado", estado)
-                                                              .whereEqualTo("casa", casa);
-
-        FirestoreRecyclerOptions<Hijo> options = new FirestoreRecyclerOptions.Builder<Hijo>()
-                .setQuery(query, Hijo.class)
-                .build();
-
-        adaptadorHijo = new AdaptadorHijo(options);
-
-        adaptadorHijo.setOnClickListener(this);
-        lista.setAdapter(adaptadorHijo);
+        inicializarVerHijoMovilidad();
     }
 
     @Override
@@ -76,28 +55,12 @@ public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    /**
-     * Definir documentación
-     */
-    private void verificarVista(){
-        Intent inten = getIntent();
-        Bundle bun = inten.getExtras();
-
-        if(bun != null){
-            setTitle((String)bun.getString("titulo"));
-            identificador = (String)bun.getString("identificador");
-            estado = (boolean)bun.getBoolean("estado");
-            casa = (boolean)bun.getBoolean("casa");
-            bandera = (boolean)bun.getBoolean("bandera");
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(VerHijoMovilidad.this, Movilidad.class);
-                intent.putExtra("identificador", identificador);
+                intent.putExtra("identificador", sIdentificador);
                 startActivity(intent);
                 return true;
             default:
@@ -114,6 +77,34 @@ public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickL
             autorizarEntregaHijo(hijo.getApellidos(), hijo.getNombres(), hijo.getIdentificador());
             registrarSalida(hijo.getIdentificador());
         }
+    }
+
+    private void verificarIntencion() {
+        Intent oIntencion = getIntent();
+        Bundle oBundle = oIntencion.getExtras();
+
+        if (oBundle != null) {
+            setTitle(oBundle.getString("titulo"));
+            sIdentificador = oBundle.getString("identificador");
+            bEstado = oBundle.getBoolean("estado");
+            bCasa = oBundle.getBoolean("casa");
+            bandera = oBundle.getBoolean("bandera");
+        }
+    }
+
+    private void inicializarVerHijoMovilidad() {
+        verificarIntencion();
+
+        lista = findViewById(R.id.listaHijoMovilidad);
+        lista.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        lista.setLayoutManager(linearLayoutManager);
+
+        adaptadorHijo = new AdaptadorHijo(FirebaseUtilConsulta.listarAlumnosMovilidad(sIdentificador, bEstado, bCasa));
+
+        adaptadorHijo.setOnClickListener(this);
+        lista.setAdapter(adaptadorHijo);
     }
 
     /**

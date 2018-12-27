@@ -1,56 +1,31 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.contenedor.Hijo;
 import aplicacion.liberman.com.wasiL2.soporte.AdaptadorHijo;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView lista;
     private AdaptadorHijo adaptadorHijo;
-    private String identificador;
+    private String sIdentificador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_hijo_recogedor);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        setTitle(R.string.sHijos);
-        verificarVista();
-
-        lista = (RecyclerView) findViewById(R.id.listaHijoRecogedor);
-        lista.setHasFixedSize(true);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        lista.setLayoutManager(linearLayoutManager);
-
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        Query query = database.collection("Niño").whereEqualTo("recogedor",identificador);
-
-        FirestoreRecyclerOptions<Hijo> options = new FirestoreRecyclerOptions.Builder<Hijo>()
-                .setQuery(query, Hijo.class)
-                .build();
-
-        adaptadorHijo = new AdaptadorHijo(options);
-
-        adaptadorHijo.setOnClickListener(this);
-        lista.setAdapter(adaptadorHijo);
+        inicializarVerHijoRecogedor();
     }
 
     @Override
@@ -63,7 +38,7 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
             intent.putExtra("nombres", hijo.getNombres());
             intent.putExtra("apellidos", hijo.getApellidos());
             intent.putExtra("imagen", hijo.getImagen());
-            intent.putExtra("identificador", identificador);
+            intent.putExtra("identificador", sIdentificador);
             intent.putExtra("identificadorHijo", hijo.getIdentificador());
             intent.putExtra("identificadorRecogedorApoderado", hijo.getApoderado());
             intent.putExtra("perfil", 3);
@@ -73,18 +48,6 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
         else{
             String mensaje = Mensaje.mensajeSalidaHecha.replace("paramH", hijo.getNombres() + " " + hijo.getApellidos());
             Toast.makeText(VerHijoRecogedor.this, mensaje, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Definir documentación
-     */
-    private void verificarVista(){
-        Intent inten = getIntent();
-        Bundle bun = inten.getExtras();
-
-        if(bun != null){
-            identificador = (String)bun.getString("identificador");
         }
     }
 
@@ -108,11 +71,39 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(VerHijoRecogedor.this, Recogedor.class);
-                intent.putExtra("identificador", identificador);
+                intent.putExtra("identificador", sIdentificador);
                 startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void inicializarVerHijoRecogedor() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        setTitle(R.string.sHijos);
+        verificarIntencion();
+
+        lista = findViewById(R.id.listaHijoRecogedor);
+        lista.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        lista.setLayoutManager(linearLayoutManager);
+
+        adaptadorHijo = new AdaptadorHijo(FirebaseUtilConsulta.listarAlumnosRecogedor(sIdentificador));
+
+        adaptadorHijo.setOnClickListener(this);
+        lista.setAdapter(adaptadorHijo);
+    }
+
+    private void verificarIntencion() {
+        Intent inten = getIntent();
+        Bundle bun = inten.getExtras();
+
+        if (bun != null) {
+            sIdentificador = bun.getString("identificador");
         }
     }
 
