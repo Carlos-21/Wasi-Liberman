@@ -1,8 +1,8 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,7 +10,7 @@ import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilAutorizacion;
 
-public class Recogedor extends AppCompatActivity implements View.OnClickListener{
+public class Recogedor extends AppCompatActivity implements View.OnClickListener {
     private ImageView permitirSalidaRecogedor;
     private ImageView cerrarSessionRecogedor;
     private String identificador;
@@ -22,9 +22,9 @@ public class Recogedor extends AppCompatActivity implements View.OnClickListener
 
         verificarVista();
 
-        permitirSalidaRecogedor = (ImageView)findViewById(R.id.permitirSalidaRecogedor);
+        permitirSalidaRecogedor = findViewById(R.id.permitirSalidaRecogedor);
         permitirSalidaRecogedor.setOnClickListener(this);
-        cerrarSessionRecogedor = (ImageView)findViewById(R.id.cerrarSesionRecogedor);
+        cerrarSessionRecogedor = findViewById(R.id.cerrarSesionRecogedor);
         cerrarSessionRecogedor.setOnClickListener(this);
 
         FirebaseUtilAutorizacion.cerrarSesionRecogedor(Recogedor.this);
@@ -33,24 +33,31 @@ public class Recogedor extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         Intent intent = null;
-        switch (view.getId()){
-            case R.id.permitirSalidaRecogedor : intent = new Intent(Recogedor.this, VerHijoRecogedor.class);
+        switch (view.getId()) {
+            case R.id.permitirSalidaRecogedor:
+                intent = new Intent(Recogedor.this, VerHijoRecogedor.class);
                 intent.putExtra("identificador", identificador);
                 startActivity(intent);
                 break;
-            case R.id.cerrarSesionRecogedor : AlertaDialogoUtil.cerrarSesion(null, null, Recogedor.this, null,3);
+            case R.id.cerrarSesionRecogedor:
+                AlertaDialogoUtil.cerrarSesion(null, null, Recogedor.this, null, 3);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertaDialogoUtil.cerrarSesion(null, null, Recogedor.this, null, 3);
     }
 
     /**
      * Definir documentación
      */
-    private void verificarVista(){
+    private void verificarVista() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();
 
-        if(bun != null){
-            identificador = (String)bun.getString("identificador");
+        if (bun != null) {
+            identificador = bun.getString("identificador");
         }
     }
 

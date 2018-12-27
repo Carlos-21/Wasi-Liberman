@@ -73,8 +73,10 @@ public class FirebaseUtilAutorizacion {
      * @param sCodigoSeguridad
      */
     public static void autentificarPorCelular(final LoginFirebase oLoginFirebase, String sToken, String sCodigoSeguridad) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(sToken, sCodigoSeguridad);
         FirebaseAuth oAutentificar = FirebaseAuth.getInstance();
+
+        System.out.println("Token asfsaf : " + sToken);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(sToken, sCodigoSeguridad);
 
         oAutentificar.signInWithCredential(credential)
                 .addOnCompleteListener(oLoginFirebase, new OnCompleteListener<AuthResult>() {
@@ -97,7 +99,7 @@ public class FirebaseUtilAutorizacion {
                 });
     }
 
-    public static void verificarTelefonoc(final ConfirmarRecogedor oConfirmarRecogedor, final String sTelefono, final String sUsuario, final String sClave) {
+    public static void verificarTelefono(final ConfirmarRecogedor oConfirmarRecogedor, final String sTelefono, final String sUsuario, final String sClave, final String sIdentificador) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+51" + sTelefono, 60, TimeUnit.SECONDS, oConfirmarRecogedor, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     @Override
@@ -114,6 +116,7 @@ public class FirebaseUtilAutorizacion {
                     public void onCodeSent(String idSeguridad, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         super.onCodeSent(idSeguridad, forceResendingToken);
 
+                        FirebaseUtilEscritura.registrarRecogedor(sUsuario, sClave, sIdentificador);
                         String sMensaje = Mensaje.mensajeTextoRecogeor
                                 .replace("paramI", idSeguridad)
                                 .replace("paramU", sUsuario)

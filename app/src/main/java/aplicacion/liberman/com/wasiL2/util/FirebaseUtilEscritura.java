@@ -41,6 +41,7 @@ public class FirebaseUtilEscritura {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 DocumentReference nycRef = db.collection("Niño").document(document.getId());
                                 batch.update(nycRef, "estado", false);
+                                batch.update(nycRef, "casa", false);
                             }
                         } else {
 

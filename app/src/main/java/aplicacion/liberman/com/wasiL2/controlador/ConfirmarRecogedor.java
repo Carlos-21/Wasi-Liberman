@@ -11,8 +11,7 @@ import android.widget.EditText;
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.soporte.Generador;
 import aplicacion.liberman.com.wasiL2.soporte.Validar;
-import aplicacion.liberman.com.wasiL2.util.FirebaseUtilAutorizacion;
-import aplicacion.liberman.com.wasiL2.util.FirebaseUtilEscritura;
+import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 
 public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClickListener {
     private Button confirmarRecogedor;
@@ -20,7 +19,7 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
     private EditText textoUsuarioRecogedor;
     private EditText textoContraseñaRecogedor;
     private EditText textoTelefonoRecogedor;
-    private String identificador;
+    private String sIdentificador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,8 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
                     String sTelefono = textoTelefonoRecogedor.getText().toString();
                     String sUsuario = textoUsuarioRecogedor.getText().toString();
                     String sClave = textoContraseñaRecogedor.getText().toString();
-                    FirebaseUtilAutorizacion.verificarTelefonoc(ConfirmarRecogedor.this, sTelefono, sUsuario, sClave);
-                    FirebaseUtilEscritura.registrarRecogedor(sUsuario, sClave, identificador);
+                    AlertaDialogoUtil.dialogoAlertaConfirmarRecogedor(ConfirmarRecogedor.this, sTelefono,
+                            sUsuario, sClave, sIdentificador);
                 }
                 break;
             case R.id.botonGenerarDatos:
@@ -70,7 +69,7 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(ConfirmarRecogedor.this, Apoderado.class);
-                intent.putExtra("identificador", identificador);
+                intent.putExtra("identificador", sIdentificador);
                 startActivity(intent);
                 return true;
             default:
@@ -78,12 +77,19 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ConfirmarRecogedor.this, Apoderado.class);
+        intent.putExtra("identificador", sIdentificador);
+        startActivity(intent);
+    }
+
     private void verificarIntencion() {
         Intent oIntencion = getIntent();
         Bundle oBundle = oIntencion.getExtras();
 
         if (oBundle != null) {
-            identificador = oBundle.getString("identificador");
+            sIdentificador = oBundle.getString("identificador");
         }
     }
 

@@ -54,7 +54,7 @@ public class AlertaDialogoUtil {
         oDialogoAlerta.show();
     }
 
-    public static void dialogoAlertaConfirmarRecogedor(final ConfirmarRecogedor oConfirmarRecogedor, final String sTelefono, final String sUsuario, final String sClave) {
+    public static void dialogoAlertaConfirmarRecogedor(final ConfirmarRecogedor oConfirmarRecogedor, final String sTelefono, final String sUsuario, final String sClave, final String sIdentificador) {
         AlertDialog.Builder oConstructor = new AlertDialog.Builder(oConfirmarRecogedor);
         oConstructor.setTitle(Mensaje.sTituloAsignarRecogedor);
         oConstructor.setMessage(Mensaje.sMensajeAsignarRecogedor);
@@ -64,7 +64,7 @@ public class AlertaDialogoUtil {
         oConstructor.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                FirebaseUtilAutorizacion.verificarTelefonoc(oConfirmarRecogedor, sTelefono, sUsuario, sClave);
+                FirebaseUtilAutorizacion.verificarTelefono(oConfirmarRecogedor, sTelefono, sUsuario, sClave, sIdentificador);
             }
         });
 

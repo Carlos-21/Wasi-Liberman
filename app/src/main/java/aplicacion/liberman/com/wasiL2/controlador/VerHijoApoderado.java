@@ -82,6 +82,13 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VerHijoApoderado.this, Apoderado.class);
+        intent.putExtra("identificador", sIdentificador);
+        startActivity(intent);
+    }
+
     private void inicializarVerHijoApoderado() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

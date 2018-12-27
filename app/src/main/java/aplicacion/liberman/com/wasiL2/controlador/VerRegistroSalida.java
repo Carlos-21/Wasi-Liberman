@@ -1,62 +1,52 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-
 import aplicacion.liberman.com.wasiL2.R;
-import aplicacion.liberman.com.wasiL2.contenedor.Registro;
 import aplicacion.liberman.com.wasiL2.soporte.AdaptadorRegistro;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class VerRegistroSalida extends AppCompatActivity {
     private RecyclerView lista;
     private AdaptadorRegistro adaptadorRegistro;
-    private String identificador;
+    private String sIdentificador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_registro_salida);
 
+        inicializarVerRegistroSalida();
+    }
+
+    private void inicializarVerRegistroSalida() {
         setTitle(R.string.sRegistroSalidas);
 
-        verificarVista();
+        verificarIntencion();
 
-        lista = (RecyclerView) findViewById(R.id.listaRegistroSalida);
+        lista = findViewById(R.id.listaRegistroSalida);
         lista.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         lista.setLayoutManager(linearLayoutManager);
 
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        Query query = database.collection("Usuarios").document(identificador).collection("Salidas");
 
-        FirestoreRecyclerOptions<Registro> options = new FirestoreRecyclerOptions.Builder<Registro>()
-                .setQuery(query, Registro.class)
-                .build();
-
-        adaptadorRegistro = new AdaptadorRegistro(options);
+        adaptadorRegistro = new AdaptadorRegistro(FirebaseUtilConsulta.listarSalidas(sIdentificador));
 
         lista.setAdapter(adaptadorRegistro);
-
     }
 
-    /**
-     * Definir documentación
-     */
-    private void verificarVista(){
+    private void verificarIntencion() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();
 
         if(bun != null){
-            identificador = (String)bun.getString("identificador");
+            sIdentificador = bun.getString("identificador");
         }
     }
 
@@ -80,7 +70,7 @@ public class VerRegistroSalida extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(VerRegistroSalida.this, Apoderado.class);
-                intent.putExtra("identificador", identificador);
+                intent.putExtra("identificador", sIdentificador);
                 startActivity(intent);
                 return true;
             default:
@@ -88,4 +78,12 @@ public class VerRegistroSalida extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(VerRegistroSalida.this, Apoderado.class);
+        intent.putExtra("identificador", sIdentificador);
+        startActivity(intent);
+    }
 }

@@ -68,6 +68,12 @@ public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VerHijoMovilidad.this, Movilidad.class);
+        intent.putExtra("identificador", sIdentificador);
+        startActivity(intent);
+    }
 
     @Override
     public void onClick(View view) {

@@ -1,9 +1,9 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,8 +40,8 @@ public class SalidaPermitida extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salida_permitida);
 
-        mensajeSalida = (TextView)findViewById(R.id.mensajeSalida);
-        fotoHijoSalida = (ImageView)findViewById(R.id.fotoHijoSalida);
+        mensajeSalida = findViewById(R.id.mensajeSalida);
+        fotoHijoSalida = findViewById(R.id.fotoHijoSalida);
         mostrarSalida();
         registrarSalida();
     }
@@ -54,20 +54,20 @@ public class SalidaPermitida extends AppCompatActivity {
         Bundle bun = inten.getExtras();
 
         if(bun != null){
-            int tipoSalida = (int)bun.getInt("salida");
+            int tipoSalida = bun.getInt("salida");
             if(tipoSalida == 1){
                 setTitle("Permitir Salida");
             }
             else{
                 setTitle("Permitir Movilidad");
             }
-            imagenHijo = (String)bun.getString("imagen");
+            imagenHijo = bun.getString("imagen");
             Picasso.get().load(imagenHijo).into(fotoHijoSalida);
-            identificador = (String)bun.getString("identificador");
-            nombreHijo = (String)bun.getString("nombres");
-            identificadorHijo = (String)bun.getString("identificadorHijo");
-            apoderado = (String)bun.getString("apoderado");
-            tipoPerfil = (int)bun.getInt("tipoPerfil");
+            identificador = bun.getString("identificador");
+            nombreHijo = bun.getString("nombres");
+            identificadorHijo = bun.getString("identificadorHijo");
+            apoderado = bun.getString("apoderado");
+            tipoPerfil = bun.getInt("tipoPerfil");
         }
 
         Mensaje.hora = Fecha.horaActual();
@@ -144,4 +144,17 @@ public class SalidaPermitida extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (tipoPerfil == 1) {
+            Intent intent = new Intent(SalidaPermitida.this, VerHijoApoderado.class);
+            intent.putExtra("bandera", true);
+            intent.putExtra("identificador", identificador);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SalidaPermitida.this, VerHijoRecogedor.class);
+            intent.putExtra("identificador", identificador);
+            startActivity(intent);
+        }
+    }
 }

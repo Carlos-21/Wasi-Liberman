@@ -79,6 +79,13 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VerHijoRecogedor.this, Recogedor.class);
+        intent.putExtra("identificador", sIdentificador);
+        startActivity(intent);
+    }
+
     private void inicializarVerHijoRecogedor() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

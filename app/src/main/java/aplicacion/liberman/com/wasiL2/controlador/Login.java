@@ -19,7 +19,7 @@ import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
 import aplicacion.liberman.com.wasiL2.soporte.Buscar;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.soporte.Validar;
-import aplicacion.liberman.com.wasiL2.util.FirebaseUtil;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText oTextoUsuario;
@@ -55,12 +55,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             verificarIntencion();
         }
 
-        FirebaseUtil.listarUsuarios(aListaUsuarios, iPerfil);
+        FirebaseUtilConsulta.listarUsuarios(aListaUsuarios, iPerfil);
     }
 
     @Override
     public void onClick(View view) {
         verificarUsuario();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent oIntent = new Intent(Login.this, Perfil.class);
+        startActivity(oIntent);
     }
 
     /**

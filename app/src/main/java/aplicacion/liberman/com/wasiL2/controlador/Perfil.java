@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
@@ -70,6 +72,15 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        FirebaseAuth.getInstance().signOut();
+
+        Intent oItencion = new Intent(Perfil.this, LoginFirebase.class);
+        startActivity(oItencion);
+        finish();
     }
 
     private void inicializarPerfil() {

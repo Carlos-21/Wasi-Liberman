@@ -58,6 +58,11 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertaDialogoUtil.cerrarSesion(Apoderado.this, null, null, null, 1);
+    }
+
     private void inicializarApoderado() {
         verHijos = findViewById(R.id.verHijos);
         verHijos.setOnClickListener(this);

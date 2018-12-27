@@ -53,6 +53,13 @@ public class VerHijoProfesor extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VerHijoProfesor.this, Profesor.class);
+        intent.putExtra("identificador", sIdentificador);
+        startActivity(intent);
+    }
+
     private void inicializarVerHijoProfesor() {
         verificarIntencion();
 

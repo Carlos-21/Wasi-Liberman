@@ -1,8 +1,8 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,11 +32,11 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        permitirSalida = (ImageView)findViewById(R.id.permitirSalida);
+        permitirSalida = findViewById(R.id.permitirSalida);
         permitirSalida.setOnClickListener(this);
-        permitirMovilidad = (ImageView)findViewById(R.id.permitirMovilidad);
+        permitirMovilidad = findViewById(R.id.permitirMovilidad);
         permitirMovilidad.setOnClickListener(this);
-        hijoSalida = (ImageView)findViewById(R.id.fotoHijoSalida);
+        hijoSalida = findViewById(R.id.fotoHijoSalida);
 
         verificarVista();
         setTitle(apellidosHijo + " " + nombresHijo);
@@ -60,86 +60,18 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
         Bundle bun = inten.getExtras();
 
         if(bun != null){
-            nombresHijo = (String)bun.getString("nombres");
-            apellidosHijo = (String)bun.getString("apellidos");
-            imagen = (String)bun.getString("imagen");
-            identificador = (String)bun.getString("identificador");
-            identificadorHijo = (String)bun.getString("identificadorHijo");
+            nombresHijo = bun.getString("nombres");
+            apellidosHijo = bun.getString("apellidos");
+            imagen = bun.getString("imagen");
+            identificador = bun.getString("identificador");
+            identificadorHijo = bun.getString("identificadorHijo");
             Picasso.get().load(imagen).into(hijoSalida);
-            tipoPerfil = (int)bun.getInt("perfil");
+            tipoPerfil = bun.getInt("perfil");
             if(tipoPerfil == 3){
-                identificadorRecogedorApoderado = (String)bun.getString("identificadorRecogedorApoderado");
+                identificadorRecogedorApoderado = bun.getString("identificadorRecogedorApoderado");
             }
         }
     }
-
-    /*
-    private void autorizarSalidaApoderado(){
-        Mensaje.nombre = apellidosHijo + " " + nombresHijo;
-        AlertDialog.Builder builder = new AlertDialog.Builder(PermitirSalida.this);
-        builder.setTitle(Mensaje.tituloPermitirSalida);
-        builder.setMessage(Mensaje.mensajePermitirSalida.replace("paramN", Mensaje.nombre));
-        builder.setCancelable(false);
-        builder.setIcon(R.drawable.informacion);
-
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(PermitirSalida.this, SalidaPermitida.class);
-                intent.putExtra("salida",1);
-                intent.putExtra("imagen",imagen);
-                intent.putExtra("identificador", identificador);
-                intent.putExtra("nombres", nombresHijo + " " + apellidosHijo);
-                intent.putExtra("identificadorHijo", identificadorHijo);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //No se hace nada
-                dialogInterface.cancel();
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    private void autorizarSalidaMovilidad(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(PermitirSalida.this);
-        builder.setTitle(Mensaje.tituloPermitirMovilidad);
-        builder.setMessage(Mensaje.mensajePermitirMovilidad);
-        builder.setCancelable(false);
-        builder.setIcon(R.drawable.informacion);
-
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(PermitirSalida.this, SalidaPermitida.class);
-                intent.putExtra("salida",2);
-                intent.putExtra("imagen",imagen);
-                intent.putExtra("identificador", identificador);
-                intent.putExtra("nombres", nombresHijo + " " + apellidosHijo);
-                intent.putExtra("identificadorHijo", identificadorHijo);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //No se hace nada
-                dialogInterface.cancel();
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,4 +94,19 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (tipoPerfil == 1) {
+            Intent intent = new Intent(PermitirSalida.this, VerHijoApoderado.class);
+            intent.putExtra("bandera", true);
+            intent.putExtra("identificador", identificador);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(PermitirSalida.this, VerHijoRecogedor.class);
+            intent.putExtra("identificador", identificador);
+            startActivity(intent);
+        }
+    }
 }
