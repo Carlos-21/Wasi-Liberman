@@ -1,30 +1,20 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.WriteBatch;
 
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.contenedor.Hijo;
 import aplicacion.liberman.com.wasiL2.soporte.AdaptadorHijo;
-import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
+import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
-public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickListener{
+public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView lista;
     private boolean bEstado;
     private boolean bCasa;
@@ -77,14 +67,18 @@ public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(bandera){
+        if (bandera) {
             int posicion = lista.getChildAdapterPosition(view);
             Hijo hijo = adaptadorHijo.getItem(posicion);
-            autorizarEntregaHijo(hijo.getApellidos(), hijo.getNombres(), hijo.getIdentificador());
-            registrarSalida(hijo.getIdentificador());
+            AlertaDialogoUtil.autorizarEntregaHijo(VerHijoMovilidad.this, hijo.getApellidos(), hijo.getNombres(), hijo.getIdentificador());
         }
     }
 
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * cinco datos con las llaves titulo, idenficador, estado, casa, bandera
+     * como parámetros
+     */
     private void verificarIntencion() {
         Intent oIntencion = getIntent();
         Bundle oBundle = oIntencion.getExtras();
@@ -98,6 +92,10 @@ public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_ver_hijo_movilidad
+     */
     private void inicializarVerHijoMovilidad() {
         verificarIntencion();
 
@@ -111,56 +109,6 @@ public class VerHijoMovilidad extends AppCompatActivity implements View.OnClickL
 
         adaptadorHijo.setOnClickListener(this);
         lista.setAdapter(adaptadorHijo);
-    }
-
-    /**
-     * Definir documentación
-     */
-    private void autorizarEntregaHijo(String apellidosHijo, String nombresHijo, String identificadorHijo){
-        Mensaje.nombre = apellidosHijo + " " + nombresHijo;
-        AlertDialog.Builder builder = new AlertDialog.Builder(VerHijoMovilidad.this);
-        builder.setTitle(Mensaje.tituloPermitirEntrega);
-        builder.setMessage(Mensaje.mensajePermitirEntrega.replace("paramH", Mensaje.nombre));
-        builder.setCancelable(false);
-        builder.setIcon(R.drawable.informacion);
-
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String mensaje = Mensaje.mensajeEntregaHecha.replace("paramH", Mensaje.nombre);
-                Toast.makeText(VerHijoMovilidad.this, mensaje, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //No se hace nada
-                dialogInterface.cancel();
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    /**
-     * Definir documentación
-     */
-    private void registrarSalida(String identificadorHijo){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        WriteBatch batch = db.batch();
-
-        DocumentReference nycRef = db.collection("Niño").document(identificadorHijo);
-        batch.update(nycRef, "casa", true);
-
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                // ...
-            }
-        });
     }
 
 }

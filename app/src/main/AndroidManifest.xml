@@ -80,7 +80,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="aplicacion.liberman.com.wasiL2.controlador.Profesor" />
         </activity>
-        <activity android:name="aplicacion.liberman.com.wasiL2.controlador.LoginFirebase" />
         <activity
             android:name="aplicacion.liberman.com.wasiL2.controlador.VerRegistroSalida"
             android:parentActivityName="aplicacion.liberman.com.wasiL2.controlador.Apoderado">
@@ -92,6 +91,13 @@
             android:name="aplicacion.liberman.com.wasiL2.controlador.Recogedor"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity android:name="aplicacion.liberman.com.wasiL2.controlador.VerHijoRecogedor"></activity>
+
+        <!-- Servicios -->
+        <service
+            android:name="aplicacion.liberman.com.wasiL2.servicio.ServicioFirebase"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

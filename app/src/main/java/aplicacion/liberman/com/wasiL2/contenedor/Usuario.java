@@ -1,25 +1,34 @@
 package aplicacion.liberman.com.wasiL2.contenedor;
 
 public class Usuario {
-    private String clave;
-    private String nombre;
+    private String nombres;
+    private String apellidos;
+    private String correo;
     private int perfil;
-    private String identificador;
+    private boolean estado;
 
-    public String getNombre() {
-        return nombre;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
-    public String getClave() {
-        return clave;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public int getPerfil() {
@@ -30,12 +39,12 @@ public class Usuario {
         this.perfil = perfil;
     }
 
-    public String getIdentificador() {
-        return identificador;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
 }

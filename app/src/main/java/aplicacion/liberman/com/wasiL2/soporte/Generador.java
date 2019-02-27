@@ -7,19 +7,21 @@ public class Generador {
 
     private static String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
 
-    public static String getUsuario(){
-        return getRandom(MINUSCULAS + MAYUSCULAS + NUMEROS, 7);
+    private static int NUMERO_GENERADOR = 8;
+
+    public static String getUsuario() {
+        return getRandom(MINUSCULAS + MAYUSCULAS + NUMEROS, NUMERO_GENERADOR);
     }
 
-    public static String getClave(){
-        return getRandom(NUMEROS + MAYUSCULAS + MINUSCULAS, 7);
+    public static String getClave() {
+        return getRandom(NUMEROS + MAYUSCULAS + MINUSCULAS, NUMERO_GENERADOR);
     }
 
     private static String getRandom(String key, int length) {
         String dato = "";
 
         for (int i = 0; i < length; i++) {
-            dato+=(key.charAt((int)(Math.random() * key.length())));
+            dato += (key.charAt((int) (Math.random() * key.length())));
         }
 
         return dato;

@@ -36,7 +36,7 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
             case R.id.botonConfirmarRecogedor:
                 if (Validar.validarRegistroRecogedor(textoUsuarioRecogedor, textoContraseñaRecogedor, textoTelefonoRecogedor)) {
                     String sTelefono = textoTelefonoRecogedor.getText().toString();
-                    String sUsuario = textoUsuarioRecogedor.getText().toString();
+                    String sUsuario = textoUsuarioRecogedor.getText().toString() + "@gmail.com";
                     String sClave = textoContraseñaRecogedor.getText().toString();
                     AlertaDialogoUtil.dialogoAlertaConfirmarRecogedor(ConfirmarRecogedor.this, sTelefono,
                             sUsuario, sClave, sIdentificador);
@@ -48,6 +48,10 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_confirmar_recogedor
+     */
     private void inicializarConfirmarRecogedor() {
         textoUsuarioRecogedor = findViewById(R.id.textoUsuarioRecogedor);
         textoContraseñaRecogedor = findViewById(R.id.textoClaveRecogedor);
@@ -58,7 +62,10 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
         generarDatos.setOnClickListener(this);
     }
 
-
+    /**
+     * Método encargado de generar datos aleatorios para el campo
+     * de texto de usuario y el campo de texto de contraseña
+     */
     private void generarDatos() {
         textoUsuarioRecogedor.setText(Generador.getUsuario());
         textoContraseñaRecogedor.setText(Generador.getClave());
@@ -84,6 +91,10 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
         startActivity(intent);
     }
 
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave identificador como parámetro
+     */
     private void verificarIntencion() {
         Intent oIntencion = getIntent();
         Bundle oBundle = oIntencion.getExtras();

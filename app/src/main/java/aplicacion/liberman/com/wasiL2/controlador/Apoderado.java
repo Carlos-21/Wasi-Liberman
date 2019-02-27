@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import aplicacion.liberman.com.wasiL2.R;
+import aplicacion.liberman.com.wasiL2.servicio.ServicioFirebase;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 
 public class Apoderado extends AppCompatActivity implements View.OnClickListener {
@@ -22,8 +23,8 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apoderado);
 
-        inicializarApoderado();
         verificarIntencion();
+        inicializarApoderado();
     }
 
     @Override
@@ -53,16 +54,20 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.cerrarSesion:
-                AlertaDialogoUtil.cerrarSesion(Apoderado.this, null, null, null, 1);
+                AlertaDialogoUtil.cerrarSesion(Apoderado.this);
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        AlertaDialogoUtil.cerrarSesion(Apoderado.this, null, null, null, 1);
+        AlertaDialogoUtil.cerrarSesion(Apoderado.this);
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_apoderado
+     */
     private void inicializarApoderado() {
         verHijos = findViewById(R.id.verHijos);
         verHijos.setOnClickListener(this);
@@ -74,8 +79,17 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         registroSalidas.setOnClickListener(this);
         cerrarSesion = findViewById(R.id.cerrarSesion);
         cerrarSesion.setOnClickListener(this);
+
+        ServicioFirebase.sIdentificadorApoderado = identificador;
+
+        Intent intent = new Intent(Apoderado.this, ServicioFirebase.class);
+        startService(intent);
     }
 
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave identificador como parámetro
+     */
     private void verificarIntencion() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();

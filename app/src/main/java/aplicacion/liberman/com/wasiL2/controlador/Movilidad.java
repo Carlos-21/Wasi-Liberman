@@ -21,8 +21,16 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movilidad);
 
-        verificarVista();
+        verificarIntencion();
 
+        inicializarMovilidad();
+    }
+
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_movilidad
+     */
+    private void inicializarMovilidad() {
         alumnosHabilitados = findViewById(R.id.alumnosHabilitados);
         alumnosHabilitados.setOnClickListener(this);
         alumnosNoHabilitados = findViewById(R.id.alumnosNoHabilitados);
@@ -65,20 +73,21 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.cerrarSesion:
-                AlertaDialogoUtil.cerrarSesion(null, Movilidad.this, null, null, 2);
+                AlertaDialogoUtil.cerrarSesion(Movilidad.this);
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        AlertaDialogoUtil.cerrarSesion(null, Movilidad.this, null, null, 2);
+        AlertaDialogoUtil.cerrarSesion(Movilidad.this);
     }
 
     /**
-     * Definir documentación
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave identificador como parámetro
      */
-    private void verificarVista() {
+    private void verificarIntencion() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();
 

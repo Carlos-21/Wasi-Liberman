@@ -8,20 +8,16 @@ public class Buscar {
 
     /**
      * Verificar la existencia de un usuario buscando en un
-     * arreglo de usuarios traidos de la base de datos en
+     * usuario traido de la base de datos en
      * Firebase
-     * @param lista
-     * @param usuario
+     *
+     * @param oUsuarioFirebase
+     * @param oUsuarioLogin
      * @return
      */
-    public static boolean existeUsuario(ArrayList<Usuario> lista, Usuario usuario){
-        int iPosicion = -1;
-        for (Usuario auxiliar : lista){
-            if(auxiliar.getNombre().equals(usuario.getNombre()) && auxiliar.getClave().equals(usuario.getClave())){
-                usuario.setIdentificador(auxiliar.getIdentificador());
-                System.out.println("Idenficiaroda s: "+auxiliar.getIdentificador());
-                return true;
-            }
+    public static boolean existeUsuario(Usuario oUsuarioFirebase, Usuario oUsuarioLogin) {
+        if (oUsuarioFirebase.getCorreo().equals(oUsuarioLogin.getCorreo()) && oUsuarioFirebase.getPerfil() == oUsuarioLogin.getPerfil()) {
+            return true;
         }
         return false;
     }

@@ -20,14 +20,9 @@ public class Recogedor extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recogedor);
 
-        verificarVista();
+        verificarIntencion();
 
-        permitirSalidaRecogedor = findViewById(R.id.permitirSalidaRecogedor);
-        permitirSalidaRecogedor.setOnClickListener(this);
-        cerrarSessionRecogedor = findViewById(R.id.cerrarSesionRecogedor);
-        cerrarSessionRecogedor.setOnClickListener(this);
-
-        FirebaseUtilAutorizacion.cerrarSesionRecogedor(Recogedor.this);
+        inicializarRecogedor();
     }
 
     @Override
@@ -40,19 +35,33 @@ public class Recogedor extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.cerrarSesionRecogedor:
-                AlertaDialogoUtil.cerrarSesion(null, null, Recogedor.this, null, 3);
+                AlertaDialogoUtil.cerrarSesion(Recogedor.this);
         }
     }
 
     @Override
     public void onBackPressed() {
-        AlertaDialogoUtil.cerrarSesion(null, null, Recogedor.this, null, 3);
+        AlertaDialogoUtil.cerrarSesion(Recogedor.this);
     }
 
     /**
-     * Definir documentación
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_recogedor
      */
-    private void verificarVista() {
+    private void inicializarRecogedor() {
+        permitirSalidaRecogedor = findViewById(R.id.permitirSalidaRecogedor);
+        permitirSalidaRecogedor.setOnClickListener(this);
+        cerrarSessionRecogedor = findViewById(R.id.cerrarSesionRecogedor);
+        cerrarSessionRecogedor.setOnClickListener(this);
+
+        FirebaseUtilAutorizacion.cerrarSesionRecogedor(Recogedor.this);
+    }
+
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave identificador como parámetro
+     */
+    private void verificarIntencion() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();
 

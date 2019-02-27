@@ -86,6 +86,10 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
         startActivity(intent);
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_ver_hijo_recogedor
+     */
     private void inicializarVerHijoRecogedor() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -105,6 +109,10 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
         lista.setAdapter(adaptadorHijo);
     }
 
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave identificador como parámetro
+     */
     private void verificarIntencion() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();

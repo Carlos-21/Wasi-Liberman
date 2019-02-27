@@ -8,15 +8,15 @@ import android.widget.TextView;
 
 import aplicacion.liberman.com.wasiL2.R;
 
-public class RegistroHolder extends RecyclerView.ViewHolder{
+public class RegistroHolder extends RecyclerView.ViewHolder {
     CardView oCartaHijoSalida;
     TextView oDatoHijoSalida;
     ImageView oFotoHijoSalida;
 
     public RegistroHolder(View itemView) {
         super(itemView);
-        oCartaHijoSalida = (CardView)itemView.findViewById(R.id.oCartaHijoSalida);
-        oDatoHijoSalida = (TextView)itemView.findViewById(R.id.oTextoDatosSalida);
-        oFotoHijoSalida = (ImageView)itemView.findViewById(R.id.oFotoHijoSalida);
+        oCartaHijoSalida = (CardView) itemView.findViewById(R.id.oCartaHijoSalida);
+        oDatoHijoSalida = (TextView) itemView.findViewById(R.id.oTextoDatosSalida);
+        oFotoHijoSalida = (ImageView) itemView.findViewById(R.id.oFotoHijoSalida);
     }
 }

@@ -31,6 +31,22 @@
           }
         },
         {
+          "client_id": "434477753295-bh76mghd9f9gt8l9j64u1tlfbuterbot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aplicacion.liberman.com.wasiL2",
+            "certificate_hash": "e6b0c5023077d02bb8d0a10e93f6a36349cb6db1"
+          }
+        },
+        {
+          "client_id": "434477753295-5hb29qhtvrlofk1lu0pftd92bb0j77nf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aplicacion.liberman.com.wasiL2",
+            "certificate_hash": "9e514736a34301d35150b698cb8ff220e6da0962"
+          }
+        },
+        {
           "client_id": "434477753295-4d6e3vt73frld3a4lf648krs50kdj0ig.apps.googleusercontent.com",
           "client_type": 3
         }

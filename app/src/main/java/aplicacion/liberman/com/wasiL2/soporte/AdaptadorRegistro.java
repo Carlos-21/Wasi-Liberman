@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.contenedor.Registro;
 
-public class AdaptadorRegistro extends FirestoreRecyclerAdapter<Registro, RegistroHolder> implements View.OnClickListener{
+public class AdaptadorRegistro extends FirestoreRecyclerAdapter<Registro, RegistroHolder> implements View.OnClickListener {
     private View.OnClickListener listener;
 
     /**
@@ -28,19 +28,19 @@ public class AdaptadorRegistro extends FirestoreRecyclerAdapter<Registro, Regist
 
     @Override
     public void onClick(View view) {
-        if(listener!=null){
+        if (listener != null) {
             listener.onClick(view);
         }
     }
 
-    public void setOnClickListener(View.OnClickListener listener){
+    public void setOnClickListener(View.OnClickListener listener) {
         this.listener = listener;
     }
 
 
     @Override
     protected void onBindViewHolder(RegistroHolder holder, int position, Registro model) {
-        holder.oDatoHijoSalida.setText("Hijo: "+model.getHijo()+"\nFecha: "+model.getFecha()+"\nHora: "+model.getHora()+"\nUsuario: "+model.getUsuario());
+        holder.oDatoHijoSalida.setText("Hijo: " + model.getHijo() + "\nFecha: " + model.getFecha() + "\nHora: " + model.getHora() + "\nUsuario: " + model.getUsuario());
         Picasso.get().load(model.getImagen()).into(holder.oFotoHijoSalida);
     }
 

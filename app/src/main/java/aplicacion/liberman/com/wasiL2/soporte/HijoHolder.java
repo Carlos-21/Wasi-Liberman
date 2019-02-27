@@ -15,8 +15,8 @@ public class HijoHolder extends RecyclerView.ViewHolder {
 
     public HijoHolder(View itemView) {
         super(itemView);
-        oCartaHijo = (CardView)itemView.findViewById(R.id.oCartaHijo);
-        oDatoHijo = (TextView)itemView.findViewById(R.id.oTextoDatos);
-        oFotoHijo = (ImageView)itemView.findViewById(R.id.oFotoHijo);
+        oCartaHijo = (CardView) itemView.findViewById(R.id.oCartaHijo);
+        oDatoHijo = (TextView) itemView.findViewById(R.id.oTextoDatos);
+        oFotoHijo = (ImageView) itemView.findViewById(R.id.oFotoHijo);
     }
 }

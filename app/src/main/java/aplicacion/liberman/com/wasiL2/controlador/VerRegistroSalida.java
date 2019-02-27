@@ -24,6 +24,10 @@ public class VerRegistroSalida extends AppCompatActivity {
         inicializarVerRegistroSalida();
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_ver_registro_salida
+     */
     private void inicializarVerRegistroSalida() {
         setTitle(R.string.sRegistroSalidas);
 
@@ -41,11 +45,15 @@ public class VerRegistroSalida extends AppCompatActivity {
         lista.setAdapter(adaptadorRegistro);
     }
 
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave identificador como parámetro
+     */
     private void verificarIntencion() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();
 
-        if(bun != null){
+        if (bun != null) {
             sIdentificador = bun.getString("identificador");
         }
     }
@@ -80,8 +88,6 @@ public class VerRegistroSalida extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         Intent intent = new Intent(VerRegistroSalida.this, Apoderado.class);
         intent.putExtra("identificador", sIdentificador);
         startActivity(intent);

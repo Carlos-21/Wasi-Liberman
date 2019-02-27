@@ -26,6 +26,14 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
 
         verificarVista();
 
+        inicializarProfesor();
+    }
+
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_profesor
+     */
+    private void inicializarProfesor() {
         alumnosHabilitados = findViewById(R.id.alumnosHabilitados);
         alumnosHabilitados.setOnClickListener(this);
         alumnosNoHabilitados = findViewById(R.id.alumnosNoHabilitados);
@@ -62,18 +70,19 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
                 }
                 break;
             case R.id.cerrarSesion:
-                AlertaDialogoUtil.cerrarSesion(null, null, null, Profesor.this, 4);
+                AlertaDialogoUtil.cerrarSesion(Profesor.this);
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        AlertaDialogoUtil.cerrarSesion(null, null, null, Profesor.this, 4);
+        AlertaDialogoUtil.cerrarSesion(Profesor.this);
     }
 
     /**
-     * Definir documentación
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave identificador como parámetro
      */
     private void verificarVista() {
         Intent inten = getIntent();

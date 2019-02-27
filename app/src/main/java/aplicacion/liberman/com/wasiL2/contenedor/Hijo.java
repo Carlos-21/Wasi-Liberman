@@ -12,6 +12,7 @@ public class Hijo {
     private String nombres;
     private String profesor;
     private String recogedor;
+    private String genero;
 
     public String getApellidos() {
         return apellidos;
@@ -99,6 +100,14 @@ public class Hijo {
 
     public void setRecogedor(String recogedor) {
         this.recogedor = recogedor;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
 }

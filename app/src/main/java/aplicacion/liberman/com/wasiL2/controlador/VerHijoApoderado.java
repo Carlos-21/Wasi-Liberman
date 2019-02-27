@@ -15,7 +15,7 @@ import aplicacion.liberman.com.wasiL2.soporte.AdaptadorHijo;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
-public class VerHijoApoderado extends AppCompatActivity implements View.OnClickListener{
+public class VerHijoApoderado extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView lista;
     private boolean bClick = true;
     private AdaptadorHijo adaptadorHijo;
@@ -34,7 +34,7 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
         if (bClick) {
             int posicion = lista.getChildAdapterPosition(view);
             Hijo hijo = adaptadorHijo.getItem(posicion);
-            if(!hijo.isEstado()){
+            if (!hijo.isEstado()) {
                 Intent intent = new Intent(VerHijoApoderado.this, PermitirSalida.class);
 
                 intent.putExtra("nombres", hijo.getNombres());
@@ -45,8 +45,7 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
                 intent.putExtra("perfil", 1);
 
                 startActivity(intent);
-            }
-            else{
+            } else {
                 String mensaje = Mensaje.mensajeSalidaHecha.replace("paramH", hijo.getNombres() + " " + hijo.getApellidos());
                 Toast.makeText(VerHijoApoderado.this, mensaje, Toast.LENGTH_SHORT).show();
             }
@@ -89,6 +88,10 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
         startActivity(intent);
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_ver_hijo_apoderado
+     */
     private void inicializarVerHijoApoderado() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -108,6 +111,11 @@ public class VerHijoApoderado extends AppCompatActivity implements View.OnClickL
         lista.setAdapter(adaptadorHijo);
     }
 
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * dos dato, uno con la llave bandera y otro con la llave
+     * identificador pasadas como parámetros
+     */
     private void verificarIntencion() {
         Intent oIntencion = getIntent();
         Bundle oBundle = oIntencion.getExtras();

@@ -1,26 +1,21 @@
 package aplicacion.liberman.com.wasiL2.util;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
+import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
 import aplicacion.liberman.com.wasiL2.controlador.ConfirmarRecogedor;
-import aplicacion.liberman.com.wasiL2.controlador.LoginFirebase;
-import aplicacion.liberman.com.wasiL2.controlador.Perfil;
+import aplicacion.liberman.com.wasiL2.controlador.Login;
 import aplicacion.liberman.com.wasiL2.controlador.Recogedor;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.soporte.Temporizador;
@@ -37,7 +32,7 @@ public class FirebaseUtilAutorizacion {
      * @param oTextoUsuario
      * @param oTextoClave
      */
-    public static void autentificarPorCorreo(final LoginFirebase oLoginFirebase, EditText oTextoUsuario, EditText oTextoClave) {
+    public static void autentificarPorCorreo(final Login oLoginFirebase, final EditText oTextoUsuario, final EditText oTextoClave, final int iPerfil) {
         if (!Validar.validarLoginFirebase(oTextoUsuario, oTextoClave)) {
             return;
         }
@@ -49,12 +44,11 @@ public class FirebaseUtilAutorizacion {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(oLoginFirebase.getApplicationContext(), Mensaje.sAutenticidadCorreo,
-                                    Toast.LENGTH_SHORT).show();
+                            Usuario oUsuarioWasi = new Usuario();
+                            oUsuarioWasi.setCorreo(oTextoUsuario.getText().toString());
+                            oUsuarioWasi.setPerfil(iPerfil);
 
-                            Intent oIntencion = new Intent(oLoginFirebase.getApplication(), Perfil.class);
-                            oLoginFirebase.startActivity(oIntencion);
-                            oLoginFirebase.finish();
+                            FirebaseUtilConsulta.verificarUsuario(oLoginFirebase, oTextoUsuario.getText().toString(), oUsuarioWasi);
                         } else {
                             Toast.makeText(oLoginFirebase.getApplicationContext(), Mensaje.sNoAutenticidadCorreo,
                                     Toast.LENGTH_SHORT).show();
@@ -64,70 +58,51 @@ public class FirebaseUtilAutorizacion {
     }
 
     /**
-     * Método encargado de realizar el proceso de autentificación de firebase
-     * mediante el código que se le envió el apoderado al recogedor mediante
-     * SMS y el token enviado por Whatsapp
+     * Método encargado de registrar las credenciales necesarias para que un recogedor
+     * pueda ingresar al sistema con dicho perfil y pueda autorizar que los hijos
+     * del apoderado correspondiente puedan salir de la institución educativa
      *
-     * @param oLoginFirebase
-     * @param sToken
-     * @param sCodigoSeguridad
+     * @param confirmarRecogedor
+     * @param correo
+     * @param clave
+     * @param sIdentificador
      */
-    public static void autentificarPorCelular(final LoginFirebase oLoginFirebase, String sToken, String sCodigoSeguridad) {
-        FirebaseAuth oAutentificar = FirebaseAuth.getInstance();
+    public static void registrarRecogedorAutorizacion(final ConfirmarRecogedor confirmarRecogedor, String correo, String clave, String sIdentificador) {
+        FirebaseUtilEscritura.registrarRecogedor(correo, sIdentificador);
 
-        System.out.println("Token asfsaf : " + sToken);
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(sToken, sCodigoSeguridad);
+        final FirebaseAuth oAutentificar = FirebaseAuth.getInstance();
 
-        oAutentificar.signInWithCredential(credential)
-                .addOnCompleteListener(oLoginFirebase, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(oLoginFirebase.getApplicationContext(), Mensaje.sAutenticidadTelefono,
-                                    Toast.LENGTH_SHORT).show();
+        oAutentificar.createUserWithEmailAndPassword(correo, clave).addOnCompleteListener(confirmarRecogedor, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
 
-                            Intent oIntencion = new Intent(oLoginFirebase.getApplication(), Perfil.class);
-                            oIntencion.putExtra("bRecogedor", true);
-                            oLoginFirebase.startActivity(oIntencion);
-                            oLoginFirebase.finish();
-                        } else {
-                            Toast.makeText(oLoginFirebase.getApplicationContext(), Mensaje.sNoAutenticidadTelefono,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    String correo = SharedPreferencesUtil.recuperarCorreo(confirmarRecogedor);
+                    String clave = SharedPreferencesUtil.recuperarClave(confirmarRecogedor);
+                    Toast.makeText(confirmarRecogedor.getApplicationContext(), Mensaje.sMensajeRecogedorAsignado,
+                            Toast.LENGTH_SHORT).show();
+                    oAutentificar.signInWithEmailAndPassword(correo, clave)
+                            .addOnCompleteListener(confirmarRecogedor, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
 
-                });
-    }
-
-    public static void verificarTelefono(final ConfirmarRecogedor oConfirmarRecogedor, final String sTelefono, final String sUsuario, final String sClave, final String sIdentificador) {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+51" + sTelefono, 60, TimeUnit.SECONDS, oConfirmarRecogedor, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    @Override
-                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-                        Toast.makeText(oConfirmarRecogedor.getApplicationContext(), Mensaje.sCodigoEnviado, Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onVerificationFailed(FirebaseException e) {
-                        Toast.makeText(oConfirmarRecogedor.getApplicationContext(), Mensaje.sCodigoNoEnviado, Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onCodeSent(String idSeguridad, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        super.onCodeSent(idSeguridad, forceResendingToken);
-
-                        FirebaseUtilEscritura.registrarRecogedor(sUsuario, sClave, sIdentificador);
-                        String sMensaje = Mensaje.mensajeTextoRecogeor
-                                .replace("paramI", idSeguridad)
-                                .replace("paramU", sUsuario)
-                                .replace("paramC", sClave);
-                        MensajeRecogedor.enviarMensajeWhatsapp(oConfirmarRecogedor, sMensaje, sTelefono);
-                    }
-
+                                    }
+                                }
+                            });
                 }
-        );
+            }
+
+        });
     }
 
+    /**
+     * Método encargado de cerrar la sesión de un usuario con el
+     * perfil recogedor esto se realiza por motivos de seguridad,
+     * el cierre automático se realiza 20 minutos después de haber iniciado sesión
+     *
+     * @param recogedor
+     */
     public static void cerrarSesionRecogedor(Recogedor recogedor) {
         Date horaDespertar = new Date(System.currentTimeMillis());
 

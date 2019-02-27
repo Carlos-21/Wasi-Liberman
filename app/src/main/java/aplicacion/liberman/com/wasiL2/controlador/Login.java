@@ -1,6 +1,7 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -19,7 +20,9 @@ import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
 import aplicacion.liberman.com.wasiL2.soporte.Buscar;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.soporte.Validar;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilAutorizacion;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
+import aplicacion.liberman.com.wasiL2.util.SharedPreferencesUtil;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText oTextoUsuario;
@@ -38,6 +41,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         inicializarLogin();
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_login
+     */
     private void inicializarLogin() {
         setTitle(R.string.sLogin);
         aListaUsuarios = new ArrayList<>();
@@ -55,7 +62,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             verificarIntencion();
         }
 
-        FirebaseUtilConsulta.listarUsuarios(aListaUsuarios, iPerfil);
     }
 
     @Override
@@ -77,47 +83,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (!Validar.validarLoginPerfil(oTextoUsuario, oTextoClave)) {
             return;
         }
-        String oTextoUsuario = this.oTextoUsuario.getText().toString();
-        String oTextoClave = this.oTextoClave.getText().toString();
 
-        Usuario oUsuarioWasi = new Usuario();
-        oUsuarioWasi.setNombre(oTextoUsuario);
-        oUsuarioWasi.setClave(oTextoClave);
+        SharedPreferencesUtil.guardarUsuario(Login.this, oTextoUsuario.getText().toString(), oTextoClave.getText().toString());
 
-        if (Buscar.existeUsuario(aListaUsuarios, oUsuarioWasi)) {
-            Toast.makeText(Login.this, Mensaje.sUsuarioCorrecto, Toast.LENGTH_SHORT).show();
-            Intent oIntencion = null;
-            switch (iPerfil) {
-                case 1:
-                    oIntencion = new Intent(Login.this, Apoderado.class);
-                    oIntencion.putExtra("identificador", oUsuarioWasi.getIdentificador());
-                    startActivity(oIntencion);
-                    finish();
-                    break;
-                case 2:
-                    oIntencion = new Intent(Login.this, Movilidad.class);
-                    oIntencion.putExtra("identificador", oUsuarioWasi.getIdentificador());
-                    startActivity(oIntencion);
-                    finish();
-                    break;
-                case 3:
-                    oIntencion = new Intent(Login.this, Recogedor.class);
-                    oIntencion.putExtra("identificador", oUsuarioWasi.getIdentificador());
-                    startActivity(oIntencion);
-                    finish();
-                    break;
-                case 4:
-                    oIntencion = new Intent(Login.this, Profesor.class);
-                    oIntencion.putExtra("identificador", oUsuarioWasi.getIdentificador());
-                    startActivity(oIntencion);
-                    finish();
-                    break;
-            }
-        } else {
-            Toast.makeText(Login.this, Mensaje.sUsuarioIncorrecto, Toast.LENGTH_SHORT).show();
-        }
-
-
+        FirebaseUtilAutorizacion.autentificarPorCorreo(Login.this, oTextoUsuario, oTextoClave, iPerfil);
     }
 
     /**

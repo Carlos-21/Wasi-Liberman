@@ -20,6 +20,7 @@ public class Mensaje {
     public static String sCodigoNoEnviado = "Código no enviado";
     public static String sTituloAsignarRecogedor = "Asignar recogedor";
     public static String sMensajeAsignarRecogedor = "¿Esta seguro de confirmar Recogedor?";
+    public static String sMensajeRecogedorAsignado = "Recogedor asignado correctamente";
 
     public static String nombre;
 
@@ -46,7 +47,7 @@ public class Mensaje {
 
     public static String mensajeEntregaHecha = "paramH, ya esta en su casa";
 
-    public static String mensajeTextoRecogeor = "Su identificador es : paramI\nSu usuario es: paramU\nSu contraseña es: paramC";
+    public static String mensajeTextoRecogeor = "Su usuario es: paramU\nSu contraseña es: paramC";
 
 
     public static String tituloQuitarPermisos = "Quitar permisos";
@@ -55,4 +56,9 @@ public class Mensaje {
     public static String mensajeFueraRango = "Funcionalidad fuera de hora";
 
     public static String mensajeFirebaseRecogedor = "Se acabo tiempo de acceso";
+
+    //Mensaje para permisos
+    public static String tituloPermisosSistema = "Permisos necesarios";
+    public static String mensajePermisosSistema = "¿Desea habilitar los permisos necesarios para la aplicación?";
+
 }

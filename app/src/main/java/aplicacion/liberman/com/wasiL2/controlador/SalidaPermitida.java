@@ -24,6 +24,7 @@ import java.util.Map;
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.soporte.Fecha;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilEscritura;
 
 public class SalidaPermitida extends AppCompatActivity {
     private TextView mensajeSalida;
@@ -43,22 +44,23 @@ public class SalidaPermitida extends AppCompatActivity {
         mensajeSalida = findViewById(R.id.mensajeSalida);
         fotoHijoSalida = findViewById(R.id.fotoHijoSalida);
         mostrarSalida();
-        registrarSalida();
+        FirebaseUtilEscritura.registrarSalida(SalidaPermitida.this, identificador, nombreHijo, identificadorHijo, imagenHijo, apoderado);
     }
 
     /**
-     * Definir documentación y definir método
+     * Método encargado de mostrar la fecha y hora en la cual se esta
+     * realizando el proceso de permitir que el hijo pueda salir de la
+     * institución educativa
      */
-    private void mostrarSalida(){
+    private void mostrarSalida() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();
 
-        if(bun != null){
+        if (bun != null) {
             int tipoSalida = bun.getInt("salida");
-            if(tipoSalida == 1){
+            if (tipoSalida == 1) {
                 setTitle("Permitir Salida");
-            }
-            else{
+            } else {
                 setTitle("Permitir Movilidad");
             }
             imagenHijo = bun.getString("imagen");
@@ -76,64 +78,16 @@ public class SalidaPermitida extends AppCompatActivity {
         mensajeSalida.setText(Mensaje.mensajeSalida.replace("paramH", Mensaje.hora).replace("paramD", Mensaje.fecha));
     }
 
-    /**
-     * Definir documentación
-     */
-    private void registrarSalida(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("hijo", nombreHijo);
-        data.put("usuario", identificador);
-        data.put("fecha", Mensaje.fecha);
-        data.put("hora", Mensaje.hora);
-        data.put("imagen", imagenHijo);
-
-        String identificadorUsuario = identificador;
-        if(apoderado!=null){
-            identificadorUsuario = apoderado;
-            System.out.println("Apfewiwe  : "+ apoderado);
-        }
-
-        db.collection("Usuarios").document(identificadorUsuario).collection("Salidas")
-                .add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(SalidaPermitida.this, Mensaje.mensajeSalidaPermitida, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-
-        WriteBatch batch = db.batch();
-
-        DocumentReference nycRef = db.collection("Niño").document(identificadorHijo);
-        batch.update(nycRef, "estado", true);
-
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                // ...
-            }
-        });
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if(tipoPerfil == 1){
+                if (tipoPerfil == 1) {
                     Intent intent = new Intent(SalidaPermitida.this, VerHijoApoderado.class);
                     intent.putExtra("bandera", true);
                     intent.putExtra("identificador", identificador);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Intent intent = new Intent(SalidaPermitida.this, VerHijoRecogedor.class);
                     intent.putExtra("identificador", identificador);
                     startActivity(intent);

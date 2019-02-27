@@ -1,59 +1,32 @@
 package aplicacion.liberman.com.wasiL2.util;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.Toast;
 
 import aplicacion.liberman.com.wasiL2.R;
-import aplicacion.liberman.com.wasiL2.controlador.Apoderado;
 import aplicacion.liberman.com.wasiL2.controlador.ConfirmarRecogedor;
-import aplicacion.liberman.com.wasiL2.controlador.LoginFirebase;
-import aplicacion.liberman.com.wasiL2.controlador.Movilidad;
 import aplicacion.liberman.com.wasiL2.controlador.Perfil;
 import aplicacion.liberman.com.wasiL2.controlador.PermitirSalida;
 import aplicacion.liberman.com.wasiL2.controlador.Profesor;
-import aplicacion.liberman.com.wasiL2.controlador.Recogedor;
 import aplicacion.liberman.com.wasiL2.controlador.SalidaPermitida;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
 public class AlertaDialogoUtil {
 
     /**
-     * Método encargado de mostrar la interfaz de usuario para
-     * la autenficiación mediante celular que provee Firebase
+     * Método encargado de mostrar un mensaje para poder asegurarnos de que el
+     * usuario con el perfil apoderado desea asignar un recogedor
      *
-     * @param oLoginFirebase
+     * @param oConfirmarRecogedor
+     * @param sTelefono
+     * @param sUsuario
+     * @param sClave
+     * @param sIdentificador
      */
-    public static void dialogoAlertaFirebaseCelular(final LoginFirebase oLoginFirebase) {
-        AlertDialog.Builder oConstructor = new AlertDialog.Builder(oLoginFirebase);
-
-        View oVista = oLoginFirebase.getLayoutInflater().inflate(R.layout.login_celular_firebase, null);
-
-        final EditText oToken = oVista.findViewById(R.id.identificadorSeguridad);
-        final EditText oCodigoSeguridad = oVista.findViewById(R.id.credencialSeguridad);
-
-        oConstructor.setView(oVista)
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        String sToken = oToken.getText().toString();
-                        String sCodigoSeguridad = oCodigoSeguridad.getText().toString();
-                        FirebaseUtilAutorizacion.autentificarPorCelular(oLoginFirebase, sToken, sCodigoSeguridad);
-                    }
-                })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.cancel();
-                    }
-                });
-
-        AlertDialog oDialogoAlerta = oConstructor.create();
-        oDialogoAlerta.show();
-    }
-
     public static void dialogoAlertaConfirmarRecogedor(final ConfirmarRecogedor oConfirmarRecogedor, final String sTelefono, final String sUsuario, final String sClave, final String sIdentificador) {
         AlertDialog.Builder oConstructor = new AlertDialog.Builder(oConfirmarRecogedor);
         oConstructor.setTitle(Mensaje.sTituloAsignarRecogedor);
@@ -64,7 +37,11 @@ public class AlertaDialogoUtil {
         oConstructor.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                FirebaseUtilAutorizacion.verificarTelefono(oConfirmarRecogedor, sTelefono, sUsuario, sClave, sIdentificador);
+                String sMensaje = Mensaje.mensajeTextoRecogeor
+                        .replace("paramU", sUsuario)
+                        .replace("paramC", sClave);
+                MensajeRecogedor.enviarMensajeTexto(oConfirmarRecogedor, sMensaje, sTelefono);
+                FirebaseUtilAutorizacion.registrarRecogedorAutorizacion(oConfirmarRecogedor, sUsuario, sClave, sIdentificador);
             }
         });
 
@@ -117,23 +94,8 @@ public class AlertaDialogoUtil {
      * Método que se encargará de verificar si el usuario desea cerrar sessión,
      * de ser ser afirmativo se mostrará la actividad de perfiles
      */
-    public static void cerrarSesion(final Apoderado apoderado, final Movilidad movilidad, final Recogedor recogedor, final Profesor profesor, int valor) {
-        AlertDialog.Builder builder = null;
-
-        switch (valor) {
-            case 1:
-                builder = new AlertDialog.Builder(apoderado);
-                break;
-            case 2:
-                builder = new AlertDialog.Builder(movilidad);
-                break;
-            case 3:
-                builder = new AlertDialog.Builder(recogedor);
-                break;
-            case 4:
-                builder = new AlertDialog.Builder(profesor);
-                break;
-        }
+    public static void cerrarSesion(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setTitle(Mensaje.tituloCerrarSesion);
         builder.setMessage(Mensaje.mensajeCerrarSesion);
@@ -143,7 +105,9 @@ public class AlertaDialogoUtil {
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                volverPerfiles(apoderado, movilidad, recogedor, profesor);
+                Intent intent = new Intent(context.getApplicationContext(), Perfil.class);
+                context.startActivity(intent);
+                ((Activity) context).finish();
             }
         });
 
@@ -159,33 +123,21 @@ public class AlertaDialogoUtil {
         alertDialog.show();
     }
 
-    private static void volverPerfiles(Apoderado apoderado, Movilidad movilidad, Recogedor recogedor, Profesor profesor) {
-        Intent intent = null;
-        if (apoderado != null) {
-            intent = new Intent(apoderado.getApplication(), Perfil.class);
-            apoderado.startActivity(intent);
-            apoderado.finish();
-        }
-
-        if (movilidad != null) {
-            intent = new Intent(movilidad.getApplication(), Perfil.class);
-            movilidad.startActivity(intent);
-            movilidad.finish();
-        }
-
-        if (recogedor != null) {
-            intent = new Intent(recogedor.getApplication(), Perfil.class);
-            recogedor.startActivity(intent);
-            recogedor.finish();
-        }
-
-        if (profesor != null) {
-            intent = new Intent(profesor.getApplication(), Perfil.class);
-            profesor.startActivity(intent);
-            profesor.finish();
-        }
-    }
-
+    /**
+     * Método encargado de autorizar la salida del hijo que se ha seleccionado, el mensaje
+     * cambiará dependiendo del parámetro salidad ya que define el tipo de salida que puede
+     * ser para movilidad como que el apoderado se haga presente
+     *
+     * @param permitirSalida
+     * @param salida
+     * @param imagen
+     * @param identificador
+     * @param nombresHijo
+     * @param apellidosHijo
+     * @param identificadorHijo
+     * @param identificadorRecogedorApoderado
+     * @param tipoPerfil
+     */
     public static void autorizarSalidaHijo(final PermitirSalida permitirSalida, final int salida, final String imagen, final String identificador, final String nombresHijo,
                                            final String apellidosHijo, final String identificadorHijo, final String identificadorRecogedorApoderado, final int tipoPerfil) {
 
@@ -217,6 +169,79 @@ public class AlertaDialogoUtil {
                 }
                 permitirSalida.startActivity(intent);
                 permitirSalida.finish();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //No se hace nada
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+    /**
+     * Método encargado de verificar que la aplicación tenga los
+     * permisos correspodientes para poder funcionar de manera
+     * correcta
+     * @param context
+     */
+    public static void autorizarPermisos(final Activity context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(true);
+        builder.setTitle(Mensaje.tituloPermisosSistema);
+        builder.setMessage(Mensaje.mensajePermisosSistema);
+        builder.setIcon(R.drawable.informacion);
+
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                PermisosUtil.verificarPermisosSistema(context);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //No se hace nada
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    /**
+     * Método encargado de mostrar un mensaje para que el usuario con
+     * el perfil de movilidad para decidir si el hijo ya esta en su casa
+     * y con esto realizar un proceso de cambio de estado en los datos
+     * del hijo
+     *
+     * @param context
+     * @param apellidosHijo
+     * @param nombresHijo
+     * @param identificadorHijo
+     */
+    public static void autorizarEntregaHijo(final Context context, String apellidosHijo, String nombresHijo, final String identificadorHijo) {
+        Mensaje.nombre = apellidosHijo + " " + nombresHijo;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(Mensaje.tituloPermitirEntrega);
+        builder.setMessage(Mensaje.mensajePermitirEntrega.replace("paramH", Mensaje.nombre));
+        builder.setCancelable(false);
+        builder.setIcon(R.drawable.informacion);
+
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String mensaje = Mensaje.mensajeEntregaHecha.replace("paramH", Mensaje.nombre);
+                FirebaseUtilEscritura.entregaHijoMovilidad(identificadorHijo);
+                Toast.makeText(context.getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -60,6 +60,10 @@ public class VerHijoProfesor extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_ver_hijo_profesor
+     */
     private void inicializarVerHijoProfesor() {
         verificarIntencion();
 
@@ -75,7 +79,9 @@ public class VerHijoProfesor extends AppCompatActivity {
     }
 
     /**
-     * Definir documentación
+     * Método encargado de verificar si en una anterior vista se pasó
+     * tres datos con las llaves titulo, identificador, estado como
+     * parámetros
      */
     private void verificarIntencion() {
         Intent oIntencion = getIntent();

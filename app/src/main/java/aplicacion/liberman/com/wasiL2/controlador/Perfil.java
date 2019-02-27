@@ -8,16 +8,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class Perfil extends AppCompatActivity implements View.OnClickListener {
     private ImageView oPerfilApoderado;
     private ImageView oPerfilRecogedor;
     private ImageView oPerfilProfesor;
     private ImageView oPerfilMovilidad;
-    private boolean bRecogedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,64 +26,52 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_perfil);
 
         inicializarPerfil();
-        verificarIntencion();
     }
 
     @Override
     public void onClick(View view) {
-        if (bRecogedor) {
-            switch (view.getId()) {
-                case R.id.oImagenPerfilApoderado:
-                    Toast.makeText(Perfil.this, Mensaje.sPerfilRecogedor, Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.oImagenPerfilMovilidad:
-                    Toast.makeText(Perfil.this, Mensaje.sPerfilRecogedor, Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.oImagenPerfilRecogedor:
-                    Intent oIntencion = new Intent(Perfil.this, Login.class);
-                    oIntencion.putExtra("perfil", 3);
-                    startActivity(oIntencion);
-                    break;
-                case R.id.oImagenPerfilProfesor:
-                    Toast.makeText(Perfil.this, Mensaje.sPerfilRecogedor, Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        } else {
-            Intent oIntencion = null;
-            switch (view.getId()) {
-                case R.id.oImagenPerfilApoderado:
-                    oIntencion = new Intent(Perfil.this, Login.class);
-                    oIntencion.putExtra("perfil", 1);
-                    startActivity(oIntencion);
-                    break;
-                case R.id.oImagenPerfilMovilidad:
-                    oIntencion = new Intent(Perfil.this, Login.class);
-                    oIntencion.putExtra("perfil", 2);
-                    startActivity(oIntencion);
-                    break;
-                case R.id.oImagenPerfilRecogedor:
-                    Toast.makeText(Perfil.this, Mensaje.sNoPerfilRecogedor, Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.oImagenPerfilProfesor:
-                    oIntencion = new Intent(Perfil.this, Login.class);
-                    oIntencion.putExtra("perfil", 4);
-                    startActivity(oIntencion);
-                    break;
-            }
-
+        Intent oIntencion = null;
+        switch (view.getId()) {
+            case R.id.oImagenPerfilApoderado:
+                oIntencion = new Intent(Perfil.this, Login.class);
+                oIntencion.putExtra("perfil", 1);
+                startActivity(oIntencion);
+                break;
+            case R.id.oImagenPerfilMovilidad:
+                oIntencion = new Intent(Perfil.this, Login.class);
+                oIntencion.putExtra("perfil", 2);
+                startActivity(oIntencion);
+                break;
+            case R.id.oImagenPerfilRecogedor:
+                oIntencion = new Intent(Perfil.this, Login.class);
+                oIntencion.putExtra("perfil", 3);
+                startActivity(oIntencion);
+                break;
+            case R.id.oImagenPerfilProfesor:
+                oIntencion = new Intent(Perfil.this, Login.class);
+                oIntencion.putExtra("perfil", 4);
+                startActivity(oIntencion);
+                break;
         }
 
     }
 
     @Override
-    public void onBackPressed() {
-        FirebaseAuth.getInstance().signOut();
+    public void onStart() {
+        super.onStart();
+    }
 
-        Intent oItencion = new Intent(Perfil.this, LoginFirebase.class);
+    @Override
+    public void onBackPressed() {
+        Intent oItencion = new Intent(Perfil.this, Inicio.class);
         startActivity(oItencion);
         finish();
     }
 
+    /**
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_perfil
+     */
     private void inicializarPerfil() {
         oPerfilApoderado = findViewById(R.id.oImagenPerfilApoderado);
         oPerfilApoderado.setOnClickListener(this);
@@ -92,15 +81,6 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         oPerfilProfesor.setOnClickListener(this);
         oPerfilMovilidad = findViewById(R.id.oImagenPerfilMovilidad);
         oPerfilMovilidad.setOnClickListener(this);
-    }
-
-    private void verificarIntencion() {
-        Intent oItencion = getIntent();
-        Bundle oBundle = oItencion.getExtras();
-
-        if (oBundle != null) {
-            bRecogedor = oBundle.getBoolean("bRecogedor");
-        }
     }
 
 }

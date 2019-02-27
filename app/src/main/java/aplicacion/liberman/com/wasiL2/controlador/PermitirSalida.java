@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 
-public class PermitirSalida extends AppCompatActivity implements View.OnClickListener{
+public class PermitirSalida extends AppCompatActivity implements View.OnClickListener {
     private ImageView permitirSalida;
     private ImageView permitirMovilidad;
     private ImageView hijoSalida;
@@ -38,28 +38,31 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
         permitirMovilidad.setOnClickListener(this);
         hijoSalida = findViewById(R.id.fotoHijoSalida);
 
-        verificarVista();
+        inicializarPermitirSalida();
         setTitle(apellidosHijo + " " + nombresHijo);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.permitirSalida : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 1, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo, identificadorRecogedorApoderado, tipoPerfil);
+        switch (view.getId()) {
+            case R.id.permitirSalida:
+                AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 1, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo, identificadorRecogedorApoderado, tipoPerfil);
                 break;
-            case R.id.permitirMovilidad : AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 2, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo, identificadorRecogedorApoderado, tipoPerfil);
+            case R.id.permitirMovilidad:
+                AlertaDialogoUtil.autorizarSalidaHijo(PermitirSalida.this, 2, imagen, identificador, nombresHijo, apellidosHijo, identificadorHijo, identificadorRecogedorApoderado, tipoPerfil);
                 break;
         }
     }
 
     /**
-     * Definir documentación
+     * Método encargado de inicializar los componentes
+     * necesarios de la vista activity_permitir_salida
      */
-    private void verificarVista(){
+    private void inicializarPermitirSalida() {
         Intent inten = getIntent();
         Bundle bun = inten.getExtras();
 
-        if(bun != null){
+        if (bun != null) {
             nombresHijo = bun.getString("nombres");
             apellidosHijo = bun.getString("apellidos");
             imagen = bun.getString("imagen");
@@ -67,7 +70,7 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
             identificadorHijo = bun.getString("identificadorHijo");
             Picasso.get().load(imagen).into(hijoSalida);
             tipoPerfil = bun.getInt("perfil");
-            if(tipoPerfil == 3){
+            if (tipoPerfil == 3) {
                 identificadorRecogedorApoderado = bun.getString("identificadorRecogedorApoderado");
             }
         }
@@ -77,13 +80,12 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if(tipoPerfil == 1){
+                if (tipoPerfil == 1) {
                     Intent intent = new Intent(PermitirSalida.this, VerHijoApoderado.class);
                     intent.putExtra("bandera", true);
                     intent.putExtra("identificador", identificador);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Intent intent = new Intent(PermitirSalida.this, VerHijoRecogedor.class);
                     intent.putExtra("identificador", identificador);
                     startActivity(intent);
@@ -96,8 +98,6 @@ public class PermitirSalida extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         if (tipoPerfil == 1) {
             Intent intent = new Intent(PermitirSalida.this, VerHijoApoderado.class);
             intent.putExtra("bandera", true);
