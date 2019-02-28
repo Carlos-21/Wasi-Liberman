@@ -1,7 +1,6 @@
 package aplicacion.liberman.com.wasiL2.controlador;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -11,17 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import aplicacion.liberman.com.wasiL2.R;
-import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
-import aplicacion.liberman.com.wasiL2.soporte.Buscar;
-import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.soporte.Validar;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilAutorizacion;
-import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 import aplicacion.liberman.com.wasiL2.util.SharedPreferencesUtil;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
@@ -31,7 +23,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private TextView oLabelLogin;
     private ImageView oImagenLogin;
     private int iPerfil;
-    private ArrayList<Usuario> aListaUsuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +38,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
      */
     private void inicializarLogin() {
         setTitle(R.string.sLogin);
-        aListaUsuarios = new ArrayList<>();
 
         oLabelLogin = findViewById(R.id.oLabelLogin2);
         oImagenLogin = findViewById(R.id.oImagenLogin2);
@@ -61,7 +51,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             verificarIntencion();
         }
-
     }
 
     @Override

@@ -108,7 +108,7 @@ public class FirebaseUtilAutorizacion {
 
         Calendar c = Calendar.getInstance();
         c.setTime(horaDespertar);
-        c.set(Calendar.MINUTE, c.get(Calendar.MINUTE) + 20);
+        c.set(Calendar.MINUTE, c.get(Calendar.MINUTE) + 1);
 
         horaDespertar = c.getTime();
         Timer temporizador = new Timer();

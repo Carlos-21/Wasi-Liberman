@@ -61,4 +61,11 @@ public class Mensaje {
     public static String tituloPermisosSistema = "Permisos necesarios";
     public static String mensajePermisosSistema = "¿Desea habilitar los permisos necesarios para la aplicación?";
 
+    //Mensaje para cuando un usuario no tiene hijo, alumnos asignados
+    public static String alumnosHProfesor = "No hay alumnos habilitados";
+    public static String alumnosNHProfesor = "No hay alumnos asignados";
+    public static String alumnosHMovilidad = "No hay alumnos habilitados";
+    public static String alumnosNHMovilidad = "No hay alumnos asignados";
+    public static String alumnosEMovilidad = "No hay alumnos entregados";
+
 }

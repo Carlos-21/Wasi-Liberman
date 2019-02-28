@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import aplicacion.liberman.com.wasiL2.controlador.Profesor;
-import aplicacion.liberman.com.wasiL2.controlador.SalidaPermitida;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
 public class FirebaseUtilEscritura {
@@ -102,7 +101,7 @@ public class FirebaseUtilEscritura {
      * @param usuario
      * @param identificadorApoderado
      */
-    public static void registrarRecogedor(String usuario, final String identificadorApoderado) {
+    public static void registrarRecogedor(final String usuario, final String identificadorApoderado) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
@@ -111,11 +110,12 @@ public class FirebaseUtilEscritura {
         data.put("perfil", 3);
 
         db.collection("Usuarios")
-                .add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .document(usuario)
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        asignarRecogedorHijo(identificadorApoderado, documentReference.getId());
+                    public void onSuccess(Void aVoid) {
+                        asignarRecogedorHijo(identificadorApoderado, usuario);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

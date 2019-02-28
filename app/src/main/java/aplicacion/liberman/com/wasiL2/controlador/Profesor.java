@@ -11,6 +11,7 @@ import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.soporte.Fecha;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class Profesor extends AppCompatActivity implements View.OnClickListener {
     private ImageView alumnosHabilitados;
@@ -46,21 +47,12 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
         switch (view.getId()) {
             case R.id.alumnosHabilitados:
-                intent = new Intent(Profesor.this, VerHijoProfesor.class);
-                intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosHabilitados));
-                intent.putExtra("identificador", identificador);
-                intent.putExtra("estado", true);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarAlumnosProfesor(Profesor.this, identificador, true);
                 break;
             case R.id.alumnosNoHabilitados:
-                intent = new Intent(Profesor.this, VerHijoProfesor.class);
-                intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosNoHabilitados));
-                intent.putExtra("identificador", identificador);
-                intent.putExtra("estado", false);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarAlumnosProfesor(Profesor.this, identificador, false);
                 break;
             case R.id.inhabilitarAlumnos:
                 if (Fecha.rangoFecha()) {

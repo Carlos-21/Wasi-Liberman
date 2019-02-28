@@ -13,6 +13,7 @@ import aplicacion.liberman.com.wasiL2.controlador.Perfil;
 import aplicacion.liberman.com.wasiL2.controlador.PermitirSalida;
 import aplicacion.liberman.com.wasiL2.controlador.Profesor;
 import aplicacion.liberman.com.wasiL2.controlador.SalidaPermitida;
+import aplicacion.liberman.com.wasiL2.servicio.ServicioFirebase;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
 public class AlertaDialogoUtil {
@@ -105,6 +106,8 @@ public class AlertaDialogoUtil {
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                context.stopService(new Intent(context.getApplicationContext(), ServicioFirebase.class));
+
                 Intent intent = new Intent(context.getApplicationContext(), Perfil.class);
                 context.startActivity(intent);
                 ((Activity) context).finish();
@@ -189,32 +192,35 @@ public class AlertaDialogoUtil {
      * Método encargado de verificar que la aplicación tenga los
      * permisos correspodientes para poder funcionar de manera
      * correcta
+     *
      * @param context
      */
     public static void autorizarPermisos(final Activity context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(true);
-        builder.setTitle(Mensaje.tituloPermisosSistema);
-        builder.setMessage(Mensaje.mensajePermisosSistema);
-        builder.setIcon(R.drawable.informacion);
+        if (!PermisosUtil.verificarPermisosSistema(context).isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            builder.setTitle(Mensaje.tituloPermisosSistema);
+            builder.setMessage(Mensaje.mensajePermisosSistema);
+            builder.setIcon(R.drawable.informacion);
 
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                PermisosUtil.verificarPermisosSistema(context);
-            }
-        });
+            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    PermisosUtil.adquirirPermisosSistema(context);
+                }
+            });
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //No se hace nada
-                dialogInterface.cancel();
-            }
-        });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //No se hace nada
+                    dialogInterface.cancel();
+                }
+            });
 
-        AlertDialog alert = builder.create();
-        alert.show();
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     /**

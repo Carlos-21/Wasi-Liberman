@@ -1,5 +1,6 @@
 package aplicacion.liberman.com.wasiL2.util;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
@@ -15,8 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-
+import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.contenedor.Hijo;
 import aplicacion.liberman.com.wasiL2.contenedor.Registro;
 import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
@@ -24,9 +24,10 @@ import aplicacion.liberman.com.wasiL2.controlador.Apoderado;
 import aplicacion.liberman.com.wasiL2.controlador.Inicio;
 import aplicacion.liberman.com.wasiL2.controlador.Login;
 import aplicacion.liberman.com.wasiL2.controlador.Movilidad;
-import aplicacion.liberman.com.wasiL2.controlador.Perfil;
 import aplicacion.liberman.com.wasiL2.controlador.Profesor;
 import aplicacion.liberman.com.wasiL2.controlador.Recogedor;
+import aplicacion.liberman.com.wasiL2.controlador.VerHijoMovilidad;
+import aplicacion.liberman.com.wasiL2.controlador.VerHijoProfesor;
 import aplicacion.liberman.com.wasiL2.soporte.Buscar;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
@@ -156,7 +157,7 @@ public class FirebaseUtilConsulta {
      */
     public static FirestoreRecyclerOptions<Hijo> listarAlumnosProfesor(String sIdentificador, boolean bEstado) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
-        Query oSentencia = oFirestore.collection("Niño").whereEqualTo("recogedor", sIdentificador)
+        Query oSentencia = oFirestore.collection("Niño").whereEqualTo("profesor", sIdentificador)
                 .whereEqualTo("estado", bEstado);
 
         FirestoreRecyclerOptions<Hijo> aAlumnos = new FirestoreRecyclerOptions.Builder<Hijo>()
@@ -164,6 +165,35 @@ public class FirebaseUtilConsulta {
                 .build();
 
         return aAlumnos;
+    }
+
+    public static void verificarAlumnosProfesor(final Context context, final String sIdentificador, final boolean bEstado) {
+        FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
+
+        oFirestore.collection("Niño")
+                .whereEqualTo("movilidad", sIdentificador)
+                .whereEqualTo("estado", bEstado)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() != 0) {
+                                Intent intent = new Intent(context.getApplicationContext(), VerHijoProfesor.class);
+                                intent.putExtra("titulo", context.getApplicationContext().getResources().getString(R.string.cAlumnosHabilitados));
+                                intent.putExtra("identificador", sIdentificador);
+                                intent.putExtra("estado", bEstado);
+                                context.startActivity(intent);
+                            } else {
+                                if (bEstado) {
+                                    Toast.makeText(context.getApplicationContext(), Mensaje.alumnosHProfesor, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context.getApplicationContext(), Mensaje.alumnosNHProfesor, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     /**
@@ -204,6 +234,42 @@ public class FirebaseUtilConsulta {
                 .build();
 
         return aAlumnos;
+    }
+
+    public static void verificarAlumnosMovilidad(final Context context, final String sIdentificador, final boolean bEstado, final boolean bCasa, final boolean bBandera) {
+        FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
+
+        oFirestore.collection("Niño")
+                .whereEqualTo("movilidad", sIdentificador)
+                .whereEqualTo("estado", bEstado)
+                .whereEqualTo("casa", bCasa)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() != 0) {
+                                Intent intent = new Intent(context.getApplicationContext(), VerHijoMovilidad.class);
+                                intent.putExtra("titulo", context.getApplicationContext().getResources().getString(R.string.cAlumnosNoHabilitados));
+                                intent.putExtra("identificador", sIdentificador);
+                                intent.putExtra("estado", bEstado);
+                                intent.putExtra("casa", bCasa);
+                                intent.putExtra("bandera", bBandera);
+                                context.startActivity(intent);
+                            } else {
+                                if (bEstado == true && bCasa == true) {
+                                    Toast.makeText(context.getApplicationContext(), Mensaje.alumnosEMovilidad, Toast.LENGTH_SHORT).show();
+                                }
+                                if (bEstado == true && bCasa == false) {
+                                    Toast.makeText(context.getApplicationContext(), Mensaje.alumnosHMovilidad, Toast.LENGTH_SHORT).show();
+                                }
+                                if (bEstado == false && bCasa == false) {
+                                    Toast.makeText(context.getApplicationContext(), Mensaje.alumnosNHMovilidad, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     /**

@@ -7,18 +7,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
-import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
+import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 
 public class Perfil extends AppCompatActivity implements View.OnClickListener {
     private ImageView oPerfilApoderado;
     private ImageView oPerfilRecogedor;
     private ImageView oPerfilProfesor;
     private ImageView oPerfilMovilidad;
+    private boolean bandera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +24,11 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_perfil);
 
         inicializarPerfil();
+
+        verificarIntencion();
+
+        AlertaDialogoUtil.autorizarPermisos(Perfil.this);
+
     }
 
     @Override
@@ -81,6 +84,26 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         oPerfilProfesor.setOnClickListener(this);
         oPerfilMovilidad = findViewById(R.id.oImagenPerfilMovilidad);
         oPerfilMovilidad.setOnClickListener(this);
+
+        bandera = false;
+    }
+
+    /**
+     * Método encargado de verificar si en una anterior vista se pasó
+     * un dato con la llave finalizar como parámetro
+     */
+    private void verificarIntencion() {
+        Intent inten = getIntent();
+        Bundle bun = inten.getExtras();
+
+        if (bun != null) {
+            bandera = bun.getBoolean("finalizar");
+
+            if (bandera) {
+                Toast.makeText(Perfil.this, Mensaje.mensajeFirebaseRecogedor, Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
 }

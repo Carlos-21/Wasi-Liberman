@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class Movilidad extends AppCompatActivity implements View.OnClickListener {
     private ImageView alumnosHabilitados;
@@ -43,34 +44,15 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
         switch (view.getId()) {
             case R.id.alumnosHabilitados:
-                intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
-                intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosHabilitados));
-                intent.putExtra("identificador", identificador);
-                intent.putExtra("estado", true);
-                intent.putExtra("casa", false);
-                intent.putExtra("bandera", true);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarAlumnosMovilidad(Movilidad.this, identificador, true, false, true);
                 break;
             case R.id.alumnosNoHabilitados:
-                intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
-                intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosNoHabilitados));
-                intent.putExtra("identificador", identificador);
-                intent.putExtra("estado", false);
-                intent.putExtra("casa", false);
-                intent.putExtra("bandera", false);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarAlumnosMovilidad(Movilidad.this, identificador, false, false, false);
                 break;
             case R.id.alumnosEntregados:
-                intent = new Intent(Movilidad.this, VerHijoMovilidad.class);
-                intent.putExtra("titulo", getApplicationContext().getResources().getString(R.string.cAlumnosEntregados));
-                intent.putExtra("identificador", identificador);
-                intent.putExtra("estado", true);
-                intent.putExtra("casa", true);
-                intent.putExtra("bandera", false);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarAlumnosMovilidad(Movilidad.this, identificador, true, true, false);
                 break;
             case R.id.cerrarSesion:
                 AlertaDialogoUtil.cerrarSesion(Movilidad.this);

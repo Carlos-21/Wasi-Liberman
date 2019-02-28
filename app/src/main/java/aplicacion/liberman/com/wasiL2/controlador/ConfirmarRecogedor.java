@@ -53,6 +53,8 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
      * necesarios de la vista activity_confirmar_recogedor
      */
     private void inicializarConfirmarRecogedor() {
+        setTitle("Asignación");
+
         textoUsuarioRecogedor = findViewById(R.id.textoUsuarioRecogedor);
         textoContraseñaRecogedor = findViewById(R.id.textoClaveRecogedor);
         textoTelefonoRecogedor = findViewById(R.id.textoTelefonoRecogedor);

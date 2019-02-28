@@ -24,7 +24,6 @@ import aplicacion.liberman.com.wasiL2.contenedor.Hijo;
 import aplicacion.liberman.com.wasiL2.controlador.Apoderado;
 
 public class ServicioFirebase extends Service {
-    private final FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
     public static String sIdentificadorApoderado;
 
     @Override
@@ -44,25 +43,32 @@ public class ServicioFirebase extends Service {
             startActivity(intent2);
         }
 
-        oFirestore.collection("Niño")
-                .whereEqualTo("apoderado", sIdentificadorApoderado)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        List<Hijo> listaHijos = queryDocumentSnapshots.toObjects(Hijo.class);
+        System.out.println("Identificacion 12138 : " + sIdentificadorApoderado);
+        FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
+        if (oFirestore != null) {
+            oFirestore.collection("Niño")
+                    .whereEqualTo("apoderado", sIdentificadorApoderado)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                            if (queryDocumentSnapshots != null) {
+                                List<Hijo> listaHijos = queryDocumentSnapshots.toObjects(Hijo.class);
 
-                        for (Hijo auxiliar : listaHijos) {
-                            if (auxiliar.isCasa()) {
-                                String mensaje = auxiliar.getApellidos() + " " + auxiliar.getNombres();
-                                if (auxiliar.getGenero().equals("masculino")) {
-                                    notificacionEntregaNiño(mensaje, "niño");
-                                } else {
-                                    notificacionEntregaNiño(mensaje, "niña");
+                                for (Hijo auxiliar : listaHijos) {
+                                    if (auxiliar.isCasa()) {
+                                        String mensaje = auxiliar.getApellidos() + " " + auxiliar.getNombres();
+                                        if (auxiliar.getGenero().equals("masculino")) {
+                                            notificacionEntregaNiño(mensaje, "niño");
+                                        } else {
+                                            notificacionEntregaNiño(mensaje, "niña");
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+        }
+
         return START_STICKY;
     }
 
@@ -97,6 +103,7 @@ public class ServicioFirebase extends Service {
     /**
      * Método encargado de enviar la notificación al usuario mostrando un mensaje dependiendo
      * de los parámetros
+     *
      * @param sMensaje
      * @param sGenero
      */
