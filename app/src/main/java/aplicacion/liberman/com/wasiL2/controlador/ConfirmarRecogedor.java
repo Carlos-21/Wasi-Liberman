@@ -36,7 +36,7 @@ public class ConfirmarRecogedor extends AppCompatActivity implements View.OnClic
             case R.id.botonConfirmarRecogedor:
                 if (Validar.validarRegistroRecogedor(textoUsuarioRecogedor, textoContraseñaRecogedor, textoTelefonoRecogedor)) {
                     String sTelefono = textoTelefonoRecogedor.getText().toString();
-                    String sUsuario = textoUsuarioRecogedor.getText().toString() + "@gmail.com";
+                    String sUsuario = textoUsuarioRecogedor.getText().toString();
                     String sClave = textoContraseñaRecogedor.getText().toString();
                     AlertaDialogoUtil.dialogoAlertaConfirmarRecogedor(ConfirmarRecogedor.this, sTelefono,
                             sUsuario, sClave, sIdentificador);

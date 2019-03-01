@@ -66,9 +66,7 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        Intent oItencion = new Intent(Perfil.this, Inicio.class);
-        startActivity(oItencion);
-        finish();
+        AlertaDialogoUtil.cerrarAplicacion(Perfil.this);
     }
 
     /**

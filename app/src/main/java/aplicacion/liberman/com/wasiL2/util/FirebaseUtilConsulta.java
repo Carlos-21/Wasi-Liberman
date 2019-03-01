@@ -16,6 +16,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.contenedor.Hijo;
 import aplicacion.liberman.com.wasiL2.contenedor.Registro;
@@ -29,6 +32,7 @@ import aplicacion.liberman.com.wasiL2.controlador.Recogedor;
 import aplicacion.liberman.com.wasiL2.controlador.VerHijoMovilidad;
 import aplicacion.liberman.com.wasiL2.controlador.VerHijoProfesor;
 import aplicacion.liberman.com.wasiL2.soporte.Buscar;
+import aplicacion.liberman.com.wasiL2.soporte.Generador;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
 public class FirebaseUtilConsulta {
@@ -36,12 +40,14 @@ public class FirebaseUtilConsulta {
     /**
      * Método encargado de verificar el usuario tanto en el módulo de autentificación
      * de firebase y en la base de datos Cloud Firestore
+     *
      * @param login
      * @param sIdentificador
      * @param oUsuarioWasi
      */
     public static void verificarUsuario(final Login login, String sIdentificador, final Usuario oUsuarioWasi) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
         DocumentReference docRef = firestore.collection("Usuarios").document(sIdentificador);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -134,6 +140,7 @@ public class FirebaseUtilConsulta {
     /**
      * Método encargado de traer todos los datos de los hijos pertenecientes a un apoderado
      * según su identificador que se pasa como parámetro
+     *
      * @param sIdentificador
      * @return
      */
@@ -149,8 +156,40 @@ public class FirebaseUtilConsulta {
     }
 
     /**
+     * Método encargado de verificar si un apoderado tiene hijos asignados en la base de datos,
+     * de no ser así se deberá comunicar con el administrados
+     *
+     * @param context
+     * @param sIdentificador
+     * @param bBandera
+     */
+    public static void verificarHijoApoderado(final Context context, final String sIdentificador, final boolean bBandera) {
+        FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
+
+        oFirestore.collection("Niño")
+                .whereEqualTo("apoderado", sIdentificador)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() != 0) {
+                                Intent intent = new Intent(context.getApplicationContext(), VerHijoProfesor.class);
+                                intent.putExtra("bandera", bBandera);
+                                intent.putExtra("identificador", sIdentificador);
+                                context.startActivity(intent);
+                            } else {
+                                Toast.makeText(context.getApplicationContext(), Mensaje.hijoApoderado, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
      * Método encargado de traer todos los datos de los alumnos pertenecientes a un profesor
      * según su identificador que se pasa como parámetro
+     *
      * @param sIdentificador
      * @param bEstado
      * @return
@@ -167,6 +206,14 @@ public class FirebaseUtilConsulta {
         return aAlumnos;
     }
 
+    /**
+     * Método encargado de verificar que un profesor tenga alumnos asignados en la base de datos,
+     * de no ser así se deberá comunicar con el administrador
+     *
+     * @param context
+     * @param sIdentificador
+     * @param bEstado
+     */
     public static void verificarAlumnosProfesor(final Context context, final String sIdentificador, final boolean bEstado) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
 
@@ -200,6 +247,7 @@ public class FirebaseUtilConsulta {
      * Método encargado de traer todos los datos de los hijos pertenecientes a un apoderado
      * que designo a una persona para que realice su labor según su identificador que se
      * pasa como parámetro
+     *
      * @param sIdentificador
      * @return
      */
@@ -218,6 +266,7 @@ public class FirebaseUtilConsulta {
      * Método encargado de traer todos los datos de los hijos pertenecientes a un apoderado
      * que designo a una movilidad para que realice su labor según su identificador que se
      * pasa como parámetro
+     *
      * @param sIdentificador
      * @param bEstado
      * @param bCasa
@@ -236,6 +285,16 @@ public class FirebaseUtilConsulta {
         return aAlumnos;
     }
 
+    /**
+     * Método encargado de verificar que un usuario con el perfil movilidad tenga asignado alumnos que recoger según la
+     * base de datos, de no ser así se deberá consultar con el administrador
+     *
+     * @param context
+     * @param sIdentificador
+     * @param bEstado
+     * @param bCasa
+     * @param bBandera
+     */
     public static void verificarAlumnosMovilidad(final Context context, final String sIdentificador, final boolean bEstado, final boolean bCasa, final boolean bBandera) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
 
@@ -274,6 +333,7 @@ public class FirebaseUtilConsulta {
 
     /**
      * Método encargado de traer todas las salidad realizadas por el apoderado en un registro
+     *
      * @param sIdentificador
      * @return
      */
@@ -287,4 +347,59 @@ public class FirebaseUtilConsulta {
 
         return aSalidas;
     }
+
+    /**
+     * Método encargado de verificar si existe un usuario con el perfil recogedor que tenga el mismo correo,
+     * si existe la aplicación generará otro usuario hasta que sea diferente y nuevo
+     *
+     * @param context
+     * @param sCorreo
+     * @param sClave
+     * @param sTelefono
+     * @param sIdentificador
+     */
+    public static void verificarUsuarioRecogedor(final Context context, final String sCorreo, final String sClave, final String sTelefono, final String sIdentificador) {
+        FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
+
+        oFirestore.collection("Usuarios")
+                .whereEqualTo("perfil", 3)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            String correo = sCorreo;
+                            String clave = sClave;
+
+                            List<Usuario> listaUsuarios = new ArrayList<>();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                listaUsuarios.add(document.toObject(Usuario.class));
+                            }
+
+                            boolean bandera = false;
+                            while (!bandera) {
+                                for (Usuario auxiliar : listaUsuarios) {
+                                    if (auxiliar.getCorreo().compareTo(correo + "@gmail.com") == 0) {
+                                        bandera = true;
+                                    }
+                                }
+                                if (!bandera) {
+                                    bandera = true;
+                                } else {
+                                    correo = Generador.getUsuario();
+                                    bandera = false;
+                                }
+                            }
+                            correo += "@gmail.com";
+                            String sMensaje = Mensaje.mensajeTextoRecogeor
+                                    .replace("paramU", correo)
+                                    .replace("paramC", sClave);
+                            MensajeRecogedor.enviarMensajeTexto(context, sMensaje, sTelefono);
+                            FirebaseUtilAutorizacion.registrarRecogedorAutorizacion(context, correo, sClave, sIdentificador);
+                        }
+                    }
+                });
+
+    }
+
 }

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.servicio.ServicioFirebase;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
 public class Apoderado extends AppCompatActivity implements View.OnClickListener {
     private ImageView verHijos;
@@ -32,16 +33,10 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         Intent intent = null;
         switch (view.getId()) {
             case R.id.verHijos:
-                intent = new Intent(Apoderado.this, VerHijoApoderado.class);
-                intent.putExtra("bandera", false);
-                intent.putExtra("identificador", identificador);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarHijoApoderado(Apoderado.this, identificador, false);
                 break;
             case R.id.permitirSalida:
-                intent = new Intent(Apoderado.this, VerHijoApoderado.class);
-                intent.putExtra("bandera", true);
-                intent.putExtra("identificador", identificador);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarHijoApoderado(Apoderado.this, identificador, true);
                 break;
             case R.id.asignarRecogedor:
                 intent = new Intent(Apoderado.this, ConfirmarRecogedor.class);

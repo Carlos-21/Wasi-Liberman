@@ -10,7 +10,7 @@ public class Generador {
     private static int NUMERO_GENERADOR = 8;
 
     public static String getUsuario() {
-        return getRandom(MINUSCULAS + MAYUSCULAS + NUMEROS, NUMERO_GENERADOR);
+        return getRandom(MINUSCULAS + NUMEROS, NUMERO_GENERADOR);
     }
 
     public static String getClave() {

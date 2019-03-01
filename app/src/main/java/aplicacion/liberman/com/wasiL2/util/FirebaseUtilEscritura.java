@@ -152,7 +152,6 @@ public class FirebaseUtilEscritura {
         String identificadorUsuario = identificador;
         if (apoderado != null) {
             identificadorUsuario = apoderado;
-            System.out.println("Apfewiwe  : " + apoderado);
         }
 
         db.collection("Usuarios").document(identificadorUsuario).collection("Salidas")

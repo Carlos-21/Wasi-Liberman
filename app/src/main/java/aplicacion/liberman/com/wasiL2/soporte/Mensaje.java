@@ -2,22 +2,13 @@ package aplicacion.liberman.com.wasiL2.soporte;
 
 public class Mensaje {
     //Mensaje de la clase LoginFirebase
-    public static String sAutenticidadTelefono = "Acceso temporal concedido";
-    public static String sNoAutenticidadTelefono = "Datos incorrectos o acceso caducado";
-    public static String sAutenticidadCorreo = "Autentificación correcta";
     public static String sNoAutenticidadCorreo = "Autentificación incorrecta";
-
-    //Mensaje de la clase Perfil
-    public static String sPerfilRecogedor = "Solo tiene acceso para el perfil de Recogedor";
-    public static String sNoPerfilRecogedor = "Su cuenta no tiene acceso para el perfil Recogedor";
 
     //Mensaje de la Clase Login
     public static String sUsuarioCorrecto = "Acceso concedido";
     public static String sUsuarioIncorrecto = "Usuario o contraseña incorrectos";
 
     //Mensaje de la Clase ConfirmarRecogedor
-    public static String sCodigoEnviado = "Código enviado";
-    public static String sCodigoNoEnviado = "Código no enviado";
     public static String sTituloAsignarRecogedor = "Asignar recogedor";
     public static String sMensajeAsignarRecogedor = "¿Esta seguro de confirmar Recogedor?";
     public static String sMensajeRecogedorAsignado = "Recogedor asignado correctamente";
@@ -67,5 +58,10 @@ public class Mensaje {
     public static String alumnosHMovilidad = "No hay alumnos habilitados";
     public static String alumnosNHMovilidad = "No hay alumnos asignados";
     public static String alumnosEMovilidad = "No hay alumnos entregados";
+    public static String hijoApoderado = "No hay hijos asignados";
+
+    //Mensaje para cerrar aplicación
+    public static String tituloCerrarApp = "Cerrar aplicación Wasi";
+    public static String mensajeCerrarApp = "¿Desea salir de la aplicación Wasi?";
 
 }

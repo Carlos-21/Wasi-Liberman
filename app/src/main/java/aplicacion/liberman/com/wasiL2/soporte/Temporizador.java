@@ -26,7 +26,6 @@ public class Temporizador extends TimerTask {
     @Override
     public void run() {
         final FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseAuth.getInstance().signOut();
 
         AuthCredential credential = EmailAuthProvider
                 .getCredential(SharedPreferencesUtil.recuperarCorreo(recogedor), SharedPreferencesUtil.recuperarClave(recogedor));

@@ -1,5 +1,7 @@
 package aplicacion.liberman.com.wasiL2.util;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,7 +16,6 @@ import java.util.Date;
 import java.util.Timer;
 
 import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
-import aplicacion.liberman.com.wasiL2.controlador.ConfirmarRecogedor;
 import aplicacion.liberman.com.wasiL2.controlador.Login;
 import aplicacion.liberman.com.wasiL2.controlador.Recogedor;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
@@ -62,27 +63,26 @@ public class FirebaseUtilAutorizacion {
      * pueda ingresar al sistema con dicho perfil y pueda autorizar que los hijos
      * del apoderado correspondiente puedan salir de la institución educativa
      *
-     * @param confirmarRecogedor
+     * @param context
      * @param correo
      * @param clave
      * @param sIdentificador
      */
-    public static void registrarRecogedorAutorizacion(final ConfirmarRecogedor confirmarRecogedor, String correo, String clave, String sIdentificador) {
+    public static void registrarRecogedorAutorizacion(final Context context, String correo, String clave, String sIdentificador) {
         FirebaseUtilEscritura.registrarRecogedor(correo, sIdentificador);
 
         final FirebaseAuth oAutentificar = FirebaseAuth.getInstance();
 
-        oAutentificar.createUserWithEmailAndPassword(correo, clave).addOnCompleteListener(confirmarRecogedor, new OnCompleteListener<AuthResult>() {
+        oAutentificar.createUserWithEmailAndPassword(correo, clave).addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-
-                    String correo = SharedPreferencesUtil.recuperarCorreo(confirmarRecogedor);
-                    String clave = SharedPreferencesUtil.recuperarClave(confirmarRecogedor);
-                    Toast.makeText(confirmarRecogedor.getApplicationContext(), Mensaje.sMensajeRecogedorAsignado,
+                    String correo = SharedPreferencesUtil.recuperarCorreo(context);
+                    String clave = SharedPreferencesUtil.recuperarClave(context);
+                    Toast.makeText(context.getApplicationContext(), Mensaje.sMensajeRecogedorAsignado,
                             Toast.LENGTH_SHORT).show();
                     oAutentificar.signInWithEmailAndPassword(correo, clave)
-                            .addOnCompleteListener(confirmarRecogedor, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(((Activity) context), new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {

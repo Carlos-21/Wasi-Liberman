@@ -38,11 +38,12 @@ public class AlertaDialogoUtil {
         oConstructor.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String sMensaje = Mensaje.mensajeTextoRecogeor
+                /*String sMensaje = Mensaje.mensajeTextoRecogeor
                         .replace("paramU", sUsuario)
                         .replace("paramC", sClave);
-                MensajeRecogedor.enviarMensajeTexto(oConfirmarRecogedor, sMensaje, sTelefono);
-                FirebaseUtilAutorizacion.registrarRecogedorAutorizacion(oConfirmarRecogedor, sUsuario, sClave, sIdentificador);
+                //MensajeRecogedor.enviarMensajeTexto(oConfirmarRecogedor, sMensaje, sTelefono);*/
+                FirebaseUtilConsulta.verificarUsuarioRecogedor(oConfirmarRecogedor, sUsuario, sClave, sTelefono, sIdentificador);
+                //FirebaseUtilAutorizacion.registrarRecogedorAutorizacion(oConfirmarRecogedor, sUsuario, sClave, sIdentificador);
             }
         });
 
@@ -263,4 +264,39 @@ public class AlertaDialogoUtil {
         alertDialog.show();
     }
 
+
+    /**
+     * Método encargado de mostrar un mensaje para que el usuario
+     * pueda decidir si desea salir de la aplicación o no
+     *
+     * @param context
+     */
+    public static void cerrarAplicacion(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(Mensaje.tituloCerrarApp);
+        builder.setMessage(Mensaje.mensajeCerrarApp);
+        builder.setCancelable(false);
+        builder.setIcon(R.drawable.informacion);
+
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //No se hace nada
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
