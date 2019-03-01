@@ -29,6 +29,7 @@ import aplicacion.liberman.com.wasiL2.controlador.Login;
 import aplicacion.liberman.com.wasiL2.controlador.Movilidad;
 import aplicacion.liberman.com.wasiL2.controlador.Profesor;
 import aplicacion.liberman.com.wasiL2.controlador.Recogedor;
+import aplicacion.liberman.com.wasiL2.controlador.VerHijoApoderado;
 import aplicacion.liberman.com.wasiL2.controlador.VerHijoMovilidad;
 import aplicacion.liberman.com.wasiL2.controlador.VerHijoProfesor;
 import aplicacion.liberman.com.wasiL2.soporte.Buscar;
@@ -174,7 +175,7 @@ public class FirebaseUtilConsulta {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             if (task.getResult().size() != 0) {
-                                Intent intent = new Intent(context.getApplicationContext(), VerHijoProfesor.class);
+                                Intent intent = new Intent(context.getApplicationContext(), VerHijoApoderado.class);
                                 intent.putExtra("bandera", bBandera);
                                 intent.putExtra("identificador", sIdentificador);
                                 context.startActivity(intent);
