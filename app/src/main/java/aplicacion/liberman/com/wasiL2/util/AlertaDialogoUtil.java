@@ -167,9 +167,9 @@ public class AlertaDialogoUtil {
                 intent.putExtra("identificador", identificador);
                 intent.putExtra("nombres", nombresHijo + " " + apellidosHijo);
                 intent.putExtra("identificadorHijo", identificadorHijo);
+                intent.putExtra("tipoPerfil", tipoPerfil);
                 if (identificadorRecogedorApoderado != null) {
                     intent.putExtra("apoderado", identificadorRecogedorApoderado);
-                    intent.putExtra("perfil", tipoPerfil);
                 }
                 permitirSalida.startActivity(intent);
                 permitirSalida.finish();

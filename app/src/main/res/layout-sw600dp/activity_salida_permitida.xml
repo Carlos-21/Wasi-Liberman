@@ -23,6 +23,7 @@
             android:layout_marginTop="25dp"
             app:srcCompat="@drawable/hijo" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,6 +41,6 @@
             android:layout_marginTop="30dp"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp" />
+            android:textSize="36sp" />
     </LinearLayout>
 </RelativeLayout>
