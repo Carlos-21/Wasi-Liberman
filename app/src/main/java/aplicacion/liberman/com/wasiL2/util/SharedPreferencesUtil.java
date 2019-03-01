@@ -26,6 +26,24 @@ public class SharedPreferencesUtil {
     }
 
     /**
+     * Método encargado de guardar parámetros importantes usados por
+     * clases de seguridad del usuario con el perfil recogedor
+     *
+     * @param context
+     * @param correo
+     * @param clave
+     */
+    public static void guardarUsuarioRecogedor(Context context, String correo, String clave) {
+        SharedPreferences pref = context.getApplicationContext().getSharedPreferences(nameFile, Context.MODE_PRIVATE);
+
+        Editor editor = pref.edit();
+        editor.putString("usuarioR", correo);
+        editor.putString("claveR", clave);
+        editor.commit();
+        editor.apply();
+    }
+
+    /**
      * Método encargado de devolder el parámetro usuario
      * guardado en PrefWasi
      *
@@ -49,6 +67,32 @@ public class SharedPreferencesUtil {
         SharedPreferences pref = context.getApplicationContext().getSharedPreferences(nameFile, Context.MODE_PRIVATE);
 
         return pref.getString("clave", "");
+    }
+
+    /**
+     * Método encargado de devolder el parámetro usuarioR
+     * guardado en PrefWasi
+     *
+     * @param context
+     * @return
+     */
+    public static String recuperarCorreoR(Context context) {
+        SharedPreferences pref = context.getApplicationContext().getSharedPreferences(nameFile, Context.MODE_PRIVATE);
+
+        return pref.getString("usuarioR", "");
+    }
+
+    /**
+     * Método encargado de devolder el parámetro claveR
+     * guardado en PrefWasi
+     *
+     * @param context
+     * @return
+     */
+    public static String recuperarClaveR(Context context) {
+        SharedPreferences pref = context.getApplicationContext().getSharedPreferences(nameFile, Context.MODE_PRIVATE);
+
+        return pref.getString("claveR", "");
     }
 
 }

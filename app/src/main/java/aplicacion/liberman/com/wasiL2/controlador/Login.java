@@ -73,7 +73,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        SharedPreferencesUtil.guardarUsuario(Login.this, oTextoUsuario.getText().toString(), oTextoClave.getText().toString());
+        if (iPerfil == 3) {
+            SharedPreferencesUtil.guardarUsuarioRecogedor(Login.this, oTextoUsuario.getText().toString(), oTextoClave.getText().toString());
+        } else {
+            SharedPreferencesUtil.guardarUsuario(Login.this, oTextoUsuario.getText().toString(), oTextoClave.getText().toString());
+        }
 
         FirebaseUtilAutorizacion.autentificarPorCorreo(Login.this, oTextoUsuario, oTextoClave, iPerfil);
     }
