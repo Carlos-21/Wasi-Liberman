@@ -6,7 +6,7 @@ public class Mensaje {
 
     //Mensaje de la Clase Login
     public static String sUsuarioCorrecto = "Acceso concedido";
-    public static String sUsuarioIncorrecto = "Usuario o contraseña incorrectos";
+    public static String sUsuarioIncorrecto = "UsuarioColeccion o contraseña incorrectos";
 
     //Mensaje de la Clase ConfirmarRecogedor
     public static String sTituloAsignarRecogedor = "Asignar recogedor";
@@ -59,6 +59,9 @@ public class Mensaje {
     public static String alumnosNHMovilidad = "No hay alumnos asignados";
     public static String alumnosEMovilidad = "No hay alumnos entregados";
     public static String hijoApoderado = "No hay hijos asignados";
+
+    //Mensaje para cuando un usuario no tiene salidas registradas de sus hijos
+    public static String hijoSalidaApoderado = "No hay salidas registradas";
 
     //Mensaje para cerrar aplicación
     public static String tituloCerrarApp = "Cerrar aplicación Wasi";

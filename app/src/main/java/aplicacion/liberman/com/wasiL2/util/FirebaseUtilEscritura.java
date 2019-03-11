@@ -17,6 +17,10 @@ import com.google.firebase.firestore.WriteBatch;
 import java.util.HashMap;
 import java.util.Map;
 
+import aplicacion.liberman.com.wasiL2.coleccion.AlumnoColeccion;
+import aplicacion.liberman.com.wasiL2.coleccion.LectorColeccion;
+import aplicacion.liberman.com.wasiL2.coleccion.SalidaColeccion;
+import aplicacion.liberman.com.wasiL2.coleccion.UsuarioColeccion;
 import aplicacion.liberman.com.wasiL2.controlador.Profesor;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
@@ -33,17 +37,20 @@ public class FirebaseUtilEscritura {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final WriteBatch batch = db.batch();
 
-        db.collection("Niño")
-                .whereEqualTo("profesor", identificadorProfesor)
+        db.collection(AlumnoColeccion.sNombre)
+                .whereEqualTo(AlumnoColeccion.sProfesor, identificadorProfesor)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                DocumentReference nycRef = db.collection("Niño").document(document.getId());
-                                batch.update(nycRef, "estado", false);
-                                batch.update(nycRef, "casa", false);
+                                DocumentReference nycRef = db.collection(AlumnoColeccion.sNombre).document(document.getId());
+                                batch.update(nycRef, AlumnoColeccion.sEstado, false);
+                                batch.update(nycRef, AlumnoColeccion.sCasa, false);
+
+                                DocumentReference nycRef2 = db.collection(LectorColeccion.sNombre).document(document.getId());
+                                batch.update(nycRef2, LectorColeccion.sBandera, false);
                             }
                         } else {
 
@@ -70,16 +77,16 @@ public class FirebaseUtilEscritura {
     private static void asignarRecogedorHijo(String identificadorApoderado, final String identificadorRecogedor) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final WriteBatch batch = db.batch();
-        db.collection("Niño")
-                .whereEqualTo("apoderado", identificadorApoderado)
+        db.collection(AlumnoColeccion.sNombre)
+                .whereEqualTo(AlumnoColeccion.sApoderado, identificadorApoderado)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                DocumentReference nycRef = db.collection("Niño").document(document.getId());
-                                batch.update(nycRef, "recogedor", identificadorRecogedor);
+                                DocumentReference nycRef = db.collection(AlumnoColeccion.sNombre).document(document.getId());
+                                batch.update(nycRef, AlumnoColeccion.sRecogedor, identificadorRecogedor);
                             }
                         } else {
 
@@ -105,11 +112,11 @@ public class FirebaseUtilEscritura {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("correo", usuario);
-        data.put("estado", true);
-        data.put("perfil", 3);
+        data.put(UsuarioColeccion.sCorreo, usuario);
+        data.put(UsuarioColeccion.sEstado, true);
+        data.put(UsuarioColeccion.sPerfil, 3);
 
-        db.collection("Usuarios")
+        db.collection(UsuarioColeccion.sNombre)
                 .document(usuario)
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -143,18 +150,18 @@ public class FirebaseUtilEscritura {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("hijo", nombreHijo);
-        data.put("usuario", identificador);
-        data.put("fecha", Mensaje.fecha);
-        data.put("hora", Mensaje.hora);
-        data.put("imagen", imagenHijo);
+        data.put(SalidaColeccion.sHijo, nombreHijo);
+        data.put(SalidaColeccion.sUsuario, identificador);
+        data.put(SalidaColeccion.sFecha, Mensaje.fecha);
+        data.put(SalidaColeccion.sHora, Mensaje.hora);
+        data.put(SalidaColeccion.sImagen, imagenHijo);
 
         String identificadorUsuario = identificador;
         if (apoderado != null) {
             identificadorUsuario = apoderado;
         }
 
-        db.collection("Usuarios").document(identificadorUsuario).collection("Salidas")
+        db.collection(UsuarioColeccion.sNombre).document(identificadorUsuario).collection(SalidaColeccion.sNombre)
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -171,8 +178,31 @@ public class FirebaseUtilEscritura {
 
         WriteBatch batch = db.batch();
 
-        DocumentReference nycRef = db.collection("Niño").document(identificadorHijo);
-        batch.update(nycRef, "estado", true);
+        DocumentReference nycRef = db.collection(AlumnoColeccion.sNombre).document(identificadorHijo);
+        batch.update(nycRef, AlumnoColeccion.sEstado, true);
+
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                // ...
+            }
+        });
+    }
+
+    /**
+     * Método encargado de cambiar el valor en un documento de la base de datos en
+     * Firebase; permitiendo a un alumno poder tener autorización de salir de la
+     * institución educativa
+     *
+     * @param identificadorHijo
+     */
+    public static void registrarSalidaLector(String identificadorHijo) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        WriteBatch batch = db.batch();
+
+        DocumentReference nycRef = db.collection(LectorColeccion.sNombre).document(identificadorHijo);
+        batch.update(nycRef, LectorColeccion.sBandera, true);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -195,8 +225,8 @@ public class FirebaseUtilEscritura {
 
         WriteBatch batch = db.batch();
 
-        DocumentReference nycRef = db.collection("Niño").document(identificadorHijo);
-        batch.update(nycRef, "casa", true);
+        DocumentReference nycRef = db.collection(AlumnoColeccion.sNombre).document(identificadorHijo);
+        batch.update(nycRef, AlumnoColeccion.sCasa, true);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

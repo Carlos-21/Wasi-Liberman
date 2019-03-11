@@ -44,9 +44,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.registroSalidas:
-                intent = new Intent(Apoderado.this, VerRegistroSalida.class);
-                intent.putExtra("identificador", identificador);
-                startActivity(intent);
+                FirebaseUtilConsulta.verificarSalidas(Apoderado.this, identificador);
                 break;
             case R.id.cerrarSesion:
                 AlertaDialogoUtil.cerrarSesion(Apoderado.this);

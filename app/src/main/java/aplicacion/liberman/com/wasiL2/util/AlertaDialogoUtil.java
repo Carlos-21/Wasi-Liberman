@@ -38,12 +38,7 @@ public class AlertaDialogoUtil {
         oConstructor.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                /*String sMensaje = Mensaje.mensajeTextoRecogeor
-                        .replace("paramU", sUsuario)
-                        .replace("paramC", sClave);
-                //MensajeRecogedor.enviarMensajeTexto(oConfirmarRecogedor, sMensaje, sTelefono);*/
                 FirebaseUtilConsulta.verificarUsuarioRecogedor(oConfirmarRecogedor, sUsuario, sClave, sTelefono, sIdentificador);
-                //FirebaseUtilAutorizacion.registrarRecogedorAutorizacion(oConfirmarRecogedor, sUsuario, sClave, sIdentificador);
             }
         });
 

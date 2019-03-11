@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aplicacion.liberman.com.wasiL2.R;
+import aplicacion.liberman.com.wasiL2.coleccion.AlumnoColeccion;
+import aplicacion.liberman.com.wasiL2.coleccion.SalidaColeccion;
+import aplicacion.liberman.com.wasiL2.coleccion.UsuarioColeccion;
 import aplicacion.liberman.com.wasiL2.contenedor.Hijo;
 import aplicacion.liberman.com.wasiL2.contenedor.Registro;
 import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
@@ -32,6 +35,7 @@ import aplicacion.liberman.com.wasiL2.controlador.Recogedor;
 import aplicacion.liberman.com.wasiL2.controlador.VerHijoApoderado;
 import aplicacion.liberman.com.wasiL2.controlador.VerHijoMovilidad;
 import aplicacion.liberman.com.wasiL2.controlador.VerHijoProfesor;
+import aplicacion.liberman.com.wasiL2.controlador.VerRegistroSalida;
 import aplicacion.liberman.com.wasiL2.soporte.Buscar;
 import aplicacion.liberman.com.wasiL2.soporte.Generador;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
@@ -49,7 +53,7 @@ public class FirebaseUtilConsulta {
     public static void verificarUsuario(final Login login, String sIdentificador, final Usuario oUsuarioWasi) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = firestore.collection("Usuarios").document(sIdentificador);
+        DocumentReference docRef = firestore.collection(UsuarioColeccion.sNombre).document(sIdentificador);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -101,7 +105,7 @@ public class FirebaseUtilConsulta {
      */
     public static void verificarUsuarioLogin(final Inicio inicio, String sIdentificador) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        DocumentReference docRef = firestore.collection("Usuarios").document(sIdentificador);
+        DocumentReference docRef = firestore.collection(UsuarioColeccion.sNombre).document(sIdentificador);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -147,7 +151,7 @@ public class FirebaseUtilConsulta {
      */
     public static FirestoreRecyclerOptions<Hijo> listarAlumnosApoderado(String sIdentificador) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
-        Query oSentencia = oFirestore.collection("Niño").whereEqualTo("apoderado", sIdentificador);
+        Query oSentencia = oFirestore.collection(AlumnoColeccion.sNombre).whereEqualTo(AlumnoColeccion.sApoderado, sIdentificador);
 
         FirestoreRecyclerOptions<Hijo> aAlumnos = new FirestoreRecyclerOptions.Builder<Hijo>()
                 .setQuery(oSentencia, Hijo.class)
@@ -167,8 +171,8 @@ public class FirebaseUtilConsulta {
     public static void verificarHijoApoderado(final Context context, final String sIdentificador, final boolean bBandera) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
 
-        oFirestore.collection("Niño")
-                .whereEqualTo("apoderado", sIdentificador)
+        oFirestore.collection(AlumnoColeccion.sNombre)
+                .whereEqualTo(AlumnoColeccion.sApoderado, sIdentificador)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -197,8 +201,8 @@ public class FirebaseUtilConsulta {
      */
     public static FirestoreRecyclerOptions<Hijo> listarAlumnosProfesor(String sIdentificador, boolean bEstado) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
-        Query oSentencia = oFirestore.collection("Niño").whereEqualTo("profesor", sIdentificador)
-                .whereEqualTo("estado", bEstado);
+        Query oSentencia = oFirestore.collection(AlumnoColeccion.sNombre).whereEqualTo(AlumnoColeccion.sProfesor, sIdentificador)
+                .whereEqualTo(AlumnoColeccion.sEstado, bEstado);
 
         FirestoreRecyclerOptions<Hijo> aAlumnos = new FirestoreRecyclerOptions.Builder<Hijo>()
                 .setQuery(oSentencia, Hijo.class)
@@ -218,9 +222,9 @@ public class FirebaseUtilConsulta {
     public static void verificarAlumnosProfesor(final Context context, final String sIdentificador, final boolean bEstado) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
 
-        oFirestore.collection("Niño")
-                .whereEqualTo("movilidad", sIdentificador)
-                .whereEqualTo("estado", bEstado)
+        oFirestore.collection(AlumnoColeccion.sNombre)
+                .whereEqualTo(AlumnoColeccion.sMovilidad, sIdentificador)
+                .whereEqualTo(AlumnoColeccion.sEstado, bEstado)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -254,7 +258,7 @@ public class FirebaseUtilConsulta {
      */
     public static FirestoreRecyclerOptions<Hijo> listarAlumnosRecogedor(String sIdentificador) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
-        Query oSentencia = oFirestore.collection("Niño").whereEqualTo("recogedor", sIdentificador);
+        Query oSentencia = oFirestore.collection(AlumnoColeccion.sNombre).whereEqualTo(AlumnoColeccion.sRecogedor, sIdentificador);
 
         FirestoreRecyclerOptions<Hijo> aAlumnos = new FirestoreRecyclerOptions.Builder<Hijo>()
                 .setQuery(oSentencia, Hijo.class)
@@ -275,9 +279,9 @@ public class FirebaseUtilConsulta {
      */
     public static FirestoreRecyclerOptions<Hijo> listarAlumnosMovilidad(String sIdentificador, boolean bEstado, boolean bCasa) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
-        Query oSentencia = oFirestore.collection("Niño").whereEqualTo("movilidad", sIdentificador)
-                .whereEqualTo("estado", bEstado)
-                .whereEqualTo("casa", bCasa);
+        Query oSentencia = oFirestore.collection(AlumnoColeccion.sNombre).whereEqualTo(AlumnoColeccion.sMovilidad, sIdentificador)
+                .whereEqualTo(AlumnoColeccion.sEstado, bEstado)
+                .whereEqualTo(AlumnoColeccion.sCasa, bCasa);
 
         FirestoreRecyclerOptions<Hijo> aAlumnos = new FirestoreRecyclerOptions.Builder<Hijo>()
                 .setQuery(oSentencia, Hijo.class)
@@ -299,10 +303,10 @@ public class FirebaseUtilConsulta {
     public static void verificarAlumnosMovilidad(final Context context, final String sIdentificador, final boolean bEstado, final boolean bCasa, final boolean bBandera) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
 
-        oFirestore.collection("Niño")
-                .whereEqualTo("movilidad", sIdentificador)
-                .whereEqualTo("estado", bEstado)
-                .whereEqualTo("casa", bCasa)
+        oFirestore.collection(AlumnoColeccion.sNombre)
+                .whereEqualTo(AlumnoColeccion.sMovilidad, sIdentificador)
+                .whereEqualTo(AlumnoColeccion.sEstado, bEstado)
+                .whereEqualTo(AlumnoColeccion.sCasa, bCasa)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -333,14 +337,44 @@ public class FirebaseUtilConsulta {
     }
 
     /**
-     * Método encargado de traer todas las salidad realizadas por el apoderado en un registro
+     * Método encargado de verificar si un usuario del perfil apoderado tiene
+     * algún registro de las salidas que le ha otorgado a su hijo
+     *
+     * @param context
+     * @param sIdentificador
+     */
+    public static void verificarSalidas(final Context context, final String sIdentificador) {
+        FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
+
+        oFirestore.collection(UsuarioColeccion.sNombre)
+                .document(sIdentificador)
+                .collection(SalidaColeccion.sNombre)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() != 0) {
+                                Intent intent = new Intent(context.getApplicationContext(), VerRegistroSalida.class);
+                                intent.putExtra("identificador", sIdentificador);
+                                context.startActivity(intent);
+                            } else {
+                                Toast.makeText(context.getApplicationContext(), Mensaje.hijoSalidaApoderado, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
+     * Método encargado de traer todas las salidas realizadas por el apoderado en un registro
      *
      * @param sIdentificador
      * @return
      */
     public static FirestoreRecyclerOptions<Registro> listarSalidas(String sIdentificador) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
-        Query oSentencia = oFirestore.collection("Usuarios").document(sIdentificador).collection("Salidas");
+        Query oSentencia = oFirestore.collection(UsuarioColeccion.sNombre).document(sIdentificador).collection(SalidaColeccion.sNombre);
 
         FirestoreRecyclerOptions<Registro> aSalidas = new FirestoreRecyclerOptions.Builder<Registro>()
                 .setQuery(oSentencia, Registro.class)
@@ -362,8 +396,8 @@ public class FirebaseUtilConsulta {
     public static void verificarUsuarioRecogedor(final Context context, final String sCorreo, final String sClave, final String sTelefono, final String sIdentificador) {
         FirebaseFirestore oFirestore = FirebaseFirestore.getInstance();
 
-        oFirestore.collection("Usuarios")
-                .whereEqualTo("perfil", 3)
+        oFirestore.collection(UsuarioColeccion.sNombre)
+                .whereEqualTo(UsuarioColeccion.sPerfil, 3)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -394,9 +428,9 @@ public class FirebaseUtilConsulta {
                             correo += "@gmail.com";
                             String sMensaje = Mensaje.mensajeTextoRecogeor
                                     .replace("paramU", correo)
-                                    .replace("paramC", sClave);
+                                    .replace("paramC", clave);
                             MensajeRecogedor.enviarMensajeTexto(context, sMensaje, sTelefono);
-                            FirebaseUtilAutorizacion.registrarRecogedorAutorizacion(context, correo, sClave, sIdentificador);
+                            FirebaseUtilAutorizacion.registrarRecogedorAutorizacion(context, correo, clave, sIdentificador);
                         }
                     }
                 });
