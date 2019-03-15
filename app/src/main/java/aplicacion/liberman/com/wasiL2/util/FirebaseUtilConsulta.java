@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +59,7 @@ public class FirebaseUtilConsulta {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Usuario oUsuario = documentSnapshot.toObject(Usuario.class);
+
                 if (Buscar.existeUsuario(oUsuario, oUsuarioWasi)) {
                     Toast.makeText(login.getApplicationContext(), Mensaje.sUsuarioCorrecto, Toast.LENGTH_SHORT).show();
                     Intent oIntencion = null;
@@ -435,6 +437,62 @@ public class FirebaseUtilConsulta {
                     }
                 });
 
+    }
+
+    public static void cambiarUsuarioFirebase(final Context context, final String sIdentificador, final int iPerfil, final String sNuevoUsuario) {
+        final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = firestore.collection(UsuarioColeccion.sNombre).document(sIdentificador);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Usuario oUsuario2 = documentSnapshot.toObject(Usuario.class);
+                final String sUsuarioActual = oUsuario2.getCorreo();
+
+                oUsuario2.setCorreo(sNuevoUsuario);
+
+                final Usuario oUsuario = oUsuario2;
+                firestore.collection(UsuarioColeccion.sNombre)
+                        .document(sIdentificador)
+                        .collection(SalidaColeccion.sNombre)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    List<Registro> listaSalidas = new ArrayList<>();
+
+                                    if (iPerfil == 1) {
+                                        for (DocumentSnapshot document : task.getResult()) {
+                                            listaSalidas.add(document.toObject(Registro.class));
+                                        }
+                                    }
+
+                                    final List<Registro> listaSalidas2 = listaSalidas;
+
+                                    firestore.collection(UsuarioColeccion.sNombre).document(sUsuarioActual)
+                                            .delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    FirebaseUtilEscritura.registrarActualizarUsuario(context, oUsuario, iPerfil, listaSalidas2);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+
+                                                }
+                                            });
+
+
+                                }
+                            }
+                        });
+            }
+
+        });
     }
 
 }

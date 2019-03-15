@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_amber_A700"
+        android:text="Wasi Seguridad"
+        android:textAlignment="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textoContraseñaActual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contraseña actual:"
+        android:textColor="@color/md_red_A100"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/textoNuevaContraseña"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ingrese nueva constraseña"
+        android:inputType="text"
+        android:textColor="@color/md_orange_A100"
+        android:textColorHint="@color/md_orange_A100"
+        android:textSize="24sp" />
+
+</LinearLayout>

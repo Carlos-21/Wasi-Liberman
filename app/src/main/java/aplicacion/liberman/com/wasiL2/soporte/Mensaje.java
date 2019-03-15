@@ -67,4 +67,8 @@ public class Mensaje {
     public static String tituloCerrarApp = "Cerrar aplicación Wasi";
     public static String mensajeCerrarApp = "¿Desea salir de la aplicación Wasi?";
 
+    //Mensaje para cambio de seguridad en Firebase
+    public static String mensajeCambioUsuario = "Su usuario ha sido actualizado.";
+    public static String mensajeCambioClave = "Su clave ha sido actualizada.";
+
 }

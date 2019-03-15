@@ -123,4 +123,39 @@ public class Validar {
         return bValidado;
     }
 
+    /**
+     * Método encargado de validar que la caja de texto para ingresar la contraseña
+     * no se encuentre vacía
+     *
+     * @param oTextoClave
+     * @return
+     */
+    public static boolean validarCambioContraseña(EditText oTextoClave) {
+        boolean bValidado = true;
+
+        String sClave = oTextoClave.getText().toString();
+        if (TextUtils.isEmpty(sClave)) {
+            oTextoClave.setError("Requerido");
+            bValidado = false;
+        } else {
+            oTextoClave.setError(null);
+        }
+
+        return bValidado;
+    }
+
+    public static boolean validarCambioUsuario(EditText oTextoUsuario) {
+        boolean bValidado = true;
+
+        String sUsuario = oTextoUsuario.getText().toString();
+        if (TextUtils.isEmpty(sUsuario)) {
+            oTextoUsuario.setError("Requerido");
+            bValidado = false;
+        } else {
+            oTextoUsuario.setError(null);
+        }
+
+        return bValidado;
+    }
+
 }

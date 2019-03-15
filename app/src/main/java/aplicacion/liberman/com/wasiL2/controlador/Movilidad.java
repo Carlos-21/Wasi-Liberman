@@ -14,6 +14,7 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
     private ImageView alumnosHabilitados;
     private ImageView alumnosNoHabilitados;
     private ImageView alumnosEntregados;
+    private ImageView configuracionUsuario;
     private ImageView cerrarSesion;
     private String identificador;
 
@@ -38,6 +39,8 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
         alumnosNoHabilitados.setOnClickListener(this);
         alumnosEntregados = findViewById(R.id.alumnosEntregados);
         alumnosEntregados.setOnClickListener(this);
+        configuracionUsuario = findViewById(R.id.configuracionUsuario);
+        configuracionUsuario.setOnClickListener(this);
         cerrarSesion = findViewById(R.id.cerrarSesion);
         cerrarSesion.setOnClickListener(this);
     }
@@ -53,6 +56,12 @@ public class Movilidad extends AppCompatActivity implements View.OnClickListener
                 break;
             case R.id.alumnosEntregados:
                 FirebaseUtilConsulta.verificarAlumnosMovilidad(Movilidad.this, identificador, true, true, false);
+                break;
+            case R.id.configuracionUsuario:
+                Intent intent = new Intent(Movilidad.this, ConfiguracionUsuario.class);
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("perfil", 2);
+                startActivity(intent);
                 break;
             case R.id.cerrarSesion:
                 AlertaDialogoUtil.cerrarSesion(Movilidad.this);

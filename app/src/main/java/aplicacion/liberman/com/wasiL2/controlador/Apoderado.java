@@ -16,6 +16,7 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
     private ImageView permitirSalida;
     private ImageView asignarRecogedor;
     private ImageView registroSalidas;
+    private ImageView configuracionUsuario;
     private ImageView cerrarSesion;
     private String identificador;
 
@@ -46,6 +47,12 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
             case R.id.registroSalidas:
                 FirebaseUtilConsulta.verificarSalidas(Apoderado.this, identificador);
                 break;
+            case R.id.configuracionUsuario:
+                intent = new Intent(Apoderado.this, ConfiguracionUsuario.class);
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("perfil", 1);
+                startActivity(intent);
+                break;
             case R.id.cerrarSesion:
                 AlertaDialogoUtil.cerrarSesion(Apoderado.this);
                 break;
@@ -70,6 +77,8 @@ public class Apoderado extends AppCompatActivity implements View.OnClickListener
         asignarRecogedor.setOnClickListener(this);
         registroSalidas = findViewById(R.id.registroSalidas);
         registroSalidas.setOnClickListener(this);
+        configuracionUsuario = findViewById(R.id.configuracionUsuario);
+        configuracionUsuario.setOnClickListener(this);
         cerrarSesion = findViewById(R.id.cerrarSesion);
         cerrarSesion.setOnClickListener(this);
 

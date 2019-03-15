@@ -10,17 +10,21 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import aplicacion.liberman.com.wasiL2.coleccion.AlumnoColeccion;
 import aplicacion.liberman.com.wasiL2.coleccion.LectorColeccion;
 import aplicacion.liberman.com.wasiL2.coleccion.SalidaColeccion;
 import aplicacion.liberman.com.wasiL2.coleccion.UsuarioColeccion;
+import aplicacion.liberman.com.wasiL2.contenedor.Registro;
+import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
 import aplicacion.liberman.com.wasiL2.controlador.Profesor;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 
@@ -235,4 +239,118 @@ public class FirebaseUtilEscritura {
             }
         });
     }
+
+    public static void registrarActualizarUsuario(final Context context, final Usuario oUsuario, final int iPerfil, final List<Registro> listaRegistro) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put(UsuarioColeccion.sApellidos, oUsuario.getApellidos());
+        data.put(UsuarioColeccion.sCorreo, oUsuario.getCorreo());
+        data.put(UsuarioColeccion.sEstado, oUsuario.isEstado());
+        data.put(UsuarioColeccion.sNombres, oUsuario.getNombres());
+        data.put(UsuarioColeccion.sPerfil, oUsuario.getPerfil());
+
+        db.collection(UsuarioColeccion.sNombre)
+                .document(oUsuario.getCorreo())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        if (iPerfil == 1) {
+                            for (Registro auxiliar : listaRegistro) {
+                                registrarSalidaActualizarUsuario(context, auxiliar, oUsuario.getCorreo());
+                            }
+                            Toast.makeText(context.getApplicationContext(), Mensaje.mensajeCambioUsuario, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context.getApplicationContext(), Mensaje.mensajeCambioUsuario, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    public static void registrarSalidaActualizarUsuario(final Context context, Registro oRegistro, String identificadorUsuario) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put(SalidaColeccion.sHijo, oRegistro.getHijo());
+        data.put(SalidaColeccion.sUsuario, oRegistro.getUsuario());
+        data.put(SalidaColeccion.sFecha, oRegistro.getFecha());
+        data.put(SalidaColeccion.sHora, oRegistro.getHora());
+        data.put(SalidaColeccion.sImagen, oRegistro.getImagen());
+
+        db.collection(UsuarioColeccion.sNombre).document(identificadorUsuario).collection(SalidaColeccion.sNombre)
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+    }
+
+    public static void actualizarAlumnoUsuario(Context context, String sIdentificador, final String sNuevoUsuario, final int iPerfil) {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final WriteBatch batch = db.batch();
+
+        Query query = null;
+
+        switch (iPerfil) {
+            case 1:
+                query = db.collection(AlumnoColeccion.sNombre).whereEqualTo(AlumnoColeccion.sApoderado, sIdentificador);
+                break;
+            case 2:
+                query = db.collection(AlumnoColeccion.sNombre).whereEqualTo(AlumnoColeccion.sMovilidad, sIdentificador);
+                break;
+            case 4:
+                query = db.collection(AlumnoColeccion.sNombre).whereEqualTo(AlumnoColeccion.sProfesor, sIdentificador);
+                break;
+        }
+
+        query.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                DocumentReference nycRef = db.collection(AlumnoColeccion.sNombre).document(document.getId());
+                                batch.update(nycRef, AlumnoColeccion.sEstado, false);
+                                switch (iPerfil) {
+                                    case 1:
+                                        batch.update(nycRef, AlumnoColeccion.sApoderado, sNuevoUsuario);
+                                        break;
+                                    case 2:
+                                        batch.update(nycRef, AlumnoColeccion.sMovilidad, sNuevoUsuario);
+                                        break;
+                                    case 4:
+                                        batch.update(nycRef, AlumnoColeccion.sProfesor, sNuevoUsuario);
+                                        break;
+                                }
+                            }
+                        } else {
+
+                        }
+                        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                            }
+                        });
+                    }
+                });
+
+    }
+
 }

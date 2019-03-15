@@ -5,7 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.controlador.ConfirmarRecogedor;
@@ -15,6 +20,7 @@ import aplicacion.liberman.com.wasiL2.controlador.Profesor;
 import aplicacion.liberman.com.wasiL2.controlador.SalidaPermitida;
 import aplicacion.liberman.com.wasiL2.servicio.ServicioFirebase;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
+import aplicacion.liberman.com.wasiL2.soporte.Validar;
 
 public class AlertaDialogoUtil {
 
@@ -103,6 +109,8 @@ public class AlertaDialogoUtil {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 context.stopService(new Intent(context.getApplicationContext(), ServicioFirebase.class));
+
+                FirebaseAuth.getInstance().signOut();
 
                 Intent intent = new Intent(context.getApplicationContext(), Perfil.class);
                 context.startActivity(intent);
@@ -294,4 +302,78 @@ public class AlertaDialogoUtil {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+    public static void cambiarUsuario(final Context context, final int iPerfil) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View oVista = ((Activity) context).getLayoutInflater().inflate(R.layout.dialogo_configuracion_usuario, null);
+
+        final TextView oUsuarioActual = oVista.findViewById(R.id.textoUsuarioActual);
+        final EditText oUsuarioNuevo = oVista.findViewById(R.id.textoNuevoUsuario);
+        oUsuarioActual.setText("Usuario actual : " + SharedPreferencesUtil.recuperarCorreo(context));
+
+        builder.setCancelable(false);
+
+        builder.setView(oVista);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (Validar.validarCambioUsuario(oUsuarioNuevo)) {
+                    FirebaseUtilAutorizacion.cambiarUsuarioFirebase(context, oUsuarioNuevo.getText().toString(), iPerfil);
+                    FirebaseUtilEscritura.actualizarAlumnoUsuario(context, SharedPreferencesUtil.recuperarCorreo(context), oUsuarioNuevo.getText().toString(), iPerfil);
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //No se hace nada
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Método encargado de mostrar une mensaje que mostrará la actual contraseña del usuario
+     * y una caja de texto donde podrá ingresar su nueva contraseña
+     *
+     * @param context
+     */
+    public static void cambiarClave(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View oVista = ((Activity) context).getLayoutInflater().inflate(R.layout.dialogo_configuracion_clave, null);
+
+        final TextView oClaveActual = oVista.findViewById(R.id.textoContraseñaActual);
+        final EditText oClaveNueva = oVista.findViewById(R.id.textoNuevaContraseña);
+        oClaveActual.setText("Contraseña actual : " + SharedPreferencesUtil.recuperarClave(context));
+
+        builder.setCancelable(false);
+
+        builder.setView(oVista);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (Validar.validarCambioContraseña(oClaveNueva)) {
+                    FirebaseUtilAutorizacion.cambiarClaveFirebase(context, oClaveNueva.getText().toString());
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //No se hace nada
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 }

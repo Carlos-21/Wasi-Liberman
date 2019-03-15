@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -113,6 +114,47 @@ public class FirebaseUtilAutorizacion {
         horaDespertar = c.getTime();
         Timer temporizador = new Timer();
         temporizador.schedule(new Temporizador(recogedor), horaDespertar);
+    }
+
+    public static void cambiarUsuarioFirebase(final Context context, final String sUsuario, final int iPerfil) {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        final String sUsuarioActual = user.getEmail();
+
+        user.updateEmail(sUsuario)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            SharedPreferencesUtil.guardarUsuario(context, sUsuario, SharedPreferencesUtil.recuperarClave(context));
+
+                            FirebaseUtilConsulta.cambiarUsuarioFirebase(context, sUsuarioActual, iPerfil, sUsuario);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * Método encargado de cambiar la clave del usuario esto solo pueden hacerlos los
+     * usuarios con los perfiles apoderado, profesor y movilidad
+     *
+     * @param context
+     * @param sClave
+     */
+    public static void cambiarClaveFirebase(final Context context, final String sClave) {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.updatePassword(sClave)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            SharedPreferencesUtil.guardarUsuario(context, user.getEmail(), sClave);
+                            Toast.makeText(context.getApplicationContext(), Mensaje.mensajeCambioClave,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 }

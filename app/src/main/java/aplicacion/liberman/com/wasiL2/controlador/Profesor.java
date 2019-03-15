@@ -17,6 +17,7 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
     private ImageView alumnosHabilitados;
     private ImageView alumnosNoHabilitados;
     private ImageView inhabilitarAlumnos;
+    private ImageView configuracionUsuario;
     private ImageView cerrarSesion;
     private String identificador;
 
@@ -41,6 +42,8 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
         alumnosNoHabilitados.setOnClickListener(this);
         inhabilitarAlumnos = findViewById(R.id.inhabilitarAlumnos);
         inhabilitarAlumnos.setOnClickListener(this);
+        configuracionUsuario = findViewById(R.id.configuracionUsuario);
+        configuracionUsuario.setOnClickListener(this);
         cerrarSesion = findViewById(R.id.cerrarSesion);
         cerrarSesion.setOnClickListener(this);
     }
@@ -60,6 +63,12 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
                 } else {
                     Toast.makeText(this, Mensaje.mensajeFueraRango, Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.configuracionUsuario:
+                Intent intent = new Intent(Profesor.this, ConfiguracionUsuario.class);
+                intent.putExtra("identificador", identificador);
+                intent.putExtra("perfil", 2);
+                startActivity(intent);
                 break;
             case R.id.cerrarSesion:
                 AlertaDialogoUtil.cerrarSesion(Profesor.this);

@@ -66,8 +66,8 @@
 
                     <ImageView
                         android:id="@+id/permitirSalidaRecogedor"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_gravity="center_horizontal|center"
                         android:src="@drawable/permitir_salida" />
 
@@ -78,7 +78,7 @@
                         android:text="Permitir\nsalida"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -109,8 +109,8 @@
 
                     <ImageView
                         android:id="@+id/cerrarSesionRecogedor"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/cerrar_sesion" />
 
@@ -121,7 +121,7 @@
                         android:text="Cerrar sesión"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
