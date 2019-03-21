@@ -10,8 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 
-import aplicacion.liberman.com.wasiL2.controlador.ConfirmarRecogedor;
-
 public class MensajeRecogedor {
 
     /**

@@ -77,7 +77,7 @@ public class AlertaDialogoUtil {
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                FirebaseUtilEscritura.quitarPermisosAlumnos(identificador, profesor);
+                FirebaseUtilEscritura.quitarPermisosAlumnos(identificador, profesor, true);
             }
         });
 
@@ -108,6 +108,8 @@ public class AlertaDialogoUtil {
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                SharedPreferencesUtil.guardarBandera(context.getApplicationContext(), true);
+
                 context.stopService(new Intent(context.getApplicationContext(), ServicioFirebase.class));
 
                 FirebaseAuth.getInstance().signOut();
@@ -303,6 +305,13 @@ public class AlertaDialogoUtil {
         alertDialog.show();
     }
 
+    /**
+     * Método encargado de mostrar une mensaje que mostrará el actual nombre del usuario
+     * y una caja de texto donde podrá ingresar su nuevo nombre de usuario
+     *
+     * @param context
+     * @param iPerfil
+     */
     public static void cambiarUsuario(final Context context, final int iPerfil) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View oVista = ((Activity) context).getLayoutInflater().inflate(R.layout.dialogo_configuracion_usuario, null);

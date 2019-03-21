@@ -44,6 +44,22 @@ public class SharedPreferencesUtil {
     }
 
     /**
+     * Método encargado de guardar un parámetro para poder identificar
+     * si un usuario del tipo perfil Recogedor ha cerrado sesión
+     *
+     * @param context
+     * @param bandera
+     */
+    public static void guardarBandera(Context context, boolean bandera) {
+        SharedPreferences pref = context.getApplicationContext().getSharedPreferences(nameFile, Context.MODE_PRIVATE);
+
+        Editor editor = pref.edit();
+        editor.putBoolean("bandera", bandera);
+        editor.commit();
+        editor.apply();
+    }
+
+    /**
      * Método encargado de devolder el parámetro usuario
      * guardado en PrefWasi
      *
@@ -93,6 +109,19 @@ public class SharedPreferencesUtil {
         SharedPreferences pref = context.getApplicationContext().getSharedPreferences(nameFile, Context.MODE_PRIVATE);
 
         return pref.getString("claveR", "");
+    }
+
+    /**
+     * Método encargado de devolver el parámetro bandera
+     * guardado en PrefWasi
+     *
+     * @param context
+     * @return
+     */
+    public static boolean recuperarBandera(Context context) {
+        SharedPreferences pref = context.getApplicationContext().getSharedPreferences(nameFile, Context.MODE_PRIVATE);
+
+        return pref.getBoolean("bandera", false);
     }
 
 }

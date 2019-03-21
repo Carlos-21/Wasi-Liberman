@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +15,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -439,6 +439,15 @@ public class FirebaseUtilConsulta {
 
     }
 
+    /**
+     * Método encargado de cambiar el usuario de la base de datos de Firebase al igual que las
+     * subcolecciones que contenga
+     *
+     * @param context
+     * @param sIdentificador
+     * @param iPerfil
+     * @param sNuevoUsuario
+     */
     public static void cambiarUsuarioFirebase(final Context context, final String sIdentificador, final int iPerfil, final String sNuevoUsuario) {
         final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -470,23 +479,16 @@ public class FirebaseUtilConsulta {
                                     }
 
                                     final List<Registro> listaSalidas2 = listaSalidas;
+                                    WriteBatch batch = firestore.batch();
+                                    DocumentReference laRef = firestore.collection(UsuarioColeccion.sNombre).document(sIdentificador);
+                                    batch.delete(laRef);
 
-                                    firestore.collection(UsuarioColeccion.sNombre).document(sUsuarioActual)
-                                            .delete()
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    FirebaseUtilEscritura.registrarActualizarUsuario(context, oUsuario, iPerfil, listaSalidas2);
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-
-                                                }
-                                            });
-
-
+                                    batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            FirebaseUtilEscritura.registrarActualizarUsuario(context, oUsuario, iPerfil, listaSalidas2, sIdentificador);
+                                        }
+                                    });
                                 }
                             }
                         });

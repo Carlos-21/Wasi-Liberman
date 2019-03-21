@@ -1,7 +1,5 @@
 package aplicacion.liberman.com.wasiL2.soporte;
 
-import java.util.ArrayList;
-
 import aplicacion.liberman.com.wasiL2.contenedor.Usuario;
 
 public class Buscar {

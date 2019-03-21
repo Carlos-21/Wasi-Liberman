@@ -5,37 +5,43 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class Fecha {
+    private static final String LUGAR = "America/Lima";
     private static final DateFormat HORA = new SimpleDateFormat("HH:mm:ss");
     private static final DateFormat FECHA = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
-     * Definir documentación
+     * Método encargado de devolver la hora Actual de la ciudad de Lima
      *
      * @return
      */
     public static String horaActual() {
-        Date date = new Date();
-        return HORA.format(date);
+        TimeZone zone = TimeZone.getTimeZone(LUGAR);
+        Calendar calendar = Calendar.getInstance(zone);
+        return HORA.format(calendar.getTime());
     }
 
     /**
-     * Definir documentación
+     * Método encargado de devolver la fecha Actual de la ciudad de Lima
      *
      * @return
      */
     public static String fechaActual() {
-        Date date = new Date();
-        return FECHA.format(date);
+        TimeZone zone = TimeZone.getTimeZone(LUGAR);
+        Calendar calendar = Calendar.getInstance(zone);
+        return FECHA.format(calendar.getTime());
     }
 
     /**
-     * Definir documentación
+     * Método encargado de poder verificar la hora actual, para así con
+     * el resultado del método determinar si se puede ejecutar una función
+     * o no
      *
      * @return
      */
-    public static boolean rangoFecha() {
+    public static boolean rangoHora() {
         GregorianCalendar cal = new GregorianCalendar();
 
         Date horaActual = cal.getTime();
@@ -51,7 +57,7 @@ public class Fecha {
         cal.set(GregorianCalendar.MINUTE, 0);
         cal.set(GregorianCalendar.SECOND, 0);
         Date horaFin = cal.getTime();
-        System.out.println("Fechas : " + horaInicio + " " + horaFin);
+
         if (horaActual.compareTo(horaInicio) >= 0 && horaActual.compareTo(horaFin) <= 0) {
             return true;
         }

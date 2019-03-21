@@ -12,6 +12,7 @@ import aplicacion.liberman.com.wasiL2.soporte.Fecha;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
+import aplicacion.liberman.com.wasiL2.util.FirebaseUtilEscritura;
 
 public class Profesor extends AppCompatActivity implements View.OnClickListener {
     private ImageView alumnosHabilitados;
@@ -58,9 +59,10 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
                 FirebaseUtilConsulta.verificarAlumnosProfesor(Profesor.this, identificador, false);
                 break;
             case R.id.inhabilitarAlumnos:
-                if (Fecha.rangoFecha()) {
+                if (Fecha.rangoHora()) {
                     AlertaDialogoUtil.inhabilitarAlumnos(identificador, Profesor.this);
                 } else {
+                    FirebaseUtilEscritura.quitarPermisosAlumnos(identificador, this, false);
                     Toast.makeText(this, Mensaje.mensajeFueraRango, Toast.LENGTH_SHORT).show();
                 }
                 break;

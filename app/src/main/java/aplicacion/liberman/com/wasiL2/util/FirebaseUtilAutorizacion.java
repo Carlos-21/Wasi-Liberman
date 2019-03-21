@@ -109,13 +109,20 @@ public class FirebaseUtilAutorizacion {
 
         Calendar c = Calendar.getInstance();
         c.setTime(horaDespertar);
-        c.set(Calendar.MINUTE, c.get(Calendar.MINUTE) + 1);
+        c.set(Calendar.MINUTE, c.get(Calendar.MINUTE) + 5);
 
         horaDespertar = c.getTime();
         Timer temporizador = new Timer();
         temporizador.schedule(new Temporizador(recogedor), horaDespertar);
     }
 
+    /**
+     * Método encargado de modificar el nombre del usuario en la seguridad de Firebase
+     *
+     * @param context
+     * @param sUsuario
+     * @param iPerfil
+     */
     public static void cambiarUsuarioFirebase(final Context context, final String sUsuario, final int iPerfil) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

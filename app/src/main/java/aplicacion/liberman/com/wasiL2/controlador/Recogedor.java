@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import aplicacion.liberman.com.wasiL2.R;
 import aplicacion.liberman.com.wasiL2.util.AlertaDialogoUtil;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilAutorizacion;
+import aplicacion.liberman.com.wasiL2.util.SharedPreferencesUtil;
 
 public class Recogedor extends AppCompatActivity implements View.OnClickListener {
     private ImageView permitirSalidaRecogedor;
@@ -55,6 +56,8 @@ public class Recogedor extends AppCompatActivity implements View.OnClickListener
         cerrarSessionRecogedor.setOnClickListener(this);
 
         FirebaseUtilAutorizacion.cerrarSesionRecogedor(Recogedor.this);
+
+        SharedPreferencesUtil.guardarBandera(Recogedor.this, false);
     }
 
     /**

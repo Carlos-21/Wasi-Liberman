@@ -25,26 +25,28 @@ public class Temporizador extends TimerTask {
 
     @Override
     public void run() {
-        final FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+        if (!SharedPreferencesUtil.recuperarBandera(recogedor)) {
+            final FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
 
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(SharedPreferencesUtil.recuperarCorreoR(recogedor), SharedPreferencesUtil.recuperarClaveR(recogedor));
+            AuthCredential credential = EmailAuthProvider
+                    .getCredential(SharedPreferencesUtil.recuperarCorreoR(recogedor), SharedPreferencesUtil.recuperarClaveR(recogedor));
 
-        usuario.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                usuario.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(recogedor.getApplicationContext(), Perfil.class);
-                            intent.putExtra("finalizar", true);
-                            recogedor.startActivity(intent);
-                            recogedor.finish();
+            usuario.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    usuario.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(recogedor.getApplicationContext(), Perfil.class);
+                                intent.putExtra("finalizar", true);
+                                recogedor.startActivity(intent);
+                                recogedor.finish();
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
     }
 }

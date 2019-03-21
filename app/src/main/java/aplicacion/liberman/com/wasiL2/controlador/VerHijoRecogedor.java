@@ -15,7 +15,7 @@ import aplicacion.liberman.com.wasiL2.soporte.AdaptadorHijo;
 import aplicacion.liberman.com.wasiL2.soporte.Mensaje;
 import aplicacion.liberman.com.wasiL2.util.FirebaseUtilConsulta;
 
-public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickListener{
+public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView lista;
     private AdaptadorHijo adaptadorHijo;
     private String sIdentificador;
@@ -32,7 +32,7 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         int posicion = lista.getChildAdapterPosition(view);
         Hijo hijo = adaptadorHijo.getItem(posicion);
-        if(!hijo.isEstado()){
+        if (!hijo.isEstado()) {
             Intent intent = new Intent(VerHijoRecogedor.this, PermitirSalida.class);
 
             intent.putExtra("nombres", hijo.getNombres());
@@ -44,8 +44,7 @@ public class VerHijoRecogedor extends AppCompatActivity implements View.OnClickL
             intent.putExtra("perfil", 3);
 
             startActivity(intent);
-        }
-        else{
+        } else {
             String mensaje = Mensaje.mensajeSalidaHecha.replace("paramH", hijo.getNombres() + " " + hijo.getApellidos());
             Toast.makeText(VerHijoRecogedor.this, mensaje, Toast.LENGTH_SHORT).show();
         }

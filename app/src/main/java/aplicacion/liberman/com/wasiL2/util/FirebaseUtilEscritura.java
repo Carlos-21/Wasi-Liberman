@@ -36,8 +36,9 @@ public class FirebaseUtilEscritura {
      *
      * @param identificadorProfesor
      * @param profesor
+     * @param bandera
      */
-    public static void quitarPermisosAlumnos(String identificadorProfesor, final Profesor profesor) {
+    public static void quitarPermisosAlumnos(String identificadorProfesor, final Profesor profesor, final boolean bandera) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final WriteBatch batch = db.batch();
 
@@ -62,7 +63,9 @@ public class FirebaseUtilEscritura {
                         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(profesor.getApplicationContext(), Mensaje.mensajePermisosQuitados, Toast.LENGTH_SHORT).show();
+                                if (bandera) {
+                                    Toast.makeText(profesor.getApplicationContext(), Mensaje.mensajePermisosQuitados, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
@@ -240,7 +243,17 @@ public class FirebaseUtilEscritura {
         });
     }
 
-    public static void registrarActualizarUsuario(final Context context, final Usuario oUsuario, final int iPerfil, final List<Registro> listaRegistro) {
+    /**
+     * Método encargado de registrar la actualización de un Usuario transfiriendo las nuevas salidas al nuevo usuario
+     * si es que tiene el perfil de apoderado, de no ser así solo actualizará
+     *
+     * @param context
+     * @param oUsuario
+     * @param iPerfil
+     * @param listaRegistro
+     * @param sIdentificador
+     */
+    public static void registrarActualizarUsuario(final Context context, final Usuario oUsuario, final int iPerfil, final List<Registro> listaRegistro, final String sIdentificador) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
@@ -260,6 +273,7 @@ public class FirebaseUtilEscritura {
                             for (Registro auxiliar : listaRegistro) {
                                 registrarSalidaActualizarUsuario(context, auxiliar, oUsuario.getCorreo());
                             }
+                            eliminarSalidaUsuario(sIdentificador);
                             Toast.makeText(context.getApplicationContext(), Mensaje.mensajeCambioUsuario, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context.getApplicationContext(), Mensaje.mensajeCambioUsuario, Toast.LENGTH_SHORT).show();
@@ -274,6 +288,52 @@ public class FirebaseUtilEscritura {
                 });
     }
 
+    /**
+     * Método encargado de eliminar los documentos de la colección Salida del antiguo usuario
+     * para evitar duplicidad de datos
+     *
+     * @param sIdentificador
+     */
+    public static void eliminarSalidaUsuario(final String sIdentificador) {
+        final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        firestore.collection(UsuarioColeccion.sNombre)
+                .document(sIdentificador)
+                .collection(SalidaColeccion.sNombre)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                firestore.collection(UsuarioColeccion.sNombre).document(sIdentificador).collection(SalidaColeccion.sNombre).document(document.getId())
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * Método encargado de registrar un documento en la colección Salida del nuevo usuario
+     * del perfil Apoderado
+     *
+     * @param context
+     * @param oRegistro
+     * @param identificadorUsuario
+     */
     public static void registrarSalidaActualizarUsuario(final Context context, Registro oRegistro, String identificadorUsuario) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -301,6 +361,15 @@ public class FirebaseUtilEscritura {
 
     }
 
+    /**
+     * Método encargado de actualizar los campos necesarios de la colección Alumno
+     * para realizar las nuevas referencias respectivas
+     *
+     * @param context
+     * @param sIdentificador
+     * @param sNuevoUsuario
+     * @param iPerfil
+     */
     public static void actualizarAlumnoUsuario(Context context, String sIdentificador, final String sNuevoUsuario, final int iPerfil) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final WriteBatch batch = db.batch();

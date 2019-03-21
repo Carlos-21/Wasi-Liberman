@@ -144,6 +144,13 @@ public class Validar {
         return bValidado;
     }
 
+    /**
+     * Método encargado de validar que la caja de texto para ingresar el usuario
+     * no se encuentre vacía
+     *
+     * @param oTextoUsuario
+     * @return
+     */
     public static boolean validarCambioUsuario(EditText oTextoUsuario) {
         boolean bValidado = true;
 
