@@ -69,7 +69,7 @@ public class Profesor extends AppCompatActivity implements View.OnClickListener 
             case R.id.configuracionUsuario:
                 Intent intent = new Intent(Profesor.this, ConfiguracionUsuario.class);
                 intent.putExtra("identificador", identificador);
-                intent.putExtra("perfil", 2);
+                intent.putExtra("perfil", 4);
                 startActivity(intent);
                 break;
             case R.id.cerrarSesion:
